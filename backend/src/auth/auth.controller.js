@@ -5,9 +5,13 @@ import { prisma } from '../../prismaClient/client.js';
 const JWT_SECRET = process.env.JWT_SECRET;
 
 function signToken(user) {
-  return jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, {
-    expiresIn: '7d',
-  });
+  return jwt.sign(
+    { userId: user.id, email: user.email, role: user.role },
+    JWT_SECRET,
+    {
+      expiresIn: '7d',
+    },
+  );
 }
 
 export const register = async (req, res) => {
@@ -56,4 +60,44 @@ export const register = async (req, res) => {
     console.error(error);
     return res.status(500).json({ message: 'Register failed' });
   }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password required' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const token = signToken(user);
+
+    return res.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Login failed' });
+  }
+};
+
+export const me = async (req, res) => {
+  res.json({ user: req.user });
 };
