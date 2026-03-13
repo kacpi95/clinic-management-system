@@ -16,12 +16,18 @@ function signToken(user) {
 
 export const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName, specialization, phone } =
+      req.body;
 
-    if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: 'Email and password are required' });
+    if (
+      !email ||
+      !password ||
+      !firstName ||
+      !lastName ||
+      !specialization ||
+      !phone
+    ) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
     if (password.length < 6) {
@@ -40,22 +46,39 @@ export const register = async (req, res) => {
 
     const hashed = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashed,
-        role: 'DOCTOR',
-      },
-      select: {
-        id: true,
-        email: true,
-        role: true,
-      },
+    const result = await prisma.$transaction(async (transaction) => {
+      const user = await transaction.user.create({
+        data: {
+          email,
+          password: hashed,
+          role: 'DOCTOR',
+        },
+      });
+
+      const doctor = await transaction.doctor.create({
+        data: {
+          userId: user.id,
+          firstName,
+          lastName,
+          specialization,
+          phone,
+        },
+      });
+
+      return { user, doctor };
     });
 
-    const token = signToken(user);
+    const token = signToken(result.user);
 
-    return res.status(201).json({ user, token });
+    return res.status(201).json({
+      user: {
+        id: result.user.id,
+        email: result.user.email,
+        role: result.user.role,
+      },
+      doctor: result.doctor,
+      token,
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Register failed' });
