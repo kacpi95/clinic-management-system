@@ -37,7 +37,7 @@ export const getAll = async ({
   return patients;
 };
 
-export const getById = async ({ id }) => {
+export const getById = async (id) => {
   return prisma.patient.findUnique({
     where: { id: Number(id) },
   });
