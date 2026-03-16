@@ -17,7 +17,7 @@ export const getAll = async ({
 
   if (lastName) where.lastName = { contains: lastName, mode: 'insensitive' };
 
-  if (pesel) where.pesel = pesel
+  if (pesel) where.pesel = pesel;
 
   if (birthDate) where.birthDate = new Date(birthDate);
 
@@ -35,4 +35,34 @@ export const getAll = async ({
   });
 
   return patients;
+};
+
+export const getById = async ({ id }) => {
+  return prisma.patient.findUnique({
+    where: { id: Number(id) },
+  });
+};
+
+export const add = async ({
+  firstName,
+  lastName,
+  pesel,
+  birthDate,
+  phone,
+  email,
+  address,
+}) => {
+  const newPatient = await prisma.patient.create({
+    data: {
+      firstName,
+      lastName,
+      pesel,
+      birthDate: new Date(birthDate),
+      phone,
+      email,
+      address,
+    },
+  });
+
+  return newPatient;
 };
