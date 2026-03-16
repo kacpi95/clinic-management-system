@@ -72,3 +72,29 @@ export const addPatient = async (req, res) => {
     return res.status(500).json({ message: 'Failed to add new patient' });
   }
 };
+
+export const removePatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedPatient = await patientService.remove(id);
+
+    return res.json(deletedPatient);
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json({ message: 'Patient not found' });
+  }
+};
+
+export const updatePatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedPatient = await patientService.update(id, req.body);
+
+    return res.json(updatedPatient);
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json({ message: 'Patient not found' });
+  }
+};
