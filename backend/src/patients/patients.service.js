@@ -66,3 +66,19 @@ export const add = async ({
 
   return newPatient;
 };
+
+export const remove = async (id) => {
+  return prisma.patient.delete({
+    where: { id: Number(id) },
+  });
+};
+
+export const update = async (id, data) => {
+  return prisma.patient.update({
+    where: { id: Number(id) },
+    data: {
+      ...data,
+      ...(data.birthDate && { birthDate: new Date(data.birthDate) }),
+    },
+  });
+};
