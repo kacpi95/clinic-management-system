@@ -46,3 +46,52 @@ export const getById = async (id) => {
     include: { patient: true, doctor: true, visitNote: true },
   });
 };
+
+export const add = async ({
+  patientId,
+  doctorId,
+  startTime,
+  endTime,
+  status,
+  reason,
+  notes,
+}) => {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+
+  if (start >= end) {
+    throw new Error('Invalid time range');
+  }
+
+  const conflict = await prisma.appointment.findFirst({
+    where: {
+      doctorId: Number(doctorId),
+      AND: [
+        {
+          startTime: { lt: end },
+        },
+        {
+          endTime: { gt: start },
+        },
+      ],
+    },
+  });
+
+  if (conflict) {
+    throw new Error('Time slot already taken');
+  }
+
+  const appointment = await prisma.appointment.create({
+    data: {
+      patientId: Number(patientId),
+      doctorId: Number(doctorId),
+      startTime: start,
+      endTime: end,
+      status,
+      reason,
+      notes,
+    },
+  });
+
+  return appointment;
+};
