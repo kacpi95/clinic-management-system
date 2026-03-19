@@ -95,3 +95,51 @@ export const add = async ({
 
   return appointment;
 };
+
+export const remove = async (id) => {
+  return prisma.appointment.delete({
+    where: { id: Number(id) },
+  });
+};
+
+export const update = async (id, data) => {
+  const appointmentId = Number(id);
+
+  const start = data.startTime ? new Date(data.startTime) : undefined;
+  const end = data.endTime ? new Date(data.endTime) : undefined;
+
+  if (start && end && start >= end) {
+    throw new Error('Invalid time');
+  }
+
+
+  if (start || end) {
+    const conflict = await prisma.appointment.findFirst({
+      where: {
+        doctorId: Number(data.doctorId),
+        id: { not: appointmentId },
+        AND: [
+          {
+            startTime: { lt: end || new Date('2100-12-31') },
+          },
+          {
+            endTime: { gt: start || new Date('1970-01-01') },
+          },
+        ],
+      },
+    });
+
+    if (conflict) {
+      throw new Error('Time slot already taken');
+    }
+  }
+
+  return prisma.appointment.update({
+    where: { id: appointmentId },
+    data: {
+      ...data,
+      ...(start && { startTime: start }),
+      ...(end && { endTime: end }),
+    },
+  });
+};
