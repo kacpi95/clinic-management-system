@@ -39,3 +39,10 @@ export const getAll = async ({
 
   return appointments;
 };
+
+export const getById = async (id) => {
+  return prisma.appointment.findUnique({
+    where: { id: Number(id) },
+    include: { patient: true, doctor: true, visitNote: true },
+  });
+};
