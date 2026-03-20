@@ -81,3 +81,17 @@ export const addAppointment = async (req, res) => {
     return res.status(500).json({ message: 'Failed to add new appointment' });
   }
 };
+
+export const removeAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedAppointment = await appointmentService.remove(id);
+
+    return res.json(deletedAppointment);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({ message: 'Appointment not found' });
+  }
+};
