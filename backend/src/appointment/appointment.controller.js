@@ -35,3 +35,18 @@ export const getAppointments = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch appointments' });
   }
 };
+
+export const getAppointmentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const appointment = await appointmentService.getById(id);
+
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+    return res.json(appointment);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to fetch appointment' });
+  }
+};
