@@ -95,3 +95,25 @@ export const removeAppointment = async (req, res) => {
     return res.status(500).json({ message: 'Appointment not found' });
   }
 };
+
+export const updateAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedAppointment = await appointmentService.update(id, req.body);
+
+    return res.json(updatedAppointment);
+  } catch (error) {
+    console.error(error);
+
+    if (error.message === 'Time slot already taken') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    if (error.message === 'Invalid time range') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    return res.status(500).json({ message: 'Appointment not found' });
+  }
+};
