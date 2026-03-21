@@ -109,7 +109,7 @@ export const update = async (id, data) => {
   const end = data.endTime ? new Date(data.endTime) : undefined;
 
   if (start && end && start >= end) {
-    throw new Error('Invalid time');
+    throw new Error('Invalid time range');
   }
 
 

@@ -143,6 +143,6 @@ export const updateAppointment = async (req, res) => {
       return res.status(400).json({ message: error.message });
     }
 
-    return res.status(500).json({ message: 'Appointment not found' });
+    return res.status(500).json({ message: 'Failed to update appointment' });
   }
 };
