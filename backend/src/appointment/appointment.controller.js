@@ -4,7 +4,6 @@ export const getAppointments = async (req, res) => {
   try {
     const {
       patientId,
-      doctorId,
       startTime,
       endTime,
       status,
@@ -16,6 +15,7 @@ export const getAppointments = async (req, res) => {
 
     const page = Number(_page) || 1;
     const limit = Number(_limit) || 8;
+    const doctorId = req.user.userId;
 
     const allAppointments = await appointmentService.getAll({
       patientId,
@@ -44,6 +44,11 @@ export const getAppointmentById = async (req, res) => {
     if (!appointment) {
       return res.status(404).json({ message: 'Appointment not found' });
     }
+
+    if (appointment.doctorId !== req.user.userId) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
     return res.json(appointment);
   } catch (error) {
     console.error(error);
@@ -53,8 +58,9 @@ export const getAppointmentById = async (req, res) => {
 
 export const addAppointment = async (req, res) => {
   try {
-    const { patientId, doctorId, startTime, endTime, status, reason, notes } =
-      req.body;
+    const { patientId, startTime, endTime, status, reason, notes } = req.body;
+
+    const doctorId = req.user.userId;
 
     const newAppointment = await appointmentService.add({
       patientId,
@@ -86,13 +92,23 @@ export const removeAppointment = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const appointment = await appointmentService.getById(id);
+
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+
+    if (appointment.doctorId !== req.user.userId) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
     const deletedAppointment = await appointmentService.remove(id);
 
     return res.json(deletedAppointment);
   } catch (error) {
     console.error(error);
 
-    return res.status(500).json({ message: 'Appointment not found' });
+    return res.status(500).json({ message: 'Failed to remove appointment' });
   }
 };
 
@@ -100,7 +116,20 @@ export const updateAppointment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const updatedAppointment = await appointmentService.update(id, req.body);
+    const appointment = await appointmentService.getById(id);
+
+    if (!appointment) {
+      return res.status(404).json({ message: 'Appointment not found' });
+    }
+
+    if (appointment.doctorId !== req.user.userId) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const updatedAppointment = await appointmentService.update(id, {
+      ...req.body,
+      doctorId: req.user.userId,
+    });
 
     return res.json(updatedAppointment);
   } catch (error) {
