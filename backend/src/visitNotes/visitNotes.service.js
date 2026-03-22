@@ -39,3 +39,10 @@ export const getAll = async ({
 
   return visitNotes;
 };
+
+export const getById = async ({ id }) => {
+  return prisma.visitNote.findFirst({
+    where: { id: Number(id), doctorId: Number(doctorId) },
+    include: { patient: true, doctor: true, appointment: true },
+  });
+};
