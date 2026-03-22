@@ -40,9 +40,9 @@ export const getAll = async ({
   return visitNotes;
 };
 
-export const getById = async ({ id }) => {
+export const getById = async (id) => {
   return prisma.visitNote.findFirst({
-    where: { id: Number(id), doctorId: Number(doctorId) },
+    where: { id: Number(id) },
     include: { patient: true, doctor: true, appointment: true },
   });
 };
@@ -93,3 +93,11 @@ export const add = async ({
 
   return visitNote;
 };
+
+export const remove = async (id) => {
+  return prisma.visitNote.delete({
+    where: { id: Number(id) },
+  });
+};
+
+
