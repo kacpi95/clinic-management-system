@@ -11,10 +11,12 @@ import { authMiddleware } from '../auth/auth.middleware';
 
 const router = express.Router();
 
-router.get('/', authMiddleware, getAppointments);
-router.get('/:id', authMiddleware, getAppointmentById);
-router.post('/', authMiddleware, addAppointment);
-router.delete('/:id', authMiddleware, removeAppointment);
-router.put('/:id', authMiddleware, updateAppointment);
+router.use(authMiddleware);
+
+router.get('/', getAppointments);
+router.get('/:id', getAppointmentById);
+router.post('/', addAppointment);
+router.delete('/:id', removeAppointment);
+router.put('/:id', updateAppointment);
 
 export default router;
