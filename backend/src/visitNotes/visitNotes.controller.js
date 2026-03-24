@@ -95,3 +95,27 @@ export const addVisitNote = async (req, res) => {
     return res.status(500).json({ message: 'Failed to add new visit note' });
   }
 };
+
+export const removeVisitNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const visitNote = await visitNotesService.getById(id);
+
+    if (!visitNote) {
+      return res.status(404).json({ message: 'Visit note not found' });
+    }
+
+    if (visitNote.doctorId !== req.user.userId) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const deletedVisitNote = await visitNotesService.remove(id);
+
+    return res.json(deletedVisitNote);
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({ message: 'Failed to remove visit note' });
+  }
+};
