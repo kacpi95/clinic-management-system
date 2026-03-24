@@ -100,4 +100,9 @@ export const remove = async (id) => {
   });
 };
 
-
+export const update = async (id, data) => {
+  return prisma.visitNote.update({
+    where: { id: Number(id) },
+    data,
+  });
+};
