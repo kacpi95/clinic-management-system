@@ -101,8 +101,10 @@ export const remove = async (id) => {
 };
 
 export const update = async (id, data) => {
+  const { doctorId, patientId, appointmentId, ...safeData } = data;
+
   return prisma.visitNote.update({
     where: { id: Number(id) },
-    data,
+    data: safeData,
   });
 };
