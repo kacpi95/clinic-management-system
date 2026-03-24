@@ -56,3 +56,42 @@ export const getVisitNoteById = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch visit note' });
   }
 };
+
+export const addVisitNote = async (req, res) => {
+  try {
+    const {
+      patientId,
+      appointmentId,
+      diagnosis,
+      recommendations,
+      medications,
+      notes,
+    } = req.body;
+
+    const doctorId = req.user.userId;
+
+    const newVisitNote = await visitNotesService.add({
+      doctorId,
+      patientId,
+      appointmentId,
+      diagnosis,
+      recommendations,
+      medications,
+      notes,
+    });
+
+    return res.status(201).json(newVisitNote);
+  } catch (error) {
+    console.error(error);
+
+    if (error.message === 'Appointment not found or access denied') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    if (error.message === 'Visit note already exists for this appointment') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    return res.status(500).json({ message: 'Failed to add new visit note' });
+  }
+};
