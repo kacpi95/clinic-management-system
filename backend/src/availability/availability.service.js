@@ -40,3 +40,10 @@ export const getAll = async ({
     orderBy: { startTime: 'asc' },
   });
 };
+
+export const getById = async (id) => {
+  return prisma.availability.findUnique({
+    where: { id: Number(id) },
+    include: { doctor: true },
+  });
+};
