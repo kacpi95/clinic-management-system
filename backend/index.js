@@ -10,8 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/patients', patientsRoutes);
-app.use('/api/appointment', appointmentRoutes);
-app.use('/api/visitNotes', visitNotesRoutes);
+app.use('/api/appointments', appointmentRoutes);
+app.use('/api/visit-notes', visitNotesRoutes);
 
 app.get('/api/test', (req, res) => {
   res.json({ status: 'ok' });
