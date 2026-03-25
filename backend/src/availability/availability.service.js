@@ -99,3 +99,48 @@ export const remove = async (id) => {
     where: { id: Number(id) },
   });
 };
+
+export const update = async (id, data) => {
+  const availabilityId = Number(id);
+
+  const existing = await prisma.availability.findUnique({
+    where: { id: availabilityId },
+  });
+
+  if (!existing) {
+    return null;
+  }
+
+  const finalStart = data.startTime
+    ? new Date(data.startTime)
+    : existing.startTime;
+
+  const finalEnd = data.endTime ? new Date(data.endTime) : existing.endTime;
+
+  if (finalStart >= finalEnd) {
+    throw new Error('Invalid time range');
+  }
+
+  const conflict = await prisma.availability.findFirst({
+    where: {
+      doctorId: Number(data.doctorId),
+      id: { not: availabilityId },
+      AND: [{ startTime: { lt: finalEnd } }, { endTime: { gt: finalStart } }],
+    },
+  });
+
+  if (conflict) {
+    throw new Error('Time slot already taken');
+  }
+
+  const { doctorId, ...safeData } = data;
+
+  return prisma.availability.update({
+    where: { id: availabilityId },
+    data: {
+      ...safeData,
+      startTime: finalStart,
+      endTime: finalEnd,
+    },
+  });
+};
