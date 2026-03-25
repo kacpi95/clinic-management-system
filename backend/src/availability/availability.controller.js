@@ -40,3 +40,32 @@ export const getAvailabilityById = async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch availability' });
   }
 };
+
+export const addAvailability = async (req, res) => {
+  try {
+    const { date, startTime, endTime, isAvailable } = req.body;
+    const doctorId = req.user.userId;
+
+    const newAvailability = await availabilityService.add({
+      doctorId,
+      date,
+      startTime,
+      endTime,
+      isAvailable,
+    });
+
+    return res.status(201).json(newAvailability);
+  } catch (error) {
+    console.error(error);
+
+    if (error.message === 'Invalid time range') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    if (error.message === 'Time slot already taken') {
+      return res.status(400).json({ message: error.message });
+    }
+
+    return res.status(500).json({ message: 'Failed to add availability' });
+  }
+};
