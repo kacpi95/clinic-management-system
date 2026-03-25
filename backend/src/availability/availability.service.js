@@ -93,3 +93,9 @@ export const add = async ({
 
   return newAvailability;
 };
+
+export const remove = async (id) => {
+  return prisma.availability.delete({
+    where: { id: Number(id) },
+  });
+};
