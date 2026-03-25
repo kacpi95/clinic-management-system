@@ -69,3 +69,26 @@ export const addAvailability = async (req, res) => {
     return res.status(500).json({ message: 'Failed to add availability' });
   }
 };
+
+export const removeAvailability = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const availability = await availabilityService.getById(id);
+
+    if (!availability) {
+      return res.status(404).json({ message: 'Availability not found' });
+    }
+
+    if (availability.doctorId !== req.user.userId) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const deletedAvailability = await availabilityService.remove(id);
+
+    return res.json(deletedAvailability);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to remove availability' });
+  }
+};
