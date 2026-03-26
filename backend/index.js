@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
+import authRoutes from './src/auth/auth.routes.js';
 import patientsRoutes from './src/patients/patients.routes.js';
 import appointmentRoutes from './src/appointment/appointment.routes.js';
 import visitNotesRoutes from './src/visitNotes/visitNotes.routes.js';
@@ -10,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientsRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/visit-notes', visitNotesRoutes);
