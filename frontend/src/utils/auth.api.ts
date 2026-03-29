@@ -1,44 +1,53 @@
 import { BACKEND_URL } from '../constants/api';
-import type { LoginFormData, RegisterFormData } from '../types/auth.types';
+import type {
+  LoginFormData,
+  RegisterFormData,
+  User,
+  AuthResponse,
+} from '../types/auth.types';
 
 export const getAuthHeader = (): Record<string, string> => {
   const token = localStorage.getItem('token');
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-export const loginRequest = async ({ email, password }: LoginFormData) => {
+export const loginRequest = async (
+  data: LoginFormData,
+): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify(data),
   });
 
-  const data = await response.json();
+  const resData = await response.json();
 
   if (!response.ok) {
-    throw new Error(data?.message || 'Login failed');
+    throw new Error(resData?.message || 'Login failed');
   }
 
-  return data;
+  return resData;
 };
 
-export const registerRequest = async (dataRegister: RegisterFormData) => {
+export const registerRequest = async (
+  data: RegisterFormData,
+): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dataRegister),
+    body: JSON.stringify(data),
   });
 
-  const data = await response.json();
+  const resData = await response.json();
 
   if (!response.ok) {
-    throw new Error(data?.message || 'Register failed');
+    throw new Error(resData?.message || 'Register failed');
   }
 
-  return data;
+  return resData;
 };
 
-export const meRequest = async () => {
+export const meRequest = async (): Promise<User> => {
   const token = localStorage.getItem('token');
 
   if (!token) {
