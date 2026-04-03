@@ -1,6 +1,7 @@
-import { useFormik } from 'formik';
+import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import * as Yup from 'yup';
 
 import { loginRequest } from '../../utils/auth.api';
 import { useAuth } from '../../context/useAuth';
@@ -12,73 +13,62 @@ export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
-  const formik = useFormik<LoginFormData>({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validate: (values) => {
-      const errors: Partial<LoginFormData> = {};
-      if (!values.email) {
-        errors.email = 'Email jest wymagany';
-      } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-        errors.email = 'Podaj poprawny adres email';
-      }
-      if (!values.password) {
-        errors.password = 'Hasło jest wymagane';
-      } else if (values.password.length < 6) {
-        errors.password = 'Hasło musi mieć 6 znaków';
-      }
-      return errors;
-    },
+  const initialValues: LoginFormData = {
+    email: '',
+    password: '',
+  };
 
-    onSubmit: async (values) => {
-      setError('');
+  const onSubmit = async (values: LoginFormData) => {
+    setError('');
 
-      try {
-        const data = await loginRequest(values);
-        login(data);
-        navigate('/');
-      } catch (error: any) {
-        setError(error.message || 'Login failed');
-      }
-    },
+    try {
+      const data = await loginRequest(values);
+      login(data);
+      navigate('/');
+    } catch (error: any) {
+      setError(error.message || 'Login failed');
+    }
+  };
+
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email('Podaj poprawny adres email')
+      .required('Email jest wymagany'),
+    password: Yup.string()
+      .min(6, 'Hasło musi mieć co najmniej 6 znaków')
+      .max(50, 'Hasło jest za długie')
+      .required('Hasło jest wymagane'),
   });
+
   return (
     <div className={styles.wrapper}>
       <h1>Logowanie</h1>
-      <form onSubmit={formik.handleSubmit} className={styles.form}>
-        <div className={styles.field}>
-          <input
-            type='email'
-            placeholder='Email'
-            name='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.email && formik.errors.email && (
-            <p className={styles.error}>{formik.errors.email}</p>
-          )}
-        </div>
-        <div className={styles.field}>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.touched.password && formik.errors.password && (
-            <p className={styles.error}>{formik.errors.password}</p>
-          )}
-        </div>
 
-        {error && <p className={styles.error}>{error}</p>}
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        <Form className={styles.form}>
+          <div className={styles.field}>
+            <Field name='email' type='email' placeholder='Email' />
+            <div className={styles.error}>
+              <ErrorMessage name='email' component='span' />
+            </div>
+          </div>
 
-        <button type='submit'>Zaloguj</button>
-      </form>
+          <div className={styles.field}>
+            <Field name='password' type='password' placeholder='Hasło' />
+            <div className={styles.error}>
+              <ErrorMessage name='password' component='span' />
+            </div>
+          </div>
+
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button type='submit'>Zaloguj</button>
+        </Form>
+      </Formik>
     </div>
   );
 }
