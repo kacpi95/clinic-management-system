@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useAuth } from '../../context/useAuth';
 import type { RegisterFormData } from '../../types/auth.types';
 import { registerRequest } from '../../utils/auth.api';
+import styles from './Register.module.scss';
 
 export default function Register() {
   const { login } = useAuth();
@@ -48,8 +49,7 @@ export default function Register() {
     specialization: Yup.string().required('Specjalizacja jest wymagana'),
 
     phone: Yup.string()
-      .min(9, 'Numer telefonu musi mieć 9 cyfr')
-      .max(9, 'Numer telefonu musi mieć 9 cyfr')
+      .matches(/^\d{9}$/, 'Numer telefonu musi mieć dokładnie 9 cyfr')
       .required('Numer telefonu jest wymagany'),
 
     email: Yup.string()
@@ -70,5 +70,78 @@ export default function Register() {
     ),
   });
 
-  return;
+  return (
+    <div className={styles.wrapper}>
+      <h1>Rejestracja</h1>
+
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}
+      >
+        <Form className={styles.form}>
+          <div className={styles.field}>
+            <Field name='firstName' type='text' placeholder='Imię' />
+            <div className={styles.error}>
+              <ErrorMessage name='firstName' component='span' />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <Field name='lastName' type='text' placeholder='Nazwisko' />
+            <div className={styles.error}>
+              <ErrorMessage name='lastName' component='span' />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <Field
+              name='specialization'
+              type='text'
+              placeholder='Specjalizacja'
+            />
+            <div className={styles.error}>
+              <ErrorMessage name='specialization' component='span' />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <Field name='phone' type='tel' placeholder='Numer telefonu' />
+            <div className={styles.error}>
+              <ErrorMessage name='phone' component='span' />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <Field name='email' type='email' placeholder='Email' />
+            <div className={styles.error}>
+              <ErrorMessage name='email' component='span' />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <Field name='password' type='password' placeholder='Hasło' />
+            <div className={styles.error}>
+              <ErrorMessage name='password' component='span' />
+            </div>
+          </div>
+
+          <div className={styles.field}>
+            <Field
+              name='confirmPassword'
+              type='password'
+              placeholder='Powtórz hasło'
+            />
+            <div className={styles.error}>
+              <ErrorMessage name='confirmPassword' component='span' />
+            </div>
+          </div>
+
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button type='submit'>Zarejestruj się</button>
+        </Form>
+      </Formik>
+    </div>
+  );
 }
