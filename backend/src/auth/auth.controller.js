@@ -46,42 +46,43 @@ export const register = async (req, res) => {
 
     const hashed = await bcrypt.hash(password, 10);
 
-    const result = await prisma.$transaction(async (transaction) => {
-      const user = await transaction.user.create({
-        data: {
-          email,
-          password: hashed,
-          role: 'DOCTOR',
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashed,
+        role: 'DOCTOR',
+        doctor: {
+          create: {
+            firstName,
+            lastName,
+            specialization,
+            phone,
+          },
         },
-      });
-
-      const doctor = await transaction.doctor.create({
-        data: {
-          userId: user.id,
-          firstName,
-          lastName,
-          specialization,
-          phone,
-        },
-      });
-
-      return { user, doctor };
+      },
+      include: {
+        doctor: true,
+      },
     });
 
-    const token = signToken(result.user);
+    const token = signToken(user);
 
     return res.status(201).json({
-      user: {
-        id: result.user.id,
-        email: result.user.email,
-        role: result.user.role,
-      },
-      doctor: result.doctor,
       token,
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.doctor.firstName,
+        lastName: user.doctor.lastName,
+        specialization: user.doctor.specialization,
+        phone: user.doctor.phone,
+      },
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Register failed' });
+    console.error('REGISTER ERROR:', error);
+    return res.status(500).json({
+      message: error.message || 'Register failed',
+    });
   }
 };
 
