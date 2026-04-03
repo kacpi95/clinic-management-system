@@ -13,6 +13,15 @@ export interface RegisterFormData {
   confirmPassword: string;
 }
 
+export interface RegisterRequestData {
+  firstName: string;
+  lastName: string;
+  specialization: string;
+  phone: string;
+  email: string;
+  password: string;
+}
+
 export interface User {
   id: number;
   email: string;

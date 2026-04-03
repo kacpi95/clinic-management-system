@@ -27,7 +27,8 @@ export default function Register() {
     setError('');
 
     try {
-      const data = await registerRequest(values);
+      const { confirmPassword: _confirmPassword, ...registerData } = values;
+      const data = await registerRequest(registerData);
       login(data);
       navigate('/');
     } catch (error: any) {
@@ -79,68 +80,70 @@ export default function Register() {
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        <Form className={styles.form}>
-          <div className={styles.field}>
-            <Field name='firstName' type='text' placeholder='Imię' />
-            <div className={styles.error}>
-              <ErrorMessage name='firstName' component='span' />
+        {() => (
+          <Form className={styles.form}>
+            <div className={styles.field}>
+              <Field name='firstName' type='text' placeholder='Imię' />
+              <div className={styles.error}>
+                <ErrorMessage name='firstName' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <Field name='lastName' type='text' placeholder='Nazwisko' />
-            <div className={styles.error}>
-              <ErrorMessage name='lastName' component='span' />
+            <div className={styles.field}>
+              <Field name='lastName' type='text' placeholder='Nazwisko' />
+              <div className={styles.error}>
+                <ErrorMessage name='lastName' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <Field
-              name='specialization'
-              type='text'
-              placeholder='Specjalizacja'
-            />
-            <div className={styles.error}>
-              <ErrorMessage name='specialization' component='span' />
+            <div className={styles.field}>
+              <Field
+                name='specialization'
+                type='text'
+                placeholder='Specjalizacja'
+              />
+              <div className={styles.error}>
+                <ErrorMessage name='specialization' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <Field name='phone' type='tel' placeholder='Numer telefonu' />
-            <div className={styles.error}>
-              <ErrorMessage name='phone' component='span' />
+            <div className={styles.field}>
+              <Field name='phone' type='tel' placeholder='Numer telefonu' />
+              <div className={styles.error}>
+                <ErrorMessage name='phone' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <Field name='email' type='email' placeholder='Email' />
-            <div className={styles.error}>
-              <ErrorMessage name='email' component='span' />
+            <div className={styles.field}>
+              <Field name='email' type='email' placeholder='Email' />
+              <div className={styles.error}>
+                <ErrorMessage name='email' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <Field name='password' type='password' placeholder='Hasło' />
-            <div className={styles.error}>
-              <ErrorMessage name='password' component='span' />
+            <div className={styles.field}>
+              <Field name='password' type='password' placeholder='Hasło' />
+              <div className={styles.error}>
+                <ErrorMessage name='password' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <Field
-              name='confirmPassword'
-              type='password'
-              placeholder='Powtórz hasło'
-            />
-            <div className={styles.error}>
-              <ErrorMessage name='confirmPassword' component='span' />
+            <div className={styles.field}>
+              <Field
+                name='confirmPassword'
+                type='password'
+                placeholder='Powtórz hasło'
+              />
+              <div className={styles.error}>
+                <ErrorMessage name='confirmPassword' component='span' />
+              </div>
             </div>
-          </div>
 
-          {error && <p className={styles.error}>{error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
 
-          <button type='submit'>Zarejestruj się</button>
-        </Form>
+            <button type='submit'>Zarejestruj się</button>
+          </Form>
+        )}
       </Formik>
     </div>
   );

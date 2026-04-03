@@ -1,9 +1,9 @@
 import { BACKEND_URL } from '../constants/api';
 import type {
   LoginFormData,
-  RegisterFormData,
   User,
   AuthResponse,
+  RegisterRequestData,
 } from '../types/auth.types';
 
 export const getAuthHeader = (): Record<string, string> => {
@@ -30,7 +30,7 @@ export const loginRequest = async (
 };
 
 export const registerRequest = async (
-  data: RegisterFormData,
+  data: RegisterRequestData,
 ): Promise<AuthResponse> => {
   const response = await fetch(`${BACKEND_URL}/auth/register`, {
     method: 'POST',
