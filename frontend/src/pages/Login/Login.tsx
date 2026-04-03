@@ -44,5 +44,41 @@ export default function Login() {
       }
     },
   });
-  return <h1>Logownaie</h1>;
+  return (
+    <div className={styles.wrapper}>
+      <h1>Logowanie</h1>
+      <form onSubmit={formik.handleSubmit} className={styles.form}>
+        <div className={styles.field}>
+          <input
+            type='email'
+            placeholder='Email'
+            name='email'
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <p className={styles.error}>{formik.errors.email}</p>
+          )}
+        </div>
+        <div className={styles.field}>
+          <input
+            type='password'
+            placeholder='Password'
+            name='password'
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <p className={styles.error}>{formik.errors.password}</p>
+          )}
+        </div>
+
+        {error && <p className={styles.error}>{error}</p>}
+
+        <button type='submit'>Zaloguj</button>
+      </form>
+    </div>
+  );
 }
