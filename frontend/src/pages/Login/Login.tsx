@@ -7,6 +7,7 @@ import { loginRequest } from '../../utils/auth.api';
 import { useAuth } from '../../context/useAuth';
 import styles from './Login.module.scss';
 import type { LoginFormData } from '../../types/auth.types';
+import Button from '../../components/Button/Button';
 
 export default function Login() {
   const { login } = useAuth();
@@ -66,7 +67,7 @@ export default function Login() {
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type='submit'>Zaloguj</button>
+          <Button type='submit'>Zaloguj się</Button>
         </Form>
       </Formik>
     </div>

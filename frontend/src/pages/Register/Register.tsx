@@ -7,6 +7,7 @@ import { useAuth } from '../../context/useAuth';
 import type { RegisterFormData } from '../../types/auth.types';
 import { registerRequest } from '../../utils/auth.api';
 import styles from './Register.module.scss';
+import  Button  from '../../components/Button/Button';
 
 export default function Register() {
   const { login } = useAuth();
@@ -141,7 +142,7 @@ export default function Register() {
 
             {error && <p className={styles.error}>{error}</p>}
 
-            <button type='submit'>Zarejestruj się</button>
+            <Button type='submit'>Zarejestruj się</Button>
           </Form>
         )}
       </Formik>
