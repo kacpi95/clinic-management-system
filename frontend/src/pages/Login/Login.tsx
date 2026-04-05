@@ -8,6 +8,7 @@ import { useAuth } from '../../context/useAuth';
 import styles from './Login.module.scss';
 import type { LoginFormData } from '../../types/auth.types';
 import Button from '../../components/Button/Button';
+import { getErrorMessage } from '../../utils/errors';
 
 export default function Login() {
   const { login } = useAuth();
@@ -26,8 +27,8 @@ export default function Login() {
       const data = await loginRequest(values);
       login(data);
       navigate('/');
-    } catch (error: any) {
-      setError(error.message || 'Login failed');
+    } catch (error) {
+      setError(getErrorMessage(error));
     }
   };
 

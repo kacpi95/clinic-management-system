@@ -8,7 +8,7 @@ export default function AuthLayout() {
 
   return (
     <div>
-      <h1>The Clinical Atelier</h1>
+      <h1>Clinica Atelier</h1>
 
       {isHomePage && (
         <div>
@@ -27,7 +27,7 @@ export default function AuthLayout() {
         <div>
           {isLoginPage ? (
             <p>
-              Nie masz konta w Clinical Atelier?{' '}
+              Nie masz konta w Clinica Atelier?
               <Link to='/register'>Zarejestruj się</Link>
             </p>
           ) : isRegisterPage ? (

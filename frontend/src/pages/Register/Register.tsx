@@ -7,7 +7,8 @@ import { useAuth } from '../../context/useAuth';
 import type { RegisterFormData } from '../../types/auth.types';
 import { registerRequest } from '../../utils/auth.api';
 import styles from './Register.module.scss';
-import  Button  from '../../components/Button/Button';
+import Button from '../../components/Button/Button';
+import { getErrorMessage } from '../../utils/errors';
 
 export default function Register() {
   const { login } = useAuth();
@@ -32,8 +33,8 @@ export default function Register() {
       const data = await registerRequest(registerData);
       login(data);
       navigate('/');
-    } catch (error: any) {
-      setError(error.message || 'Register failed');
+    } catch (error) {
+      setError(getErrorMessage(error));
     }
   };
 
