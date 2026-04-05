@@ -1,0 +1,17 @@
+$primary: #0056B3;
+$secondary: #566075;
+$tertiary: #973C00;
+$neutral: #F8F9FA;
+
+$text-headline: 'Manrope', sans-serif;
+$text-body: 'Inter', sans-serif;
+
+
+$maxWidth: 1200px;
+
+@mixin container {
+  width: 100%;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  padding: 0 16px;
+}
