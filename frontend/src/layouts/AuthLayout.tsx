@@ -1,42 +1,34 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import styles from './AuthLayout.module.scss';
+import img1 from '../assets/img1.jpg';
 
 export default function AuthLayout() {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
-  const isRegisterPage = location.pathname === '/register';
   const isHomePage = location.pathname === '/';
 
   return (
-    <div>
-      <h1>Clinica Atelier</h1>
+    <div className={styles.wrapper} style={{ backgroundImage: `url(${img1})` }}>
+      <div className={styles.overlay} />
 
-      {isHomePage && (
-        <div>
-          <p>
-            <Link to='/login'>Zaloguj się</Link>
-          </p>
-          <p>
-            <Link to='/register'>Zarejestruj się</Link>
-          </p>
-        </div>
-      )}
+      <div className={styles.content}>
+        {isHomePage ? (
+          <div className={styles.homeCard}>
+            <h1 className={styles.title}>Clinica Atelier</h1>
 
-      <Outlet />
+            <div className={styles.links}>
+              <Link to='/login' className={styles.buttonPrimary}>
+                Zaloguj się
+              </Link>
 
-      {!isHomePage && (
-        <div>
-          {isLoginPage ? (
-            <p>
-              Nie masz konta w Clinica Atelier?
-              <Link to='/register'>Zarejestruj się</Link>
-            </p>
-          ) : isRegisterPage ? (
-            <p>
-              Masz już konto? <Link to='/login'>Zaloguj się</Link>
-            </p>
-          ) : null}
-        </div>
-      )}
+              <Link to='/register' className={styles.buttonSecondary}>
+                Zarejestruj się
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <Outlet />
+        )}
+      </div>
     </div>
   );
 }
