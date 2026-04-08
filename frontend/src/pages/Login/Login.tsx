@@ -2,6 +2,7 @@ import { Formik, Form, ErrorMessage, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 
 import { loginRequest } from '../../utils/auth.api';
 import { useAuth } from '../../context/useAuth';
@@ -41,10 +42,12 @@ export default function Login() {
       .max(50, 'Hasło jest za długie')
       .required('Hasło jest wymagane'),
   });
-
   return (
-    <div className={styles.wrapper}>
-      <h1>Logowanie</h1>
+    <div className={styles.card}>
+      <div className={styles.logo}>+</div>
+
+      <h1 className={styles.title}>Clinica Atelier</h1>
+      <p className={styles.subtitle}>Bezpieczny dostęp do usług medycznych</p>
 
       <Formik
         initialValues={initialValues}
@@ -53,24 +56,49 @@ export default function Login() {
       >
         <Form className={styles.form}>
           <div className={styles.field}>
-            <Field name='email' type='email' placeholder='Email' />
+            <label htmlFor='email' className={styles.label}>
+              Email
+            </label>
+            <Field
+              id='email'
+              name='email'
+              type='email'
+              placeholder='name@clinic.com'
+              className={styles.input}
+            />
             <div className={styles.error}>
               <ErrorMessage name='email' component='span' />
             </div>
           </div>
 
           <div className={styles.field}>
-            <Field name='password' type='password' placeholder='Hasło' />
+            <label htmlFor='password' className={styles.label}>
+              Hasło
+            </label>
+            <Field
+              id='password'
+              name='password'
+              type='password'
+              placeholder='••••••••'
+              className={styles.input}
+            />
             <div className={styles.error}>
               <ErrorMessage name='password' component='span' />
             </div>
           </div>
 
-          {error && <p className={styles.error}>{error}</p>}
+          {error && <p className={styles.submitError}>{error}</p>}
 
-          <Button type='submit'>Zaloguj się</Button>
+          <Button type='submit' className={styles.button}>
+            Zaloguj się
+          </Button>
         </Form>
       </Formik>
+
+      <div className={styles.switchAuth}>
+        <span>Nowy użytkownik? </span>
+        <Link to='/register'>Załóż konto</Link>
+      </div>
     </div>
   );
 }
