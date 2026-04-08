@@ -32,7 +32,7 @@ export default function Register() {
       const { confirmPassword: _confirmPassword, ...registerData } = values;
       const data = await registerRequest(registerData);
       login(data);
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       setError(getErrorMessage(error));
     }
