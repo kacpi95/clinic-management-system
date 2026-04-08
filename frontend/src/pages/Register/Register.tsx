@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -75,78 +75,181 @@ export default function Register() {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Rejestracja</h1>
+      <div className={styles.overlay}></div>
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
-        {() => (
-          <Form className={styles.form}>
-            <div className={styles.field}>
-              <Field name='firstName' type='text' placeholder='Imię' />
-              <div className={styles.error}>
-                <ErrorMessage name='firstName' component='span' />
+      <div className={styles.content}>
+        <section className={styles.register}>
+          <div className={styles.infoPanel}>
+            <p className={styles.eyebrow}>DOSTĘP DLA SPECJALISTÓW</p>
+
+            <h1 className={styles.heading}>
+              Podnieś standard zarządzania placówką medyczną.
+            </h1>
+
+            <p className={styles.description}>
+              Dołącz do nowoczesnego systemu stworzonego dla specjalistów.
+              Zarządzaj pacjentami, wizytami i dokumentacją w jednym miejscu.
+            </p>
+
+            <div className={styles.featureGrid}>
+              <div className={styles.featureCard}>
+                <h3>Bezpieczny dostęp</h3>
+                <p>Szyfrowanie danych i bezpieczne logowanie dla personelu.</p>
+              </div>
+
+              <div className={styles.featureCard}>
+                <h3>Gotowe do pracy</h3>
+                <p>Intuicyjny panel do zarządzania wizytami i pacjentami.</p>
               </div>
             </div>
+          </div>
 
-            <div className={styles.field}>
-              <Field name='lastName' type='text' placeholder='Nazwisko' />
-              <div className={styles.error}>
-                <ErrorMessage name='lastName' component='span' />
-              </div>
+          <div className={styles.card}>
+            <div className={styles.cardHeader}>
+              <div className={styles.logo}>+</div>
+              <h2 className={styles.title}>Utwórz konto</h2>
+              <p className={styles.subtitle}>
+                Wprowadź dane, aby rozpocząć korzystanie z systemu.
+              </p>
             </div>
 
-            <div className={styles.field}>
-              <Field
-                name='specialization'
-                type='text'
-                placeholder='Specjalizacja'
-              />
-              <div className={styles.error}>
-                <ErrorMessage name='specialization' component='span' />
-              </div>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+            >
+              <Form className={styles.form}>
+                <div className={styles.row}>
+                  <div className={styles.field}>
+                    <label htmlFor='firstName' className={styles.label}>
+                      Imię
+                    </label>
+                    <Field
+                      id='firstName'
+                      name='firstName'
+                      type='text'
+                      placeholder='Np. Anna'
+                      className={styles.input}
+                    />
+                    <div className={styles.error}>
+                      <ErrorMessage name='firstName' component='span' />
+                    </div>
+                  </div>
+
+                  <div className={styles.field}>
+                    <label htmlFor='lastName' className={styles.label}>
+                      Nazwisko
+                    </label>
+                    <Field
+                      id='lastName'
+                      name='lastName'
+                      type='text'
+                      placeholder='Np. Kowalska'
+                      className={styles.input}
+                    />
+                    <div className={styles.error}>
+                      <ErrorMessage name='lastName' component='span' />
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.field}>
+                  <label htmlFor='specialization' className={styles.label}>
+                    Specjalizacja
+                  </label>
+                  <Field
+                    id='specialization'
+                    name='specialization'
+                    type='text'
+                    placeholder='Np. Kardiologia'
+                    className={styles.input}
+                  />
+                  <div className={styles.error}>
+                    <ErrorMessage name='specialization' component='span' />
+                  </div>
+                </div>
+
+                <div className={styles.field}>
+                  <label htmlFor='phone' className={styles.label}>
+                    Numer telefonu
+                  </label>
+                  <Field
+                    id='phone'
+                    name='phone'
+                    type='tel'
+                    placeholder='123456789'
+                    className={styles.input}
+                  />
+                  <div className={styles.error}>
+                    <ErrorMessage name='phone' component='span' />
+                  </div>
+                </div>
+
+                <div className={styles.field}>
+                  <label htmlFor='email' className={styles.label}>
+                    Adres e-mail
+                  </label>
+                  <Field
+                    id='email'
+                    name='email'
+                    type='email'
+                    placeholder='twoj@email.pl'
+                    className={styles.input}
+                  />
+                  <div className={styles.error}>
+                    <ErrorMessage name='email' component='span' />
+                  </div>
+                </div>
+
+                <div className={styles.row}>
+                  <div className={styles.field}>
+                    <label htmlFor='password' className={styles.label}>
+                      Hasło
+                    </label>
+                    <Field
+                      id='password'
+                      name='password'
+                      type='password'
+                      placeholder='Minimum 6 znaków'
+                      className={styles.input}
+                    />
+                    <div className={styles.error}>
+                      <ErrorMessage name='password' component='span' />
+                    </div>
+                  </div>
+
+                  <div className={styles.field}>
+                    <label htmlFor='confirmPassword' className={styles.label}>
+                      Powtórz hasło
+                    </label>
+                    <Field
+                      id='confirmPassword'
+                      name='confirmPassword'
+                      type='password'
+                      placeholder='Wpisz hasło ponownie'
+                      className={styles.input}
+                    />
+                    <div className={styles.error}>
+                      <ErrorMessage name='confirmPassword' component='span' />
+                    </div>
+                  </div>
+                </div>
+
+                {error && <p className={styles.submitError}>{error}</p>}
+
+                <Button type='submit' className={styles.button}>
+                  Utwórz konto
+                </Button>
+              </Form>
+            </Formik>
+
+            <div className={styles.switchAuth}>
+              <span>Masz już konto? </span>
+              <Link to='/login'>Zaloguj się</Link>
             </div>
-
-            <div className={styles.field}>
-              <Field name='phone' type='tel' placeholder='Numer telefonu' />
-              <div className={styles.error}>
-                <ErrorMessage name='phone' component='span' />
-              </div>
-            </div>
-
-            <div className={styles.field}>
-              <Field name='email' type='email' placeholder='Email' />
-              <div className={styles.error}>
-                <ErrorMessage name='email' component='span' />
-              </div>
-            </div>
-
-            <div className={styles.field}>
-              <Field name='password' type='password' placeholder='Hasło' />
-              <div className={styles.error}>
-                <ErrorMessage name='password' component='span' />
-              </div>
-            </div>
-
-            <div className={styles.field}>
-              <Field
-                name='confirmPassword'
-                type='password'
-                placeholder='Powtórz hasło'
-              />
-              <div className={styles.error}>
-                <ErrorMessage name='confirmPassword' component='span' />
-              </div>
-            </div>
-
-            {error && <p className={styles.error}>{error}</p>}
-
-            <Button type='submit'>Zarejestruj się</Button>
-          </Form>
-        )}
-      </Formik>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
