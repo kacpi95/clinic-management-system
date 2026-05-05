@@ -1,0 +1,25 @@
+@use '../../styles/variables' as *;
+
+.layout {
+  min-height: 100vh;
+  background: $neutral;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+.content {
+  padding: 16px;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+  }
+
+  .content {
+    padding: 32px;
+  }
+}
