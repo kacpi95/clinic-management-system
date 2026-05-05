@@ -80,7 +80,7 @@
   margin: 0 auto;
   padding: 24px 18px;
   border-radius: $radius-md;
-  background: $neutral;
+  background: $surface-bg-alt;
   backdrop-filter: blur(8px);
 }
 
@@ -95,11 +95,6 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto 18px;
-  border-radius: 50%;
-  font-size: 28px;
-  font-weight: 700;
-  color: $primary;
-  background: $logo-bg;
 }
 
 .title {

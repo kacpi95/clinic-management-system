@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
+import logo from '../../assets/logo.png';
 import { useAuth } from '../../context/useAuth';
 import type { RegisterFormData } from '../../types/auth.types';
 import { registerRequest } from '../../utils/auth.api';
@@ -106,7 +107,9 @@ export default function Register() {
 
           <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <div className={styles.logo}>+</div>
+              <div className={styles.logo}>
+                <img src={logo} alt='Logo' />
+              </div>
               <h2 className={styles.title}>Utwórz konto</h2>
               <p className={styles.subtitle}>
                 Wprowadź dane, aby rozpocząć korzystanie z systemu.

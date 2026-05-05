@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
+import logo from '../../assets/logo.png';
 import styles from './Sidebar.module.scss';
 
 const navItems = [
@@ -14,7 +15,9 @@ export default function Sidebar() {
   return (
     <aside className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.logo}>+</div>
+        <div className={styles.logo}>
+          <img src={logo} alt='Logo' />
+        </div>
 
         <div>
           <h1 className={styles.name}>The Clinical Atelier</h1>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
+import logo from '../../assets/logo.png';
 import { loginRequest } from '../../utils/auth.api';
 import { useAuth } from '../../context/useAuth';
 import styles from './Login.module.scss';
@@ -44,7 +45,9 @@ export default function Login() {
   });
   return (
     <div className={styles.card}>
-      <div className={styles.logo}>+</div>
+      <div className={styles.logo}>
+        <img src={logo} alt='Logo' />
+      </div>
 
       <h1 className={styles.title}>Clinica Atelier</h1>
       <p className={styles.subtitle}>Bezpieczny dostęp do usług medycznych</p>
