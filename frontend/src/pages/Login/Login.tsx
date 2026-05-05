@@ -27,7 +27,7 @@ export default function Login() {
     try {
       const data = await loginRequest(values);
       login(data);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       setError(getErrorMessage(error));
     }
