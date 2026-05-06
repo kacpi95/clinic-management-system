@@ -24,6 +24,7 @@ export default function AuthProvider({ children }: Props) {
   });
 
   const login = ({ token, user }: AuthResponse) => {
+    console.log(user);
     setToken(token);
     setUser(user);
     localStorage.setItem('token', token);

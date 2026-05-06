@@ -22,13 +22,20 @@ export interface RegisterRequestData {
   password: string;
 }
 
-export interface User {
+export interface Doctor {
   id: number;
-  email: string;
   firstName: string;
   lastName: string;
   specialization: string;
   phone: string;
+  userId?: number;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  role: 'DOCTOR' | 'ADMIN';
+  doctor: Doctor | null;
 }
 
 export interface AuthResponse {

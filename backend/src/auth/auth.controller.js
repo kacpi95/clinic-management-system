@@ -94,7 +94,10 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: 'Email and password required' });
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({
+      where: { email },
+      include: { doctor: true },
+    });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -113,6 +116,7 @@ export const login = async (req, res) => {
         id: user.id,
         email: user.email,
         role: user.role,
+        doctor: user.doctor,
       },
       token,
     });
