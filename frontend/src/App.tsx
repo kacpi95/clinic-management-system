@@ -7,6 +7,7 @@ import Register from './pages/Register/Register';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
-          <Route path='/dashboard' element={<DashboardLayout />}></Route>
+          <Route path='/dashboard' element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+          </Route>
         </Route>
 
         <Route path='*' element={<Navigate to='/' replace />} />
