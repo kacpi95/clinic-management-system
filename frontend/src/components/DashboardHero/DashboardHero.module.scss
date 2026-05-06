@@ -1,0 +1,65 @@
+@use '../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 2rem;
+  line-height: 1;
+  color: $text-default;
+
+  span {
+    color: $primary;
+  }
+}
+
+.dateSection {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $primary;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: $secondary;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .dateSection {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .date {
+    font-size: 1.8rem;
+  }
+}
