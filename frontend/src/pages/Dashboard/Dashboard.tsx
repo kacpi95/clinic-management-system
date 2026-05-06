@@ -1,10 +1,11 @@
+import DashboardHero from '../../components/DashboardHero/DashboardHero';
 import styles from './Dashboard.module.scss';
 
 export default function Dashboard() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.mainContent}>
-        {/* DashboardHero */}
+        <DashboardHero />
         {/* StatsGrid */}
         {/* TodaysAppointments */}
       </div>
