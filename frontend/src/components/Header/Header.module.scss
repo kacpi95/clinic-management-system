@@ -1,0 +1,100 @@
+@use '../../styles/variables' as *;
+
+.wrapper {
+  width: 100%;
+  min-height: 76px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: $surface-bg-alt;
+  border-bottom: 1px solid rgba(86, 96, 117, 0.12);
+}
+
+.leftSection {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: $text-default;
+}
+
+.description {
+  display: none;
+  margin: 4px 0 0;
+  font-family: $text-body;
+  font-size: 1rem;
+  color: $secondary;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: none;
+  text-align: right;
+}
+
+.name {
+  display: block;
+  font-family: $text-headline;
+  font-size: 1rem;
+  color: $text-default;
+}
+
+.specialization {
+  display: block;
+  margin-top: 2px;
+  font-family: $text-body;
+  font-size: 0.8rem;
+  color: $secondary;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 800;
+  color: $primary;
+  text-transform: uppercase;
+  background: $logo-bg;
+  font-family: $text-headline;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 18px 28px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .description {
+    display: block;
+  }
+
+  .userInfo {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    min-height: 90px;
+    padding: 20px 32px;
+  }
+}
