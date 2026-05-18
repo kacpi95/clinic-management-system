@@ -1,0 +1,78 @@
+@use '../../../../styles/variables' as *;
+
+.mainCard {
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.mainCard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  p {
+    margin: 0;
+    font-family: $text-body;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $secondary;
+  }
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  border-radius: $radius-sm;
+  background: $logo-bg;
+}
+
+.cardContent {
+  h2 {
+    margin: 0;
+    font-size: 3rem;
+    line-height: 1;
+    font-family: $text-headline;
+    color: $primary;
+  }
+
+  p {
+    margin: 8px 0 0;
+    font-family: $text-body;
+    font-size: 1rem;
+    color: $secondary;
+  }
+}
+
+.cardFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  span {
+    padding: 8px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: $text-body;
+    color: $secondary;
+    background: $surface-bg;
+  }
+}
+
+@media (min-width: 768px) {
+  .mainCard {
+    min-height: 260px;
+  }
+}
