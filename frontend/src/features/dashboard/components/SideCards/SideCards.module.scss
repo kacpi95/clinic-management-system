@@ -1,0 +1,45 @@
+@use '../../../../styles/variables' as *;
+
+.smallCard,
+.alertCard {
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.sideCards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.smallCard,
+.alertCard {
+  padding: 18px;
+}
+
+.smallCardContent {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  h3 {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: $text-default;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 1rem;
+    font-family: $text-body;
+    color: $secondary;
+  }
+}
+
+.alertCard {
+  h3 {
+    color: $error;
+  }
+}
