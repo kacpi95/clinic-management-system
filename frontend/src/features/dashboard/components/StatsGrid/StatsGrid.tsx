@@ -1,3 +1,10 @@
+import styles from './StatsGrid.module.scss';
+import MainCard from '../MainCard/MainCard';
+
 export default function StatsGrid() {
-  return <h1>Stats Grid</h1>;
+  return (
+    <section className={styles.wrapper}>
+      <MainCard />
+    </section>
+  );
 }
