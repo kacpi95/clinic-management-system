@@ -33,3 +33,10 @@ export const appointments = [
     status: 'Oczekuje',
   },
 ];
+
+
+export const flowItems = [
+  { label: 'Ukończone wizyty', value: '24' },
+  { label: 'Nowi pacjenci', value: '6' },
+  { label: 'Śr. czas konsultacji', value: '22 min' },
+];
