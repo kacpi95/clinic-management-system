@@ -1,4 +1,4 @@
-import { useAuth } from '../../context/useAuth';
+import { useAuth } from '../../../../context/useAuth';
 import styles from './DashboardHero.module.scss';
 
 export default function DashboardHero() {
@@ -20,8 +20,6 @@ export default function DashboardHero() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.content}>
-        
-
         <h1 className={styles.title}>
           Dzień dobry, <span>{doctor?.firstName || 'Doktorze'}.</span>
         </h1>
