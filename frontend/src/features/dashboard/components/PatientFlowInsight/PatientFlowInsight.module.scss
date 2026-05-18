@@ -1,0 +1,78 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  padding: 22px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.header {
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 6px 0 0;
+    font-family: $text-headline;
+    font-size: 1.2rem;
+    color: $text-default;
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: $secondary;
+}
+
+.trendBox {
+  padding: 18px;
+  border-radius: $radius-sm;
+  background: rgba(0, 86, 179, 0.08);
+
+  strong {
+    display: block;
+    font-family: $text-headline;
+    font-size: 2rem;
+    color: $primary;
+  }
+
+  span {
+    display: block;
+    margin-top: 6px;
+    font-size: 1rem;
+    color: $secondary;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(86, 96, 117, 0.12);
+  }
+
+  li:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  span {
+    color: $secondary;
+    font-size: 0.9rem;
+  }
+
+  strong {
+    font-family: $text-headline;
+    color: $text-default;
+  }
+}
