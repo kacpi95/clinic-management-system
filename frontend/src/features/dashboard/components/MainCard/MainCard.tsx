@@ -1,7 +1,7 @@
 import { FaRegCalendar } from 'react-icons/fa';
 
 import styles from './MainCard.module.scss';
-import { stats } from '../data/stats.mock';
+import { stats } from '../../data/stats.mock';
 
 export default function MainCard() {
   const date = new Date();

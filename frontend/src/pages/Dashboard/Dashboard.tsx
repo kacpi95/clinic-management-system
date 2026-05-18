@@ -1,5 +1,6 @@
 import DashboardHero from '../../features/dashboard/components/DashboardHero/DashboardHero';
 import StatsGrid from '../../features/dashboard/components/StatsGrid/StatsGrid';
+import TodaysAppointments from '../../features/dashboard/components/TodaysAppointments/TodaysAppointments';
 import styles from './Dashboard.module.scss';
 
 export default function Dashboard() {
@@ -8,7 +9,7 @@ export default function Dashboard() {
       <div className={styles.mainContent}>
         <DashboardHero />
         <StatsGrid />
-        {/* TodaysAppointments */}
+        <TodaysAppointments />
       </div>
       <div className={styles.rightSidebar}>
         {/* PatientFlowInsight  */}

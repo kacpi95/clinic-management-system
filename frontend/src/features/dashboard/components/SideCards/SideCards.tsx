@@ -2,7 +2,7 @@ import { IoPersonAdd } from 'react-icons/io5';
 import { IoIosWarning } from 'react-icons/io';
 
 import styles from './SideCards.module.scss';
-import { stats } from '../data/stats.mock';
+import { stats } from '../../data/stats.mock';
 
 export default function SideCards() {
   return (
