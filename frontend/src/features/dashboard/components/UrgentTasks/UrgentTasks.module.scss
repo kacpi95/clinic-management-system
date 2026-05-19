@@ -1,0 +1,100 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  padding: 22px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+
+  h2 {
+    margin: 6px 0 0;
+    font-family: $text-headline;
+    font-size: 1.2rem;
+    color: $text-default;
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: $secondary;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.1);
+  color: $error;
+  font-family: $text-headline;
+  font-weight: 800;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: $tertiary;
+  flex-shrink: 0;
+}
+
+.content {
+  min-width: 0;
+
+  p {
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: $secondary;
+  }
+}
+
+.itemHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  h3 {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1rem;
+    color: $text-default;
+  }
+
+  span {
+    width: fit-content;
+    padding: 5px 9px;
+    border-radius: 50px;
+    background: $surface-bg;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: $tertiary;
+  }
+}
