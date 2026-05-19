@@ -6,7 +6,7 @@ import styles from './Sidebar.module.scss';
 const navItems = [
   { path: '/dashboard', label: 'Dashboard' },
   { path: '/calendar', label: 'Kalendarz' },
-  { path: '/patients', label: 'Pacjenci' },
+  { path: '/dashboard/patients', label: 'Pacjenci' },
   { path: '/analytics', label: 'Analityka' },
   { path: '/settings', label: 'Ustawienia' },
 ];

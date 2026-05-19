@@ -8,6 +8,7 @@ import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Patients from './pages/Patients/Patients';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/dashboard' element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path='patients' element={<Patients />} />
           </Route>
         </Route>
 
