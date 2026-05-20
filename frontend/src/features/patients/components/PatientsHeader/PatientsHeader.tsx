@@ -2,6 +2,8 @@ import { IoFilter } from 'react-icons/io5';
 import { PiExport } from 'react-icons/pi';
 
 import styles from './PatientsHeader.module.scss';
+import { downloadPatientsJson } from '../../utils/exportPatients';
+import { patients } from '../../data/patients.mock';
 
 export default function PatientsHeader() {
   return (
@@ -18,7 +20,10 @@ export default function PatientsHeader() {
           <span>Filtruj</span>
         </button>
 
-        <button className={styles.button}>
+        <button
+          className={styles.button}
+          onClick={() => downloadPatientsJson(patients)}
+        >
           <PiExport className={styles.icon} />
           <span>Eksport</span>
         </button>
