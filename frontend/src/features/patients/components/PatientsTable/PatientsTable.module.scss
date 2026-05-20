@@ -1,0 +1,122 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.header,
+.row {
+  min-width: 960px;
+  display: grid;
+  grid-template-columns: 1.6fr 1.2fr 1.1fr 0.6fr 1fr 1.2fr 0.5fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.header {
+  padding: 18px 22px;
+  font-family: $text-body;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(86, 96, 117, 0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $secondary;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(86, 96, 117, 0.1);
+  transition: $transition-fast;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: rgba(0, 86, 179, 0.035);
+  }
+}
+
+.patient {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+
+  strong {
+    font-family: $text-headline;
+    font-size: 1rem;
+    color: $text-default;
+  }
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: $primary;
+  font-family: $text-headline;
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: $logo-bg;
+}
+
+.cell {
+  font-family: $text-body;
+  font-size: 0.9rem;
+  color: $secondary;
+}
+
+.statusBadge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 50px;
+  font-family: $text-body;
+  white-space: nowrap;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: $primary;
+  background: rgba(0, 86, 179, 0.08);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: $surface-bg;
+  color: $secondary;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    background: $logo-bg;
+    color: $primary;
+  }
+}
