@@ -1,3 +1,4 @@
+import EmergencyProtocolCard from '../../features/patients/components/EmergencyProtocolCard/EmergencyProtocolCard';
 import PatientCapacityCard from '../../features/patients/components/PatientCapacityCard/PatientCapacityCard';
 import PatientsHeader from '../../features/patients/components/PatientsHeader/PatientsHeader';
 import PatientsTable from '../../features/patients/components/PatientsTable/PatientsTable';
@@ -10,7 +11,7 @@ export default function Patients() {
       <PatientsTable />
       <div className={styles.bottomGrid}>
         <PatientCapacityCard />
-        {/* EmergencyProtocolCard */}
+        <EmergencyProtocolCard />
       </div>
     </div>
   );
