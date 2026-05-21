@@ -3,8 +3,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 24px;
+  gap: 18px;
+  padding: 20px;
   border-radius: $radius-md;
   background: $surface-bg-alt;
 }
@@ -26,7 +26,7 @@
 .title {
   margin: 0;
   font-family: $text-headline;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: $text-default;
 }
 
@@ -37,13 +37,13 @@
 
   strong {
     font-family: $text-headline;
-    font-size: 3rem;
+    font-size: 2.5rem;
     line-height: 1;
     color: $primary;
   }
 
   span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: $secondary;
   }
 }
@@ -75,11 +75,12 @@
   gap: 16px;
 
   span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: $secondary;
   }
 
   strong {
+    font-size: 0.9rem;
     font-family: $text-headline;
     color: $text-default;
   }

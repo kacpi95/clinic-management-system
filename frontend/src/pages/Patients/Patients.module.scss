@@ -3,3 +3,16 @@
   flex-direction: column;
   gap: 32px;
 }
+
+.bottomGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 1024px) {
+  .bottomGrid {
+    grid-template-columns: 1.8fr 0.7fr;
+    align-items: stretch;
+  }
+}
