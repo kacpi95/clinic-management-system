@@ -1,4 +1,5 @@
 import CalendarFilters from '../../features/calendar/components/CalendarFilters/CalendarFilters';
+import CalendarGrid from '../../features/calendar/components/CalendarGrid/CalendarGrid';
 import CalendarHeader from '../../features/calendar/components/CalendarHeader/CalendarHeader';
 import styles from './Calendar.module.scss';
 
@@ -13,7 +14,9 @@ export default function Calendar() {
           <CalendarFilters />
           {/* OnCallCard */}
         </div>
-        <div className={styles.mainContent}>{/* CalendarGrid */}</div>
+        <div className={styles.mainContent}>
+          <CalendarGrid />
+        </div>
       </div>
     </div>
   );
