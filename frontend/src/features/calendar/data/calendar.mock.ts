@@ -18,3 +18,22 @@ export const filters = [
     variant: 'routine',
   },
 ];
+
+export const events = [
+  {
+    title: 'Konsultacja',
+    start: '2026-05-02',
+  },
+  {
+    title: 'Kontrola',
+    start: '2026-05-07',
+  },
+  {
+    title: 'Pilny przypadek',
+    start: '2026-05-14',
+  },
+  {
+    title: 'Badanie rutynowe',
+    start: '2026-05-19',
+  },
+];
