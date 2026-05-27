@@ -1,0 +1,71 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  padding: 20px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+:global(.fc) {
+  font-family: $text-body;
+}
+
+:global(.fc-theme-standard td),
+:global(.fc-theme-standard th),
+:global(.fc-theme-standard .fc-scrollgrid) {
+  border-color: rgba(86, 96, 117, 0.12);
+}
+
+:global(.fc-col-header-cell) {
+  padding: 14px 0;
+  background: rgba(86, 96, 117, 0.04);
+
+  a {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $secondary;
+    text-decoration: none;
+  }
+}
+
+:global(.fc-daygrid-day) {
+  transition: $transition-fast;
+
+  &:hover {
+    background: rgba(0, 86, 179, 0.03);
+  }
+}
+
+:global(.fc-daygrid-day-number) {
+  padding: 12px;
+  font-family: $text-headline;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: $text-default;
+  text-decoration: none;
+}
+
+:global(.fc-event) {
+  border: none;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: $primary;
+  background: rgba(0, 86, 179, 0.12);
+}
+
+:global(.fc-event-title) {
+  font-weight: 700;
+  color: black
+}
+
+:global(.fc-day-today) {
+  background: rgba(0, 86, 179, 0.05) !important;
+}
+
+:global(.fc-toolbar) {
+  display: none;
+}
