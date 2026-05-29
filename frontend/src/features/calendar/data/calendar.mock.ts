@@ -37,3 +37,24 @@ export const events = [
     start: '2026-05-19',
   },
 ];
+
+export const appointments = [
+  {
+    id: 1,
+    time: '09:00',
+    patient: 'Jan Kowalski',
+    type: 'Kontrola',
+  },
+  {
+    id: 2,
+    time: '10:30',
+    patient: 'Anna Nowak',
+    type: 'Konsultacja',
+  },
+  {
+    id: 3,
+    time: '12:00',
+    patient: 'Piotr Wiśniewski',
+    type: 'Badanie',
+  },
+];
