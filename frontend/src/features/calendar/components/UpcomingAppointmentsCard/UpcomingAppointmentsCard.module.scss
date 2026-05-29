@@ -1,0 +1,60 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 1.1rem;
+  color: $text-default;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.time {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: $radius-sm;
+  font-family: $text-headline;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: $primary;
+  background: rgba(0, 86, 179, 0.08);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  strong {
+    font-size: 0.9rem;
+    color: $text-default;
+  }
+
+  span {
+    font-size: 0.8rem;
+    color: $secondary;
+  }
+}
