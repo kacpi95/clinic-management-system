@@ -7,7 +7,7 @@ const navItems = [
   { path: '/dashboard', label: 'Dashboard' },
   { path: '/dashboard/calendar', label: 'Kalendarz' },
   { path: '/dashboard/patients', label: 'Pacjenci' },
-  { path: '/analytics', label: 'Analityka' },
+  { path: '/dashboard/analytics', label: 'Analityka' },
   { path: '/settings', label: 'Ustawienia' },
 ];
 

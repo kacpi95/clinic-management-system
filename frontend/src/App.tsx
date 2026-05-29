@@ -10,6 +10,7 @@ import PublicRoute from './routes/PublicRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Patients from './pages/Patients/Patients';
 import Calendar from './pages/Calendar/Calendar';
+import Analytics from './pages/Analytics/Analytics';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path='patients' element={<Patients />} />
             <Route path='calendar' element={<Calendar />} />
+            <Route path='analytics' element={<Analytics />} />
           </Route>
         </Route>
 
