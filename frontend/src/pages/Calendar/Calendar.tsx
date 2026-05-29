@@ -1,6 +1,7 @@
 import CalendarFilters from '../../features/calendar/components/CalendarFilters/CalendarFilters';
 import CalendarGrid from '../../features/calendar/components/CalendarGrid/CalendarGrid';
 import CalendarHeader from '../../features/calendar/components/CalendarHeader/CalendarHeader';
+import UpcomingAppointmentsCard from '../../features/calendar/components/UpcomingAppointmentsCard/UpcomingAppointmentsCard';
 import styles from './Calendar.module.scss';
 
 export default function Calendar() {
@@ -12,7 +13,7 @@ export default function Calendar() {
       <div className={styles.content}>
         <div className={styles.leftSidebar}>
           <CalendarFilters />
-          {/* OnCallCard */}
+          <UpcomingAppointmentsCard />
         </div>
         <div className={styles.mainContent}>
           <CalendarGrid />
