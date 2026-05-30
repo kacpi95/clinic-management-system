@@ -1,0 +1,56 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: $secondary;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 2.4rem;
+  color: $text-default;
+}
+
+.description {
+  margin: 8px 0 0;
+  color: $secondary;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+
+  button {
+    min-height: 42px;
+    padding: 0 16px;
+    border: none;
+    border-radius: $radius-sm;
+    background: $surface-bg-alt;
+    color: $secondary;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+.active {
+  background: $primary !important;
+  color: $button-text !important;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
