@@ -1,0 +1,49 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  padding: 22px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 14px 36px rgba(17, 24, 39, 0.06);
+
+  p {
+    margin: 0 0 10px;
+    color: $secondary;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  strong {
+    font-family: $text-headline;
+    font-size: 2rem;
+    color: $text-default;
+  }
+}
+
+.trend {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: $primary;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
