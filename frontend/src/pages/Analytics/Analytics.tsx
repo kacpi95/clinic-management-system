@@ -1,5 +1,6 @@
 import AnalyticsHeader from '../../features/analytics/components/AnalyticsHeader/AnalyticsHeader';
 import AnalyticsStats from '../../features/analytics/components/AnalyticsStats/AnalyticsStats';
+import VisitsChart from '../../features/analytics/components/VisitsChart/VisitsChart';
 import styles from './Analytics.module.scss';
 
 export default function Analytics() {
@@ -8,7 +9,7 @@ export default function Analytics() {
       <AnalyticsHeader />
       <AnalyticsStats />
       <div className={styles.grid}>
-        {/* VisitsChart  */}
+        <VisitsChart />
         {/* AppointmentStatusCard */}
       </div>
       {/* VisitTypesTable  */}

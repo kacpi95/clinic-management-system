@@ -24,3 +24,13 @@ export const analyticsStats = [
     trend: '-4%',
   },
 ];
+
+export const visitsChartData = [
+  { day: 'Pon', visits: 18 },
+  { day: 'Wt', visits: 24 },
+  { day: 'Śr', visits: 20 },
+  { day: 'Czw', visits: 28 },
+  { day: 'Pt', visits: 22 },
+  { day: 'Sob', visits: 12 },
+  { day: 'Nd', visits: 6 },
+];
