@@ -1,11 +1,12 @@
 import AnalyticsHeader from '../../features/analytics/components/AnalyticsHeader/AnalyticsHeader';
+import AnalyticsStats from '../../features/analytics/components/AnalyticsStats/AnalyticsStats';
 import styles from './Analytics.module.scss';
 
 export default function Analytics() {
   return (
     <div className={styles.wrapper}>
       <AnalyticsHeader />
-      {/* AnalyticsStats  */}
+      <AnalyticsStats />
       <div className={styles.grid}>
         {/* VisitsChart  */}
         {/* AppointmentStatusCard */}
