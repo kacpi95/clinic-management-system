@@ -70,3 +70,27 @@ export const appointmentStatuses = [
     value: 8,
   },
 ];
+
+export const visitTypes = [
+  {
+    id: 1,
+    type: 'Kontrola',
+    count: 86,
+    growth: '+12%',
+    status: 'Wzrost',
+  },
+  {
+    id: 2,
+    type: 'Konsultacja',
+    count: 64,
+    growth: '+6%',
+    status: 'Stabilnie',
+  },
+  {
+    id: 3,
+    type: 'Badanie',
+    count: 42,
+    growth: '-3%',
+    status: 'Spadek',
+  },
+];
