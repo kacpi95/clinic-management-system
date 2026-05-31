@@ -1,0 +1,68 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  padding: 24px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.header {
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1.3rem;
+    color: $text-default;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: $secondary;
+    font-size: 1rem;
+  }
+}
+
+.score {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  border: 18px solid rgba(0, 86, 179, 0.15);
+
+  strong {
+    font-family: $text-headline;
+    font-size: 2rem;
+    color: $primary;
+  }
+
+  span {
+    font-size: 0.8rem;
+    color: $secondary;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: $secondary;
+    font-size: 1rem;
+  }
+
+  strong {
+    color: $text-default;
+  }
+}
