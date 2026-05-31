@@ -1,0 +1,66 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  padding: 24px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1.3rem;
+    color: $text-default;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    color: $primary;
+    font-weight: 800;
+    cursor: pointer;
+  }
+}
+
+.table {
+  overflow-x: auto;
+}
+
+.tableHeader,
+.row {
+  min-width: 680px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.tableHeader {
+  padding: 14px 0;
+  color: $secondary;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.row {
+  padding: 18px 0;
+  border-top: 1px solid rgba(86, 96, 117, 0.12);
+
+  strong {
+    font-family: $text-headline;
+    color: $text-default;
+  }
+
+  span {
+    color: $secondary;
+    font-size: 0.9rem;
+  }
+}
