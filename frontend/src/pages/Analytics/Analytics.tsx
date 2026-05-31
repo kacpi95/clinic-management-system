@@ -2,6 +2,7 @@ import AnalyticsHeader from '../../features/analytics/components/AnalyticsHeader
 import AnalyticsStats from '../../features/analytics/components/AnalyticsStats/AnalyticsStats';
 import AppointmentStatusCard from '../../features/analytics/components/AppointmentStatusCard/AppointmentStatusCard';
 import VisitsChart from '../../features/analytics/components/VisitsChart/VisitsChart';
+import VisitTypesTable from '../../features/analytics/components/VisitTypesTable/VisitTypesTable';
 import styles from './Analytics.module.scss';
 
 export default function Analytics() {
@@ -13,7 +14,7 @@ export default function Analytics() {
         <VisitsChart />
         <AppointmentStatusCard />
       </div>
-      {/* VisitTypesTable  */}
+      <VisitTypesTable />
     </div>
   );
 }
