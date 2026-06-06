@@ -4,8 +4,12 @@ import { PiExport } from 'react-icons/pi';
 import styles from './PatientsHeader.module.scss';
 import { downloadPatientsJson } from '../../utils/exportPatients';
 import { patients } from '../../data/patients.mock';
+import type { PatientsHeaderProps } from '../../types/patient.types';
 
-export default function PatientsHeader() {
+export default function PatientsHeader({
+  searchTerm,
+  setSearchTerm,
+}: PatientsHeaderProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
@@ -17,7 +21,12 @@ export default function PatientsHeader() {
       <div className={styles.buttons}>
         <button className={styles.button}>
           <IoFilter className={styles.icon} />
-          <span>Filtruj</span>
+          <input
+            type='text'
+            placeholder='Szukaj pacjenta...'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </button>
 
         <button

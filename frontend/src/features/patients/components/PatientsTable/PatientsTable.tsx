@@ -1,11 +1,32 @@
 import { BsThreeDots } from 'react-icons/bs';
+import { useMemo } from 'react';
 
 import patientOne from '../../../../assets/patient-1.png';
 import styles from './PatientsTable.module.scss';
 import { usePatients } from '../../hooks/usePatients';
+import type { PatientsTableProps } from '../../types/patient.types';
 
-export default function PatientsTable() {
+
+export default function PatientsTable({ searchTerm }: PatientsTableProps) {
   const { patients, isLoading, error } = usePatients();
+  const filteredPatients = useMemo(() => {
+    const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+
+    if (!normalizedSearchTerm) {
+      return patients;
+    }
+
+    return patients.filter((patient) => {
+      const fullName = `${patient.firstName} ${patient.lastName}`.toLowerCase();
+
+      return (
+        fullName.includes(normalizedSearchTerm) ||
+        patient.pesel.includes(normalizedSearchTerm) ||
+        patient.email?.toLowerCase().includes(normalizedSearchTerm) ||
+        patient.phone.includes(normalizedSearchTerm)
+      );
+    });
+  }, [patients, searchTerm]);
 
   if (isLoading) {
     return <div>Ładowanie danych</div>;
@@ -27,7 +48,7 @@ export default function PatientsTable() {
         </div>
 
         <div className={styles.body}>
-          {patients.map((patient) => (
+          {filteredPatients.map((patient) => (
             <div key={patient.id} className={styles.row}>
               <div className={styles.patient}>
                 <span
