@@ -1,19 +1,28 @@
 import { BsThreeDots } from 'react-icons/bs';
 
+import patientOne from '../../../../assets/patient-1.png';
 import styles from './PatientsTable.module.scss';
-import { patients } from '../../data/patients.mock';
+import { usePatients } from '../../hooks/usePatients';
 
 export default function PatientsTable() {
+  const { patients, isLoading, error } = usePatients();
+
+  if (isLoading) {
+    return <div>Ładowanie danych</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.table}>
         <div className={styles.header}>
           <div>Imię i nazwisko</div>
-          <div>Specjalizacja lekarza</div>
           <div>PESEL</div>
-          <div>Wiek</div>
-          <div>Ostatnia wizyta</div>
-          <div>Status</div>
+          <div>Email</div>
+          <div>Telefon</div>
           <div>Akcje</div>
         </div>
 
@@ -21,18 +30,17 @@ export default function PatientsTable() {
           {patients.map((patient) => (
             <div key={patient.id} className={styles.row}>
               <div className={styles.patient}>
-                <span className={styles.avatar}>{patient.initials}</span>
-                <strong>{patient.name}</strong>
+                <span
+                  className={styles.avatar}
+                  style={{ backgroundImage: `url(${patientOne})` }}
+                ></span>
+                <strong>
+                  {patient.firstName} {patient.lastName}
+                </strong>
               </div>
-
-              <div className={styles.cell}>{patient.doctorSpecialization}</div>
               <div className={styles.cell}>{patient.pesel}</div>
-              <div className={styles.cell}>{patient.wiek}</div>
-              <div className={styles.cell}>{patient.ostatniaWizyta}</div>
-
-              <div>
-                <span className={styles.statusBadge}>{patient.status}</span>
-              </div>
+              <div className={styles.cell}>{patient.email}</div>
+              <div className={styles.cell}>{patient.phone}</div>
 
               <div className={styles.actions}>
                 <button className={styles.actionButton}>
