@@ -13,13 +13,13 @@ export default function PatientCapacityCard() {
       <div className={styles.header}>
         <p className={styles.eyebrow}>Podgląd</p>
 
-        <h2 className={styles.title}>Pojemność kliniki</h2>
+        <h2 className={styles.title}>Przegląd praktyki</h2>
       </div>
 
       <div className={styles.capacity}>
         <strong>{clinicCapacity.occupied}%</strong>
 
-        <span>Dzisiejsze obłożenie</span>
+        <span>Wykorzystanie harmonogramu</span>
       </div>
 
       <div className={styles.progressBar}>
@@ -43,7 +43,7 @@ export default function PatientCapacityCard() {
         </div>
 
         <div className={styles.stat}>
-          <span>Lekarze na dyżurze</span>
+          <span>Dostępni lekarze</span>
           <strong>{clinicCapacity.doctorsOnDuty}</strong>
         </div>
       </div>

@@ -10,7 +10,11 @@ export default function Patients() {
   const [searchTerm, setSearchTerm] = useState('');
   return (
     <div className={styles.wrapper}>
-      <PatientsHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <PatientsHeader
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        patients={[]}
+      />
       <PatientsTable searchTerm={searchTerm} />
       <div className={styles.bottomGrid}>
         <PatientCapacityCard />

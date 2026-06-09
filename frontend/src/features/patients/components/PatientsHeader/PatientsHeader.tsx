@@ -3,31 +3,31 @@ import { PiExport } from 'react-icons/pi';
 
 import styles from './PatientsHeader.module.scss';
 import { downloadPatientsJson } from '../../utils/exportPatients';
-import { patients } from '../../data/patients.mock';
 import type { PatientsHeaderProps } from '../../types/patient.types';
 
 export default function PatientsHeader({
   searchTerm,
   setSearchTerm,
+  patients,
 }: PatientsHeaderProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
         <p className={styles.eyebrow}>CENTRALNA BAZA DANYCH</p>
-
         <h1 className={styles.title}>Pacjenci</h1>
       </div>
 
-      <div className={styles.buttons}>
-        <button className={styles.button}>
+      <div className={styles.actions}>
+        <div className={styles.searchBox}>
           <IoFilter className={styles.icon} />
+
           <input
             type='text'
             placeholder='Szukaj pacjenta...'
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </button>
+        </div>
 
         <button
           className={styles.button}

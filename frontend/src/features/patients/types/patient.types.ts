@@ -24,6 +24,7 @@ export interface CreatePatientData {
 export type PatientsHeaderProps = {
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  patients: Patient[];
 };
 
 export type PatientsTableProps = {
