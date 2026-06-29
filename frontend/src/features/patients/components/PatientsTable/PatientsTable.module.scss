@@ -93,7 +93,7 @@
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .actionButton {
@@ -113,4 +113,11 @@
     background: $logo-bg;
     color: $primary;
   }
+}
+
+.test {
+  position: absolute;
+  background-color: red;
+  width: 100px;
+  height: 100px;
 }
