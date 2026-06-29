@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import EmergencyProtocolCard from '../../features/patients/components/EmergencyProtocolCard/EmergencyProtocolCard';
 import PatientCapacityCard from '../../features/patients/components/PatientCapacityCard/PatientCapacityCard';
 import PatientsHeader from '../../features/patients/components/PatientsHeader/PatientsHeader';
 import PatientsTable from '../../features/patients/components/PatientsTable/PatientsTable';
@@ -18,7 +17,6 @@ export default function Patients() {
       <PatientsTable searchTerm={searchTerm} />
       <div className={styles.bottomGrid}>
         <PatientCapacityCard />
-        <EmergencyProtocolCard />
       </div>
     </div>
   );
