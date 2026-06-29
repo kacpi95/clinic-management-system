@@ -1,3 +1,6 @@
+import type { Appointment } from '../../appointments/types/appointment.type';
+import type { VisitNote } from '../../visitNotes/types/visitNote.types';
+
 export interface Patient {
   id: number;
   firstName: string;
@@ -32,3 +35,8 @@ export type PatientsTableProps = {
 };
 
 export type UpdatePatientData = Partial<CreatePatientData>;
+
+export interface PatientDetails extends Patient {
+  appointments: Appointment[];
+  visitNotes: VisitNote[];
+}
