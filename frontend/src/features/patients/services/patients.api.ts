@@ -4,6 +4,7 @@ import type {
   Patient,
   CreatePatientData,
   UpdatePatientData,
+  PatientDetails,
 } from '../types/patient.types';
 
 export function getPatients() {
@@ -11,7 +12,7 @@ export function getPatients() {
 }
 
 export function getPatientById(id: number) {
-  return apiClient<Patient>(`/patients/${id}`);
+  return apiClient<PatientDetails>(`/patients/${id}`);
 }
 
 export function createPatient(data: CreatePatientData) {

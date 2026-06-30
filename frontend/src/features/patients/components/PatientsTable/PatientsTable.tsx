@@ -1,14 +1,20 @@
 import { BsThreeDots } from 'react-icons/bs';
-import { useMemo } from 'react';
+import { BiDetail } from 'react-icons/bi';
+import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import patientOne from '../../../../assets/patient-1.png';
 import styles from './PatientsTable.module.scss';
 import { usePatients } from '../../hooks/usePatients';
 import type { PatientsTableProps } from '../../types/patient.types';
 
-
 export default function PatientsTable({ searchTerm }: PatientsTableProps) {
+  const navigate = useNavigate();
+
   const { patients, isLoading, error } = usePatients();
+
+  const [openedMenu, setOpenedMenu] = useState<number | null>(null);
+
   const filteredPatients = useMemo(() => {
     const normalizedSearchTerm = searchTerm.toLowerCase().trim();
 
@@ -64,9 +70,28 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
               <div className={styles.cell}>{patient.phone}</div>
 
               <div className={styles.actions}>
-                <button className={styles.actionButton}>
+                <button
+                  onClick={() => {
+                    setOpenedMenu(
+                      openedMenu === patient.id ? null : patient.id,
+                    );
+                  }}
+                  className={styles.actionButton}
+                >
                   <BsThreeDots />
                 </button>
+                {openedMenu === patient.id && (
+                  <div className={styles.dropDown}>
+                    <button
+                      onClick={() =>
+                        navigate(`/dashboard/patients/${patient.id}`)
+                      }
+                    >
+                      <BiDetail />
+                      Szczegóły
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           ))}
