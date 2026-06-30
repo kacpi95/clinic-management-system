@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import Button from '../../../../components/Button/Button';
 import { usePatient } from '../../hooks/usePatient';
 import styles from './PatientDetails.module.scss';
+import PatientInfoCard from '../PatientInfoCard/PatientInfoCard';
+
 
 export default function PatientDetails() {
   const { id } = useParams();
@@ -23,6 +25,7 @@ export default function PatientDetails() {
 
   return (
     <div className={styles.wrapper}>
+      <PatientInfoCard patient={patient} />
       <Button type='button' className={styles.button}>
         Umów wizytę
       </Button>
