@@ -4,7 +4,7 @@ import Button from '../../../../components/Button/Button';
 import { usePatient } from '../../hooks/usePatient';
 import styles from './PatientDetails.module.scss';
 import PatientInfoCard from '../PatientInfoCard/PatientInfoCard';
-
+import AppointmentHistory from '../AppointmentHistory/AppointmentHistory';
 
 export default function PatientDetails() {
   const { id } = useParams();
@@ -26,6 +26,8 @@ export default function PatientDetails() {
   return (
     <div className={styles.wrapper}>
       <PatientInfoCard patient={patient} />
+
+      <AppointmentHistory appointments={patient.appointments} />
       <Button type='button' className={styles.button}>
         Umów wizytę
       </Button>
