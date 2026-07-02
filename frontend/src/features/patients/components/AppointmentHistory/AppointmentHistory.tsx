@@ -9,6 +9,12 @@ type Props = {
   appointments: Appointment[];
 };
 
+const statusLabels = {
+  PLANNED: 'Zaplanowana',
+  COMPLETED: 'Zakończona',
+  CANCELED: 'Anulowana',
+};
+
 export default function AppointmentHistory({ appointments }: Props) {
   const [openedId, setOpenedId] = useState<number | null>(null);
 
@@ -42,7 +48,7 @@ export default function AppointmentHistory({ appointments }: Props) {
               <span
                 className={`${styles.status} ${styles[appointment.status.toLowerCase()]}`}
               >
-                {appointment.status}
+                {statusLabels[appointment.status]}
               </span>
 
               {openedId === appointment.id ? (

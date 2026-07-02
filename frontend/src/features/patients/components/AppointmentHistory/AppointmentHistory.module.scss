@@ -1,0 +1,143 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 1.5rem;
+  color: $text-default;
+}
+
+.counter {
+  padding: 6px 12px;
+  border-radius: 50px;
+  color: $primary;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: rgba(0, 86, 179, 0.08);
+}
+
+.card {
+  overflow: hidden;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 10px 28px rgba(17, 24, 39, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 26px;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    background: rgba(0, 86, 179, 0.03);
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  strong {
+    font-size: 1rem;
+    color: $text-default;
+  }
+
+  span {
+    font-size: 1rem;
+    color: $secondary;
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.icon {
+  color: $primary;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.planned {
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+}
+
+.completed {
+  background: rgba(22, 163, 74, 0.08);
+  color: #16a34a;
+}
+
+.canceled {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 26px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+
+  span {
+    color: $secondary;
+    font-weight: 600;
+  }
+
+  strong {
+    color: $text-default;
+  }
+}
+
+.note {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: $radius-sm;
+  background: rgba(0, 86, 179, 0.03);
+
+  span {
+    color: $secondary;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.6;
+    color: $text-default;
+  }
+}
