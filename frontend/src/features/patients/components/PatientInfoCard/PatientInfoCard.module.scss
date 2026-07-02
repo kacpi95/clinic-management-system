@@ -1,0 +1,60 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  padding: 28px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.06);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: $secondary;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 2rem;
+  color: $text-default;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: $radius-sm;
+  background: rgba(0, 86, 179, 0.03);
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $secondary;
+}
+
+.value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $text-default;
+  word-break: break-word;
+}
