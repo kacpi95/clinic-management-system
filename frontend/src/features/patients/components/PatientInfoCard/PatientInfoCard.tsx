@@ -8,30 +8,43 @@ type Props = {
 export default function PatientInfoCard({ patient }: Props) {
   return (
     <section className={styles.wrapper}>
-      <h2>Dane pacjenta</h2>
-      <div className={styles.grid}>
-        <p>
-          <strong>Imię i nazwisko</strong>
-          <span>
+      <div className={styles.header}>
+        <div>
+          <p className={styles.eyebrow}>KARTA PACJENTA</p>
+
+          <h2 className={styles.title}>
             {patient.firstName} {patient.lastName}
+          </h2>
+        </div>
+      </div>
+
+      <div className={styles.grid}>
+        <div className={styles.item}>
+          <span className={styles.label}>PESEL</span>
+          <span className={styles.value}>{patient.pesel}</span>
+        </div>
+
+        <div className={styles.item}>
+          <span className={styles.label}>Telefon</span>
+          <span className={styles.value}>{patient.phone}</span>
+        </div>
+
+        <div className={styles.item}>
+          <span className={styles.label}>Email</span>
+          <span className={styles.value}>{patient.email || 'Brak'}</span>
+        </div>
+
+        <div className={styles.item}>
+          <span className={styles.label}>Adres</span>
+          <span className={styles.value}>{patient.address}</span>
+        </div>
+
+        <div className={styles.item}>
+          <span className={styles.label}>Data urodzenia</span>
+          <span className={styles.value}>
+            {new Date(patient.birthDate).toLocaleDateString('pl-PL')}
           </span>
-        </p>
-        <p>
-          <strong>PESEL</strong>
-          <span>{patient.pesel}</span>
-        </p>
-        <p>
-          <strong>Telefon</strong>
-          <span>{patient.phone}</span>
-        </p>
-        <p>
-          <strong>Email</strong>
-          <span>{patient.email}</span>
-        </p>
-        <p>
-          <strong>Adres</strong>
-          <span>{patient.address}</span>
-        </p>
+        </div>
       </div>
     </section>
   );
