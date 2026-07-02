@@ -39,8 +39,13 @@ export default function AppointmentHistory({ appointments }: Props) {
 
           {openedId === appointment.id && (
             <div className={styles.content}>
-              <p>Status: {appointment.status}</p>
-              <p>Notatka: {appointment.notes}</p>
+              <p>
+                <strong>Status: </strong>
+                {appointment.status}
+              </p>
+              <p>
+                <strong>Notatka: </strong> {appointment.notes}
+              </p>
             </div>
           )}
         </article>
