@@ -1,0 +1,87 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $secondary;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 2.4rem;
+  color: $text-default;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: $radius-sm;
+  font-family: $text-body;
+  font-size: 1rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: $transition-fast;
+}
+
+.primaryButton {
+  border: none;
+  background: $primary;
+  color: $button-text;
+
+  &:hover {
+    background: $primaryHover;
+    transform: translateY(-2px);
+  }
+}
+
+.secondaryButton {
+  border: 1px solid rgba(86, 96, 117, 0.18);
+  background: $surface-bg-alt;
+  color: $text-default;
+
+  &:hover {
+    border-color: $primary;
+    background: rgba(0, 86, 179, 0.04);
+    color: $primary;
+    transform: translateY(-2px);
+  }
+
+  svg {
+    font-size: 0.9rem;
+  }
+}
