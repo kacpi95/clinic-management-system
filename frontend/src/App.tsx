@@ -13,6 +13,7 @@ import Calendar from './pages/Calendar/Calendar';
 import Analytics from './pages/Analytics/Analytics';
 import PatientDetails from './features/patients/components/PatientDetails/PatientDetails';
 import NewAppointment from './features/appointments/pages/NewAppointment/NewAppointment';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
 
         <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
+      <Toaster position='top-center' />
     </AuthProvider>
   );
 }

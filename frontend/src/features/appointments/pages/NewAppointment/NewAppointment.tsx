@@ -1,6 +1,8 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import Button from '../../../../components/Button/Button';
 import { usePatient } from '../../../patients/hooks/usePatient';
@@ -14,7 +16,10 @@ export default function NewAppointment() {
   const { id } = useParams();
   const { user } = useAuth();
 
+  const navigate = useNavigate();
+
   const { patient, isLoading, error } = usePatient(Number(id));
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const initialValues = {
     patientId: patient?.id ?? 0,
@@ -55,7 +60,7 @@ export default function NewAppointment() {
     if (!user?.doctor?.id) {
       return;
     }
-    const doctorId = user?.doctor?.id;
+    const doctorId = user.doctor.id;
 
     const newAppointment = {
       patientId: values.patientId,
@@ -67,11 +72,23 @@ export default function NewAppointment() {
       status,
     };
 
+    setIsSubmitting(true);
     try {
       console.log(newAppointment);
       await createAppointment(newAppointment);
+
+      toast.success('Wizyta została utworzona');
+      navigate(`/dashboard/patients/${patient?.id}`);
     } catch (error) {
       console.error(error);
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Nie udało się utworzyć wizyty',
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -185,7 +202,9 @@ export default function NewAppointment() {
           </div>
 
           <div className={styles.actions}>
-            <Button type='submit'>Umów wizytę</Button>
+            <Button type='submit' disabled={isSubmitting}>
+              {isSubmitting ? 'Zapisywanie...' : 'Umów wizytę'}
+            </Button>
           </div>
         </Form>
       </Formik>

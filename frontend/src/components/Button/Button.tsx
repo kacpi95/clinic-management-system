@@ -4,6 +4,7 @@ interface Props {
   children: ReactNode;
   type: 'button' | 'submit' | 'reset';
   className?: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
