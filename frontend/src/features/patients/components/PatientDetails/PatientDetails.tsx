@@ -45,7 +45,13 @@ export default function PatientDetails() {
             <FaArrowLeft />
             Powrót
           </Button>
-          <Button type='button' className={styles.primaryButton}>
+          <Button
+            type='button'
+            className={styles.primaryButton}
+            onClick={() =>
+              navigate(`/dashboard/appointments/${id}/new-appointment`)
+            }
+          >
             Umów wizytę
           </Button>
         </div>
