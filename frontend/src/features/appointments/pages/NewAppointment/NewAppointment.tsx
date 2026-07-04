@@ -6,6 +6,9 @@ import Button from '../../../../components/Button/Button';
 import { usePatient } from '../../../patients/hooks/usePatient';
 import styles from './NewAppointment.module.scss';
 import { useAuth } from '../../../../context/useAuth';
+import { APPOINTMENT_HOURS } from '../../appointmentHours';
+import { createAppointment } from '../../services/appointment.api';
+import type { AppointmentStatus } from '../../types/appointment.type';
 
 export default function NewAppointment() {
   const { id } = useParams();
@@ -17,17 +20,19 @@ export default function NewAppointment() {
     patientId: patient?.id ?? 0,
     date: '',
     startTime: '',
-    endTime: '',
     reason: '',
     notes: '',
   };
 
   const validationSchema = Yup.object({
-    date: Yup.string().required('Data jest wymagana'),
+    date: Yup.date()
+      .min(
+        new Date(new Date().setHours(0, 0, 0, 0)),
+        'Nie można wybrać przeszłej daty',
+      )
+      .required('Data jest wymagana'),
 
     startTime: Yup.string().required('Godzina rozpoczęcia jest wymagana'),
-
-    endTime: Yup.string().required('Godzina zakończenia jest wymagana'),
 
     reason: Yup.string()
       .min(10, 'Minimum 10 znaków')
@@ -39,8 +44,35 @@ export default function NewAppointment() {
       .max(255, 'Maksymalnie 255 znaków'),
   });
 
-  const onSubmit = (values: typeof initialValues) => {
-    console.log(values);
+  const onSubmit = async (values: typeof initialValues) => {
+    const startTime = new Date(`${values.date}T${values.startTime}`);
+
+    const endTime = new Date(startTime);
+    endTime.setMinutes(endTime.getMinutes() + 30);
+
+    const status: AppointmentStatus = 'PLANNED';
+
+    if (!user?.doctor?.id) {
+      return;
+    }
+    const doctorId = user?.doctor?.id;
+
+    const newAppointment = {
+      patientId: values.patientId,
+      doctorId,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+      reason: values.reason,
+      notes: values.notes,
+      status,
+    };
+
+    try {
+      console.log(newAppointment);
+      await createAppointment(newAppointment);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (isLoading) {
@@ -101,22 +133,17 @@ export default function NewAppointment() {
             <div className={styles.field}>
               <label>Godzina rozpoczęcia</label>
 
-              <Field type='time' name='startTime' className={styles.input} />
+              <Field name='startTime' as='select' className={styles.input}>
+                <option value=''>Wybierz godzinę</option>
+                {APPOINTMENT_HOURS.map((el) => (
+                  <option key={el} value={el}>
+                    {el}
+                  </option>
+                ))}
+              </Field>
 
               <ErrorMessage
                 name='startTime'
-                component='span'
-                className={styles.error}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label>Godzina zakończenia</label>
-
-              <Field type='time' name='endTime' className={styles.input} />
-
-              <ErrorMessage
-                name='endTime'
                 component='span'
                 className={styles.error}
               />

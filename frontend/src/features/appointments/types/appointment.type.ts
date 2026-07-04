@@ -29,10 +29,12 @@ export interface Appointment {
 
 export interface CreateAppointmentData {
   patientId: number;
+  doctorId: number;
   startTime: string;
   endTime: string;
   reason: string;
   notes?: string;
+  status: AppointmentStatus;
 }
 
 export type UpdateAppointmentData = Partial<CreateAppointmentData> & {
