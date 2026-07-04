@@ -12,6 +12,7 @@ import Patients from './pages/Patients/Patients';
 import Calendar from './pages/Calendar/Calendar';
 import Analytics from './pages/Analytics/Analytics';
 import PatientDetails from './features/patients/components/PatientDetails/PatientDetails';
+import NewAppointment from './features/appointments/pages/NewAppointment/NewAppointment';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path='patients/:id' element={<PatientDetails />} />
             <Route path='calendar' element={<Calendar />} />
             <Route path='analytics' element={<Analytics />} />
+            <Route path='appointments/new' element={<NewAppointment />} />
           </Route>
         </Route>
 
