@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 import styles from './PatientForm.module.scss';
 import type { PatientDetails } from '../../types/patient.types';
@@ -12,6 +13,47 @@ export default function PatientForm({ patient }: Props) {
   const { id } = useParams();
 
   const isEditMode = Boolean(id);
+
+  const initialValues = {
+    firstName: patient?.firstName ?? '',
+    lastName: patient?.lastName ?? '',
+    pesel: patient?.pesel ?? '',
+    birthDate: patient?.birthDate ? patient.birthDate.slice(0, 10) : '',
+    phone: patient?.phone ?? '',
+    email: patient?.email ?? '',
+    address: patient?.address ?? '',
+  };
+
+  const validationSchema = Yup.object({
+    firstName: Yup.string()
+      .min(3, 'Minimum 3 znaki')
+      .max(20, 'Maksymalnie 20 znaków')
+      .required('Imię jest wymagane'),
+
+    lastName: Yup.string()
+      .min(3, 'Minimum 3 znaki')
+      .max(30, 'Maksymalnie 30 znaków')
+      .required('Nazwisko jest wymagane'),
+
+    pesel: Yup.string()
+      .length(11, 'PESEL musi mieć 11 cyfr')
+      .required('PESEL jest wymagany'),
+
+    birthDate: Yup.date().required('Data urodzenia jest wymagana'),
+
+    phone: Yup.string()
+      .min(9, 'Numer jest za krótki')
+      .max(15, 'Numer jest za długi')
+      .required('Telefon jest wymagany'),
+
+    email: Yup.string()
+      .email('Niepoprawny adres email')
+      .required('Email jest wymagany'),
+
+    address: Yup.string()
+      .min(5, 'Adres jest za krótki')
+      .required('Adres jest wymagany'),
+  });
 
   return (
     <div className={styles.wrapper}>
@@ -26,8 +68,8 @@ export default function PatientForm({ patient }: Props) {
       </div>
 
       <Formik
-        initialValues={}
-        validationSchema={}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
         enableReinitialize
         onSubmit={}
       >
