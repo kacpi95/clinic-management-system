@@ -14,6 +14,7 @@ import Analytics from './pages/Analytics/Analytics';
 import PatientDetails from './features/patients/components/PatientDetails/PatientDetails';
 import NewAppointment from './features/appointments/pages/NewAppointment/NewAppointment';
 import { Toaster } from 'react-hot-toast';
+import EditPatient from './features/patients/pages/EditPatient/EditPatient';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               path='appointments/:id/new-appointment'
               element={<NewAppointment />}
             />
+            <Route path='patients/:id/edit' element={<EditPatient />} />
           </Route>
         </Route>
 

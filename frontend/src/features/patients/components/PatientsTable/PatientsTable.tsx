@@ -1,5 +1,6 @@
 import { BsThreeDots } from 'react-icons/bs';
 import { BiDetail } from 'react-icons/bi';
+import { CiEdit } from 'react-icons/ci';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -89,6 +90,14 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
                     >
                       <BiDetail />
                       Szczegóły
+                    </button>
+                    <button
+                      onClick={() =>
+                        navigate(`/dashboard/patients/${patient.id}/edit`)
+                      }
+                    >
+                      <CiEdit />
+                      Edytuj
                     </button>
                   </div>
                 )}
