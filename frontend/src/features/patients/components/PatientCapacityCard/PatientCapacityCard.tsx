@@ -1,32 +1,40 @@
+import { usePatients } from '../../hooks/usePatients';
 import styles from './PatientCapacityCard.module.scss';
 
-const clinicCapacity = {
-  occupied: 78,
-  activePatients: 24,
-  availableSlots: 12,
-  doctorsOnDuty: 3,
-};
+const MAX_PATIENTS = 50;
 
 export default function PatientCapacityCard() {
+  const { isLoading, error, patients } = usePatients();
+
+  if (isLoading) {
+    return <div>Ładowanie...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  const activePatients = patients.length;
+  const occupied = Math.round((activePatients / MAX_PATIENTS) * 100);
+  const availableSlots = MAX_PATIENTS - activePatients;
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.header}>
-        <p className={styles.eyebrow}>Podgląd</p>
-
+        <p className={styles.eyebrow}>PODGLĄD</p>
         <h2 className={styles.title}>Przegląd praktyki</h2>
       </div>
 
       <div className={styles.capacity}>
-        <strong>{clinicCapacity.occupied}%</strong>
-
-        <span>Wykorzystanie harmonogramu</span>
+        <strong>{occupied}%</strong>
+        <span>Wykorzystanie limitu pacjentów</span>
       </div>
 
       <div className={styles.progressBar}>
         <div
           className={styles.progress}
           style={{
-            width: `${clinicCapacity.occupied}%`,
+            width: `${occupied}%`,
           }}
         />
       </div>
@@ -34,17 +42,17 @@ export default function PatientCapacityCard() {
       <div className={styles.stats}>
         <div className={styles.stat}>
           <span>Aktywni pacjenci</span>
-          <strong>{clinicCapacity.activePatients}</strong>
+          <strong>{activePatients}</strong>
         </div>
 
         <div className={styles.stat}>
           <span>Wolne terminy</span>
-          <strong>{clinicCapacity.availableSlots}</strong>
+          <strong>{availableSlots}</strong>
         </div>
 
         <div className={styles.stat}>
-          <span>Dostępni lekarze</span>
-          <strong>{clinicCapacity.doctorsOnDuty}</strong>
+          <span>Limit pacjentów</span>
+          <strong>{MAX_PATIENTS}</strong>
         </div>
       </div>
     </section>
