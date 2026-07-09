@@ -1,7 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
+import Button from '../../../../components/Button/Button';
+import { usePatient } from '../../hooks/usePatient';
+import { createPatient, updatePatient } from '../../services/patients.api';
 import styles from './PatientForm.module.scss';
 import type { PatientDetails } from '../../types/patient.types';
 
@@ -11,8 +16,13 @@ type Props = {
 
 export default function PatientForm({ patient }: Props) {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const isEditMode = Boolean(id);
+
+  const { isLoading, error } = usePatient(Number(id));
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const initialValues = {
     firstName: patient?.firstName ?? '',
@@ -55,6 +65,40 @@ export default function PatientForm({ patient }: Props) {
       .required('Adres jest wymagany'),
   });
 
+  const onSubmit = async (values: typeof initialValues) => {
+    setIsSubmitting(true);
+
+    try {
+      if (isEditMode && patient) {
+        await updatePatient(patient.id, values);
+
+        toast.success('Pacjent został zaktualizowany');
+      } else {
+        await createPatient(values);
+
+        toast.success('Pacjent został dodany');
+      }
+
+      navigate('/dashboard/patients');
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error instanceof Error ? error.message : 'Wystąpił nieoczekiwany błąd',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isEditMode && isLoading) {
+    return <div>Ładowanie...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -71,7 +115,7 @@ export default function PatientForm({ patient }: Props) {
         initialValues={initialValues}
         validationSchema={validationSchema}
         enableReinitialize
-        onSubmit={}
+        onSubmit={onSubmit}
       >
         <Form className={styles.form}>
           <div className={styles.row}>
@@ -162,6 +206,16 @@ export default function PatientForm({ patient }: Props) {
               component='span'
               className={styles.error}
             />
+          </div>
+
+          <div className={styles.actions}>
+            <Button type='submit' disabled={isSubmitting}>
+              {isSubmitting
+                ? 'Zapisywanie...'
+                : isEditMode
+                  ? 'Zapisz zmiany'
+                  : 'Dodaj pacjenta'}
+            </Button>
           </div>
         </Form>
       </Formik>
