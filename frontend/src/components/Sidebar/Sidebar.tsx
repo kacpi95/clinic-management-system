@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 import styles from './Sidebar.module.scss';
@@ -12,6 +12,8 @@ const navItems = [
 ];
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <aside className={styles.wrapper}>
       <div className={styles.header}>
@@ -40,7 +42,12 @@ export default function Sidebar() {
       </nav>
 
       <div className={styles.footer}>
-        <button className={styles.button}>Nowa wizyta</button>
+        <button
+          className={styles.button}
+          onClick={() => navigate('/dashboard/patients/new')}
+        >
+          Dodaj nowego pacjenta
+        </button>
       </div>
     </aside>
   );

@@ -15,6 +15,7 @@ import PatientDetails from './features/patients/components/PatientDetails/Patien
 import NewAppointment from './features/appointments/pages/NewAppointment/NewAppointment';
 import { Toaster } from 'react-hot-toast';
 import EditPatient from './features/patients/pages/EditPatient/EditPatient';
+import NewPatient from './features/patients/pages/NewPatient/NewPatient';
 
 function App() {
   return (
@@ -33,13 +34,14 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path='patients' element={<Patients />} />
             <Route path='patients/:id' element={<PatientDetails />} />
+            <Route path='patients/:id/edit' element={<EditPatient />} />
+            <Route path='patients/new' element={<NewPatient />} />
             <Route path='calendar' element={<Calendar />} />
             <Route path='analytics' element={<Analytics />} />
             <Route
               path='appointments/:id/new-appointment'
               element={<NewAppointment />}
             />
-            <Route path='patients/:id/edit' element={<EditPatient />} />
           </Route>
         </Route>
 
