@@ -8,8 +8,10 @@
 
 .header {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .eyebrow {
@@ -154,6 +156,35 @@ select.input {
   }
 }
 
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: $radius-sm;
+  font-family: $text-body;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 1px solid rgba(86, 96, 117, 0.18);
+  background: $surface-bg-alt;
+  color: $text-default;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    border-color: $primary;
+    background: rgba(0, 86, 179, 0.04);
+    color: $primary;
+    transform: translateY(-2px);
+  }
+
+  svg {
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 1.7rem;
@@ -175,5 +206,12 @@ select.input {
     button {
       width: 100%;
     }
+  }
+  .header {
+    align-items: stretch;
+  }
+
+  .secondaryButton {
+    width: 100%;
   }
 }

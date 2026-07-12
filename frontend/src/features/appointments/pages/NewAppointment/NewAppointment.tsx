@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { FaUser } from 'react-icons/fa';
+import { FaArrowLeft, FaUser } from 'react-icons/fa';
 import { FaUserDoctor } from 'react-icons/fa6';
 
 import Button from '../../../../components/Button/Button';
@@ -109,8 +109,18 @@ export default function NewAppointment() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <p className={styles.eyebrow}>NOWA WIZYTA</p>
-        <h1 className={styles.title}>Umów wizytę</h1>
+        <div>
+          <p className={styles.eyebrow}>NOWA WIZYTA</p>
+          <h1 className={styles.title}>Umów wizytę</h1>
+        </div>
+        <Button
+          type='button'
+          className={styles.secondaryButton}
+          onClick={() => navigate(`/dashboard/patients/${id}`)}
+        >
+          <FaArrowLeft />
+          Powrót
+        </Button>
       </div>
       <div className={styles.infoGrid}>
         <div className={styles.card}>
