@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { FaUser } from 'react-icons/fa';
+import { FaUserDoctor } from 'react-icons/fa6';
 
 import Button from '../../../../components/Button/Button';
 import { usePatient } from '../../../patients/hooks/usePatient';
@@ -112,6 +114,7 @@ export default function NewAppointment() {
       </div>
       <div className={styles.infoGrid}>
         <div className={styles.card}>
+          <FaUser />
           <span className={styles.label}>Pacjent</span>
           <h3>
             {patient.firstName} {patient.lastName}
@@ -119,6 +122,7 @@ export default function NewAppointment() {
           <p>PESEL: {patient.pesel}</p>
         </div>
         <div className={styles.card}>
+          <FaUserDoctor />
           <span className={styles.label}>Lekarz prowadzący</span>
           <h3>
             {user?.doctor?.firstName} {user?.doctor?.lastName}
