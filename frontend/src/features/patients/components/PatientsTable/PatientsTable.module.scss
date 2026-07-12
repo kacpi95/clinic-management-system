@@ -92,6 +92,7 @@
 }
 
 .actions {
+  position: relative;
   display: flex;
   justify-content: flex-start;
 }
@@ -120,4 +121,49 @@
   background-color: red;
   width: 100px;
   height: 100px;
+}
+
+.dropDown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  padding: 8px;
+  border: 1px solid rgba(86, 96, 117, 0.12);
+  border-radius: $radius-sm;
+  background: $surface-bg-alt;
+  z-index: 20;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  font-family: $text-body;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: $text-default;
+
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    background: rgba(0, 86, 179, 0.06);
+    color: $primary;
+  }
+}
+
+.menuIcon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  color: $primary;
 }

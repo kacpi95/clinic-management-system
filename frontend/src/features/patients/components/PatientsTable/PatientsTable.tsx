@@ -84,20 +84,23 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
                 {openedMenu === patient.id && (
                   <div className={styles.dropDown}>
                     <button
+                      className={styles.menuButton}
                       onClick={() =>
                         navigate(`/dashboard/patients/${patient.id}`)
                       }
                     >
-                      <BiDetail />
-                      Szczegóły
+                      <BiDetail className={styles.menuIcon} />
+                      <span>Szczegóły</span>
                     </button>
+
                     <button
+                      className={styles.menuButton}
                       onClick={() =>
                         navigate(`/dashboard/patients/${patient.id}/edit`)
                       }
                     >
-                      <CiEdit />
-                      Edytuj
+                      <CiEdit className={styles.menuIcon} />
+                      <span>Edytuj</span>
                     </button>
                   </div>
                 )}
