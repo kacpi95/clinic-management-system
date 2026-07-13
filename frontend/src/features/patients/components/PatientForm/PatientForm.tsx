@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { FaArrowLeft } from 'react-icons/fa';
 
 import Button from '../../../../components/Button/Button';
 import { usePatient } from '../../hooks/usePatient';
@@ -102,13 +103,24 @@ export default function PatientForm({ patient }: Props) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <p className={styles.eyebrow}>
-          {isEditMode ? 'EDYCJA PACJENTA' : 'NOWY PACJENT'}
-        </p>
+        <div>
+          <p className={styles.eyebrow}>
+            {isEditMode ? 'EDYCJA PACJENTA' : 'NOWY PACJENT'}
+          </p>
 
-        <h1 className={styles.title}>
-          {isEditMode ? 'Edytuj pacjenta' : 'Dodaj pacjenta'}
-        </h1>
+          <h1 className={styles.title}>
+            {isEditMode ? 'Edytuj pacjenta' : 'Dodaj pacjenta'}
+          </h1>
+        </div>
+
+        <Button
+          type='button'
+          className={styles.secondaryButton}
+          onClick={() => navigate('/dashboard')}
+        >
+          <FaArrowLeft />
+          Powrót
+        </Button>
       </div>
 
       <Formik
