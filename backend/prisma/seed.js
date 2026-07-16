@@ -1,6 +1,32 @@
 import { prisma } from '../prismaClient/client.js';
 import bcrypt from 'bcrypt';
 
+const today = new Date();
+
+function addDays(days) {
+  const date = new Date(today);
+  date.setDate(date.getDate() + days);
+  date.setHours(0, 0, 0, 0);
+
+  return date;
+}
+
+function createDateTime(days, hour, minute = 0) {
+  const date = addDays(days);
+
+  date.setHours(hour, minute, 0, 0);
+
+  return date;
+}
+
+function getWeekDay(days) {
+  return addDays(days).getDay();
+}
+
+function randomItem(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 async function main() {
   await prisma.visitNote.deleteMany();
   await prisma.appointment.deleteMany();

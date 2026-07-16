@@ -116,7 +116,7 @@ export default function PatientForm({ patient }: Props) {
         <Button
           type='button'
           className={styles.secondaryButton}
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate('/dashboard/patients')}
         >
           <FaArrowLeft />
           Powrót
