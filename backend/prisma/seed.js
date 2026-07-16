@@ -236,30 +236,52 @@ async function main() {
     ],
   });
 
-  await prisma.availability.createMany({
-    data: [
-      {
+  const availability = [];
+
+  const doctorOneSchedule = {
+    1: [8, 16],
+    2: [9, 17],
+    3: [8, 14],
+    4: [10, 18],
+    5: [8, 15],
+  };
+
+  const doctorTwoSchedule = {
+    1: [10, 17],
+    3: [9, 16],
+    5: [8, 14],
+  };
+
+  for (let day = -14; day <= 21; day++) {
+    const weekDay = getWeekDay(day);
+
+    if (doctorOneSchedule[weekDay]) {
+      const [start, end] = doctorOneSchedule[weekDay];
+
+      availability.push({
         doctorId: 1,
-        date: new Date('2026-06-06'),
-        startTime: new Date('2026-06-06T08:00:00'),
-        endTime: new Date('2026-06-06T16:00:00'),
+        date: addDays(day),
+        startTime: createDateTime(day, start),
+        endTime: createDateTime(day, end),
         isAvailable: true,
-      },
-      {
-        doctorId: 1,
-        date: new Date('2026-06-07'),
-        startTime: new Date('2026-06-07T09:00:00'),
-        endTime: new Date('2026-06-07T14:00:00'),
-        isAvailable: true,
-      },
-      {
+      });
+    }
+
+    if (doctorTwoSchedule[weekDay]) {
+      const [start, end] = doctorTwoSchedule[weekDay];
+
+      availability.push({
         doctorId: 2,
-        date: new Date('2026-06-06'),
-        startTime: new Date('2026-06-06T10:00:00'),
-        endTime: new Date('2026-06-06T15:00:00'),
+        date: addDays(day),
+        startTime: createDateTime(day, start),
+        endTime: createDateTime(day, end),
         isAvailable: true,
-      },
-    ],
+      });
+    }
+  }
+
+  await prisma.availability.createMany({
+    data: availability,
   });
 
   await prisma.appointment.createMany({
