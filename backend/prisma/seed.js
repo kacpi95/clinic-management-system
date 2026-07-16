@@ -349,6 +349,210 @@ async function main() {
     ],
   });
 
+  const reasons = [
+    'Kontrola',
+    'Badanie kontrolne',
+    'Konsultacja chirurgiczna',
+    'Ból brzucha',
+    'Ból gardła',
+    'Kontrola po zabiegu',
+    'Zmiana opatrunku',
+    'Badanie okresowe',
+    'Omówienie wyników',
+    'USG',
+    'Silny ból pleców',
+    'Podejrzenie przepukliny',
+    'Kontrola po operacji',
+    'Dolegliwości bólowe',
+  ];
+
+  const notes = [
+    '',
+    '',
+    '',
+    'Pacjent zgłasza poprawę.',
+    'Pierwsza konsultacja.',
+    'Do wykonania RTG.',
+    'Do wykonania USG.',
+    'Kontrola za miesiąc.',
+    'Pacjent zgłasza ból od kilku dni.',
+    'Zalecana obserwacja.',
+  ];
+
+  const slots = [
+    [8, 0],
+    [8, 30],
+    [9, 0],
+    [9, 30],
+    [10, 30],
+    [11, 30],
+    [13, 0],
+    [13, 30],
+    [14, 30],
+    [15, 30],
+  ];
+
+  const appointments = [];
+
+  let appointmentId = 1;
+
+  for (let day = -14; day <= -1; day++) {
+    const weekDay = getWeekDay(day);
+
+    if (weekDay === 0 || weekDay === 6) {
+      continue;
+    }
+
+    const visitsToday = 2 + Math.floor(Math.random() * 4);
+
+    for (let i = 0; i < visitsToday; i++) {
+      const slot = slots[i];
+
+      const patientId = 1 + Math.floor(Math.random() * 15);
+
+      appointments.push({
+        id: appointmentId++,
+        patientId,
+        doctorId: 1,
+
+        startTime: createDateTime(day, slot[0], slot[1]),
+
+        endTime: createDateTime(
+          day,
+          slot[1] === 30 ? slot[0] + 1 : slot[0],
+          slot[1] === 30 ? 0 : 30,
+        ),
+
+        status: Math.random() > 0.12 ? 'COMPLETED' : 'CANCELED',
+
+        reason: randomItem(reasons),
+
+        notes: randomItem(notes),
+      });
+    }
+  }
+
+  const todaySlots = [
+    [8, 0],
+    [9, 0],
+    [10, 30],
+    [13, 0],
+    [14, 30],
+  ];
+
+  for (let i = 0; i < todaySlots.length; i++) {
+    const slot = todaySlots[i];
+
+    appointments.push({
+      id: appointmentId++,
+
+      patientId: i + 1,
+
+      doctorId: 1,
+
+      startTime: createDateTime(0, slot[0], slot[1]),
+
+      endTime: createDateTime(
+        0,
+        slot[1] === 30 ? slot[0] + 1 : slot[0],
+        slot[1] === 30 ? 0 : 30,
+      ),
+
+      status: 'PLANNED',
+
+      reason: randomItem(reasons),
+
+      notes: randomItem(notes),
+    });
+  }
+
+  for (let day = 1; day <= 14; day++) {
+    const weekDay = getWeekDay(day);
+
+    if (weekDay === 0 || weekDay === 6) {
+      continue;
+    }
+
+    const visitsToday = 3 + Math.floor(Math.random() * 5);
+
+    const availableSlots = [...slots];
+
+    for (let i = 0; i < visitsToday; i++) {
+      const randomIndex = Math.floor(Math.random() * availableSlots.length);
+
+      const slot = availableSlots.splice(randomIndex, 1)[0];
+
+      const patientId = 1 + Math.floor(Math.random() * 15);
+
+      appointments.push({
+        id: appointmentId++,
+
+        patientId,
+
+        doctorId: 1,
+
+        startTime: createDateTime(day, slot[0], slot[1]),
+
+        endTime: createDateTime(
+          day,
+          slot[1] === 30 ? slot[0] + 1 : slot[0],
+          slot[1] === 30 ? 0 : 30,
+        ),
+
+        status: 'PLANNED',
+
+        reason: randomItem(reasons),
+
+        notes: randomItem(notes),
+      });
+    }
+  }
+
+  for (let day = -5; day <= 14; day++) {
+    const weekDay = getWeekDay(day);
+
+    if (![1, 3, 5].includes(weekDay)) {
+      continue;
+    }
+
+    const visitsToday = 2 + Math.floor(Math.random() * 3);
+
+    const availableSlots = [...slots];
+
+    for (let i = 0; i < visitsToday; i++) {
+      const randomIndex = Math.floor(Math.random() * availableSlots.length);
+
+      const slot = availableSlots.splice(randomIndex, 1)[0];
+
+      const patientId = 1 + Math.floor(Math.random() * 15);
+
+      appointments.push({
+        id: appointmentId++,
+
+        patientId,
+
+        doctorId: 2,
+
+        startTime: createDateTime(day, slot[0], slot[1]),
+
+        endTime: createDateTime(
+          day,
+          slot[1] === 30 ? slot[0] + 1 : slot[0],
+          slot[1] === 30 ? 0 : 30,
+        ),
+
+        status: day < 0 ? 'COMPLETED' : 'PLANNED',
+
+        reason: randomItem(reasons),
+
+        notes: randomItem(notes),
+      });
+    }
+  }
+
+  await prisma.appointment.createMany({
+    data: appointments,
+  });
   await prisma.visitNote.createMany({
     data: [
       {
