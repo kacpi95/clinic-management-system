@@ -284,71 +284,6 @@ async function main() {
     data: availability,
   });
 
-  await prisma.appointment.createMany({
-    data: [
-      {
-        id: 1,
-        patientId: 1,
-        doctorId: 1,
-        startTime: new Date('2026-06-06T08:30:00'),
-        endTime: new Date('2026-06-06T09:00:00'),
-        status: 'COMPLETED',
-        reason: 'Kontrola po leczeniu',
-        notes: 'Pacjent zgłasza poprawę samopoczucia',
-      },
-      {
-        id: 2,
-        patientId: 2,
-        doctorId: 1,
-        startTime: new Date('2026-06-06T10:00:00'),
-        endTime: new Date('2026-06-06T10:30:00'),
-        status: 'PLANNED',
-        reason: 'Konsultacja',
-        notes: 'Pierwsza wizyta kontrolna',
-      },
-      {
-        id: 3,
-        patientId: 3,
-        doctorId: 1,
-        startTime: new Date('2026-06-06T12:00:00'),
-        endTime: new Date('2026-06-06T12:30:00'),
-        status: 'PLANNED',
-        reason: 'Badanie kontrolne',
-        notes: 'Pacjent po wcześniejszej konsultacji',
-      },
-      {
-        id: 4,
-        patientId: 4,
-        doctorId: 1,
-        startTime: new Date('2026-06-07T09:30:00'),
-        endTime: new Date('2026-06-07T10:00:00'),
-        status: 'PLANNED',
-        reason: 'Follow-up',
-        notes: 'Omówienie wyników badań',
-      },
-      {
-        id: 5,
-        patientId: 5,
-        doctorId: 2,
-        startTime: new Date('2026-06-06T11:00:00'),
-        endTime: new Date('2026-06-06T11:30:00'),
-        status: 'PLANNED',
-        reason: 'Ból kolana',
-        notes: 'Podejrzenie przeciążenia',
-      },
-      {
-        id: 6,
-        patientId: 2,
-        doctorId: 1,
-        startTime: new Date('2026-06-05T14:00:00'),
-        endTime: new Date('2026-06-05T14:30:00'),
-        status: 'CANCELED',
-        reason: 'Konsultacja',
-        notes: 'Pacjent odwołał wizytę',
-      },
-    ],
-  });
-
   const reasons = [
     'Kontrola',
     'Badanie kontrolne',
@@ -553,20 +488,79 @@ async function main() {
   await prisma.appointment.createMany({
     data: appointments,
   });
+
+  const diagnoses = [
+    'Zapalenie gardła',
+    'Przeziębienie',
+    'Nadciśnienie tętnicze',
+    'Migrena',
+    'Stan po zabiegu',
+    'Zapalenie zatok',
+    'Ból kręgosłupa',
+    'Przeciążenie mięśni',
+    'Alergia sezonowa',
+    'Infekcja wirusowa',
+    'Zapalenie oskrzeli',
+    'Zapalenie ucha',
+  ];
+
+  const recommendations = [
+    'Kontrola za 2 tygodnie.',
+    'Odpoczynek i odpowiednie nawodnienie.',
+    'Przyjmować leki zgodnie z zaleceniami.',
+    'Wykonać badania kontrolne.',
+    'Unikać wysiłku fizycznego.',
+    'Zgłosić się ponownie w razie pogorszenia.',
+    'Kontrola za miesiąc.',
+    'Zwiększyć aktywność fizyczną.',
+    'Ograniczyć stres.',
+    'Zmiana diety.',
+  ];
+
+  const medications = [
+    'Ibuprofen',
+    'Paracetamol',
+    'Amotaks',
+    'Augmentin',
+    'No-Spa',
+    'Ketonal',
+    'Diclofenac',
+    'Prestarium',
+    'Sumatriptan',
+    'Brak nowych leków',
+  ];
+
+  const visitNotes = [];
+
+  let noteId = 1;
+
+  for (const appointment of appointments) {
+    if (appointment.status !== 'COMPLETED') {
+      continue;
+    }
+
+    visitNotes.push({
+      id: noteId++,
+
+      appointmentId: appointment.id,
+
+      patientId: appointment.patientId,
+
+      doctorId: appointment.doctorId,
+
+      diagnosis: randomItem(diagnoses),
+
+      recommendations: randomItem(recommendations),
+
+      medications: randomItem(medications),
+
+      notes:
+        'Pacjent zgłosił się na wizytę. Stan ogólny dobry. Zalecono dalszą obserwację.',
+    });
+  }
+
   await prisma.visitNote.createMany({
-    data: [
-      {
-        id: 1,
-        patientId: 1,
-        appointmentId: 1,
-        doctorId: 1,
-        diagnosis: 'Stan po leczeniu zachowawczym',
-        recommendations:
-          'Kontynuować obserwację i zgłosić się na kontrolę za 4 tygodnie',
-        medications: 'Brak nowych leków',
-        notes: 'Stan stabilny',
-      },
-    ],
+    data: visitNotes,
   });
 
   console.log('Seed finished successfully');
