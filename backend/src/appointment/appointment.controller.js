@@ -146,3 +146,20 @@ export const updateAppointment = async (req, res) => {
     return res.status(500).json({ message: 'Failed to update appointment' });
   }
 };
+
+export const getCalendarAppointments = async (req, res) => {
+  try {
+    const doctorId = req.user.userId;
+
+    const appointments = await appointmentService.getCalendarAppointments({
+      doctorId,
+    });
+
+    return res.json(appointments);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: 'Failed to fetch calendar appointments' });
+  }
+};
