@@ -112,7 +112,6 @@ export const update = async (id, data) => {
     throw new Error('Invalid time range');
   }
 
-
   if (start || end) {
     const conflict = await prisma.appointment.findFirst({
       where: {
@@ -140,6 +139,26 @@ export const update = async (id, data) => {
       ...data,
       ...(start && { startTime: start }),
       ...(end && { endTime: end }),
+    },
+  });
+};
+
+export const getCalendarAppointments = async ({ doctorId }) => {
+  return prisma.appointment.findMany({
+    where: {
+      doctorId: Number(doctorId),
+    },
+    orderBy: {
+      startTime: 'asc',
+    },
+    include: {
+      patient: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
     },
   });
 };
