@@ -55,15 +55,15 @@
   flex-shrink: 0;
 }
 
-.urgent {
+.canceled {
   background: $error;
 }
 
-.confirmed {
+.planned {
   background: $primary;
 }
 
-.routine {
+.completed {
   background: $secondary;
 }
 
