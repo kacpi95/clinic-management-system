@@ -1,4 +1,4 @@
-import CalendarFilters from '../../features/calendar/components/CalendarFilters/CalendarFilters';
+import CalendarLegend from '../../features/calendar/components/CalendarLegend/CalendarLegend';
 import CalendarGrid from '../../features/calendar/components/CalendarGrid/CalendarGrid';
 import CalendarHeader from '../../features/calendar/components/CalendarHeader/CalendarHeader';
 import UpcomingAppointmentsCard from '../../features/calendar/components/UpcomingAppointmentsCard/UpcomingAppointmentsCard';
@@ -12,7 +12,7 @@ export default function Calendar() {
       </div>
       <div className={styles.content}>
         <div className={styles.leftSidebar}>
-          <CalendarFilters />
+          <CalendarLegend />
           <UpcomingAppointmentsCard />
         </div>
         <div className={styles.mainContent}>

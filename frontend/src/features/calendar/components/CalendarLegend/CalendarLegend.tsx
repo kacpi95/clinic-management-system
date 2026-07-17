@@ -1,7 +1,7 @@
-import styles from './CalendarFilters.module.scss';
+import styles from './CalendarLegend.module.scss';
 import { filters } from '../../data/calendar.mock';
 
-export default function CalendarFilters() {
+export default function CalendarLegend() {
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.title}>Szybkie filtry</h2>
