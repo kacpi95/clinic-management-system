@@ -314,91 +314,185 @@ async function main() {
     'Zalecana obserwacja.',
   ];
 
-  const slots = [
-    [8, 0],
-    [8, 30],
-    [9, 0],
-    [9, 30],
-    [10, 30],
-    [11, 30],
-    [13, 0],
-    [13, 30],
-    [14, 30],
-    [15, 30],
-  ];
-
   const appointments = [];
 
   let appointmentId = 1;
 
-  for (let day = -14; day <= -1; day++) {
-    const weekDay = getWeekDay(day);
+  const doctorOnePatientIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    if (weekDay === 0 || weekDay === 6) {
-      continue;
-    }
+  const doctorTwoPatientIds = [11, 12, 13, 14, 15];
 
-    const visitsToday = 2 + Math.floor(Math.random() * 4);
-
-    for (let i = 0; i < visitsToday; i++) {
-      const slot = slots[i];
-
-      const patientId = 1 + Math.floor(Math.random() * 15);
-
-      appointments.push({
-        id: appointmentId++,
-        patientId,
-        doctorId: 1,
-
-        startTime: createDateTime(day, slot[0], slot[1]),
-
-        endTime: createDateTime(
-          day,
-          slot[1] === 30 ? slot[0] + 1 : slot[0],
-          slot[1] === 30 ? 0 : 30,
-        ),
-
-        status: Math.random() > 0.12 ? 'COMPLETED' : 'CANCELED',
-
-        reason: randomItem(reasons),
-
-        notes: randomItem(notes),
-      });
-    }
-  }
-
-  const todaySlots = [
-    [8, 0],
-    [9, 0],
-    [10, 30],
-    [13, 0],
-    [14, 30],
-  ];
-
-  for (let i = 0; i < todaySlots.length; i++) {
-    const slot = todaySlots[i];
-
-    appointments.push({
+  function createAppointment({
+    patientId,
+    doctorId,
+    day,
+    hour,
+    minute = 0,
+    status,
+    reason,
+    notes = '',
+  }) {
+    return {
       id: appointmentId++,
 
-      patientId: i + 1,
+      patientId,
+      doctorId,
 
-      doctorId: 1,
-
-      startTime: createDateTime(0, slot[0], slot[1]),
+      startTime: createDateTime(day, hour, minute),
 
       endTime: createDateTime(
-        0,
-        slot[1] === 30 ? slot[0] + 1 : slot[0],
-        slot[1] === 30 ? 0 : 30,
+        day,
+        minute === 30 ? hour + 1 : hour,
+        minute === 30 ? 0 : 30,
       ),
 
-      status: 'PLANNED',
+      status,
+      reason,
+      notes,
+    };
+  }
 
-      reason: randomItem(reasons),
+  const doctorOnePastDays = [-14, -13, -12, -11, -10, -9, -8, -7, -6, -5];
 
-      notes: randomItem(notes),
-    });
+  doctorOnePatientIds.forEach((patientId, index) => {
+    appointments.push(
+      createAppointment({
+        patientId,
+        doctorId: 1,
+        day: doctorOnePastDays[index],
+        hour: 9 + (index % 4),
+        minute: index % 2 === 0 ? 0 : 30,
+        status: index === 3 || index === 8 ? 'CANCELED' : 'COMPLETED',
+        reason: randomItem(reasons),
+        notes: randomItem(notes),
+      }),
+    );
+  });
+
+  const doctorOneHistory = [
+    {
+      day: -8,
+      patientId: 1,
+      hour: 8,
+      minute: 0,
+      status: 'COMPLETED',
+    },
+    {
+      day: -7,
+      patientId: 2,
+      hour: 10,
+      minute: 30,
+      status: 'COMPLETED',
+    },
+    {
+      day: -6,
+      patientId: 3,
+      hour: 13,
+      minute: 0,
+      status: 'CANCELED',
+    },
+    {
+      day: -5,
+      patientId: 4,
+      hour: 9,
+      minute: 30,
+      status: 'COMPLETED',
+    },
+    {
+      day: -4,
+      patientId: 5,
+      hour: 11,
+      minute: 30,
+      status: 'COMPLETED',
+    },
+    {
+      day: -3,
+      patientId: 6,
+      hour: 14,
+      minute: 30,
+      status: 'COMPLETED',
+    },
+    {
+      day: -2,
+      patientId: 7,
+      hour: 10,
+      minute: 30,
+      status: 'CANCELED',
+    },
+    {
+      day: -1,
+      patientId: 8,
+      hour: 13,
+      minute: 30,
+      status: 'COMPLETED',
+    },
+  ];
+
+  for (const appointment of doctorOneHistory) {
+    appointments.push(
+      createAppointment({
+        patientId: appointment.patientId,
+        doctorId: 1,
+        day: appointment.day,
+        hour: appointment.hour,
+        minute: appointment.minute,
+        status: appointment.status,
+        reason: randomItem(reasons),
+        notes: randomItem(notes),
+      }),
+    );
+  }
+
+  const todayAppointments = [
+    {
+      patientId: 1,
+      hour: 8,
+      minute: 0,
+    },
+    {
+      patientId: 2,
+      hour: 9,
+      minute: 30,
+    },
+    {
+      patientId: 3,
+      hour: 11,
+      minute: 0,
+    },
+    {
+      patientId: 4,
+      hour: 13,
+      minute: 30,
+    },
+    {
+      patientId: 5,
+      hour: 15,
+      minute: 0,
+    },
+  ];
+
+  for (const appointment of todayAppointments) {
+    const endTime = createDateTime(
+      0,
+      appointment.minute === 30 ? appointment.hour + 1 : appointment.hour,
+
+      appointment.minute === 30 ? 0 : 30,
+    );
+
+    const status = endTime < new Date() ? 'COMPLETED' : 'PLANNED';
+
+    appointments.push(
+      createAppointment({
+        patientId: appointment.patientId,
+        doctorId: 1,
+        day: 0,
+        hour: appointment.hour,
+        minute: appointment.minute,
+        status,
+        reason: randomItem(reasons),
+        notes: randomItem(notes),
+      }),
+    );
   }
 
   for (let day = 1; day <= 14; day++) {
@@ -408,171 +502,283 @@ async function main() {
       continue;
     }
 
-    const visitsToday = 3 + Math.floor(Math.random() * 5);
+    const dailySlots = [
+      {
+        hour: 8,
+        minute: 0,
+      },
+      {
+        hour: 9,
+        minute: 30,
+      },
+      {
+        hour: 11,
+        minute: 0,
+      },
+      {
+        hour: 13,
+        minute: 30,
+      },
+    ];
 
-    const availableSlots = [...slots];
+    dailySlots.forEach((slot, index) => {
 
-    for (let i = 0; i < visitsToday; i++) {
-      const randomIndex = Math.floor(Math.random() * availableSlots.length);
+      const patientIndex = (day + index) % doctorOnePatientIds.length;
+      const patientId = doctorOnePatientIds[patientIndex];
 
-      const slot = availableSlots.splice(randomIndex, 1)[0];
-
-      const patientId = 1 + Math.floor(Math.random() * 15);
-
-      appointments.push({
-        id: appointmentId++,
-
-        patientId,
-
-        doctorId: 1,
-
-        startTime: createDateTime(day, slot[0], slot[1]),
-
-        endTime: createDateTime(
+      appointments.push(
+        createAppointment({
+          patientId,
+          doctorId: 1,
           day,
-          slot[1] === 30 ? slot[0] + 1 : slot[0],
-          slot[1] === 30 ? 0 : 30,
-        ),
-
-        status: 'PLANNED',
-
-        reason: randomItem(reasons),
-
-        notes: randomItem(notes),
-      });
-    }
+          hour: slot.hour,
+          minute: slot.minute,
+          status: 'PLANNED',
+          reason: randomItem(reasons),
+          notes: randomItem(notes),
+        }),
+      );
+    });
   }
 
-  for (let day = -5; day <= 14; day++) {
+  doctorTwoPatientIds.forEach((patientId, index) => {
+    appointments.push(
+      createAppointment({
+        patientId,
+        doctorId: 2,
+
+        day: -5 + index,
+
+        hour: 10 + (index % 3),
+
+        minute: index % 2 === 0 ? 0 : 30,
+
+        status: index === 2 ? 'CANCELED' : 'COMPLETED',
+
+        reason: randomItem(reasons),
+        notes: randomItem(notes),
+      }),
+    );
+  });
+
+  for (let day = 1; day <= 14; day++) {
     const weekDay = getWeekDay(day);
 
     if (![1, 3, 5].includes(weekDay)) {
       continue;
     }
 
-    const visitsToday = 2 + Math.floor(Math.random() * 3);
+    const firstPatientIndex = day % doctorTwoPatientIds.length;
 
-    const availableSlots = [...slots];
+    const secondPatientIndex = (day + 1) % doctorTwoPatientIds.length;
 
-    for (let i = 0; i < visitsToday; i++) {
-      const randomIndex = Math.floor(Math.random() * availableSlots.length);
-
-      const slot = availableSlots.splice(randomIndex, 1)[0];
-
-      const patientId = 1 + Math.floor(Math.random() * 15);
-
-      appointments.push({
-        id: appointmentId++,
-
-        patientId,
+    appointments.push(
+      createAppointment({
+        patientId: doctorTwoPatientIds[firstPatientIndex],
 
         doctorId: 2,
 
-        startTime: createDateTime(day, slot[0], slot[1]),
+        day,
 
-        endTime: createDateTime(
-          day,
-          slot[1] === 30 ? slot[0] + 1 : slot[0],
-          slot[1] === 30 ? 0 : 30,
-        ),
+        hour: 10,
+        minute: 0,
 
-        status: day < 0 ? 'COMPLETED' : 'PLANNED',
+        status: 'PLANNED',
 
         reason: randomItem(reasons),
-
         notes: randomItem(notes),
-      });
-    }
+      }),
+
+      createAppointment({
+        patientId: doctorTwoPatientIds[secondPatientIndex],
+
+        doctorId: 2,
+
+        day,
+
+        hour: 12,
+        minute: 30,
+
+        status: 'PLANNED',
+
+        reason: randomItem(reasons),
+        notes: randomItem(notes),
+      }),
+    );
   }
 
   await prisma.appointment.createMany({
     data: appointments,
   });
 
+  console.log(`Created ${appointments.length} appointments`);
+
+  console.log(
+    `Doctor 1 appointments: ${
+      appointments.filter((appointment) => appointment.doctorId === 1).length
+    }`,
+  );
+
+  console.log(
+    `Doctor 2 appointments: ${
+      appointments.filter((appointment) => appointment.doctorId === 2).length
+    }`,
+  );
+
+  console.log(
+    `Planned appointments: ${
+      appointments.filter((appointment) => appointment.status === 'PLANNED')
+        .length
+    }`,
+  );
+
+  console.log(
+    `Completed appointments: ${
+      appointments.filter((appointment) => appointment.status === 'COMPLETED')
+        .length
+    }`,
+  );
+
+  console.log(
+    `Canceled appointments: ${
+      appointments.filter((appointment) => appointment.status === 'CANCELED')
+        .length
+    }`,
+  );
+
   const diagnoses = [
+    'Stan po leczeniu zachowawczym',
     'Zapalenie gardła',
-    'Przeziębienie',
     'Nadciśnienie tętnicze',
     'Migrena',
-    'Stan po zabiegu',
-    'Zapalenie zatok',
-    'Ból kręgosłupa',
-    'Przeciążenie mięśni',
-    'Alergia sezonowa',
-    'Infekcja wirusowa',
-    'Zapalenie oskrzeli',
-    'Zapalenie ucha',
+    'Ból odcinka lędźwiowego',
+    'Przeciążenie stawu kolanowego',
+    'Infekcja górnych dróg oddechowych',
+    'Stan po zabiegu chirurgicznym',
+    'Dolegliwości bólowe brzucha',
+    'Podejrzenie przepukliny',
   ];
 
   const recommendations = [
-    'Kontrola za 2 tygodnie.',
-    'Odpoczynek i odpowiednie nawodnienie.',
-    'Przyjmować leki zgodnie z zaleceniami.',
-    'Wykonać badania kontrolne.',
-    'Unikać wysiłku fizycznego.',
-    'Zgłosić się ponownie w razie pogorszenia.',
-    'Kontrola za miesiąc.',
-    'Zwiększyć aktywność fizyczną.',
-    'Ograniczyć stres.',
-    'Zmiana diety.',
+    'Kontrola za 4 tygodnie',
+    'Odpoczynek i nawodnienie',
+    'Kontrola ciśnienia',
+    'Ograniczyć wysiłek fizyczny',
+    'Kontrola za miesiąc',
+    'Wykonać badania laboratoryjne',
+    'Wykonać USG',
+    'Wykonać RTG',
+    'Kontynuować dotychczasowe leczenie',
+    'Obserwacja i ponowna konsultacja w razie pogorszenia',
   ];
 
   const medications = [
-    'Ibuprofen',
-    'Paracetamol',
+    'Brak nowych leków',
+    'Paracetamol doraźnie',
+    'Ibuprofen doraźnie',
     'Amotaks',
-    'Augmentin',
-    'No-Spa',
-    'Ketonal',
-    'Diclofenac',
     'Prestarium',
     'Sumatriptan',
-    'Brak nowych leków',
+    'Ketoprofen',
+    'Leczenie objawowe',
   ];
 
-  const visitNotes = [];
+  const visitNotesText = [
+    'Stan pacjenta stabilny.',
+    'Pacjent zgłasza poprawę.',
+    'Bez nowych dolegliwości.',
+    'Zalecono dalszą obserwację.',
+    'Pacjent poinformowany o dalszym postępowaniu.',
+    'Kontrola przebiegła bez powikłań.',
+  ];
 
-  let noteId = 1;
+  const completedAppointments = appointments.filter(
+    (appointment) => appointment.status === 'COMPLETED',
+  );
 
-  for (const appointment of appointments) {
-    if (appointment.status !== 'COMPLETED') {
-      continue;
-    }
+  const visitNotes = completedAppointments.map((appointment, index) => ({
+    id: index + 1,
 
-    visitNotes.push({
-      id: noteId++,
+    patientId: appointment.patientId,
 
-      appointmentId: appointment.id,
+    appointmentId: appointment.id,
 
-      patientId: appointment.patientId,
+    doctorId: appointment.doctorId,
 
-      doctorId: appointment.doctorId,
+    diagnosis: randomItem(diagnoses),
 
-      diagnosis: randomItem(diagnoses),
+    recommendations: randomItem(recommendations),
 
-      recommendations: randomItem(recommendations),
+    medications: randomItem(medications),
 
-      medications: randomItem(medications),
-
-      notes:
-        'Pacjent zgłosił się na wizytę. Stan ogólny dobry. Zalecono dalszą obserwację.',
-    });
-  }
+    notes: randomItem(visitNotesText),
+  }));
 
   await prisma.visitNote.createMany({
     data: visitNotes,
   });
 
-  console.log('Seed finished successfully');
-  console.log('Login credentials:');
+  const doctorOneAppointments = appointments.filter(
+    (appointment) => appointment.doctorId === 1,
+  );
+
+  const doctorTwoAppointments = appointments.filter(
+    (appointment) => appointment.doctorId === 2,
+  );
+
+  const doctorOnePlanned = doctorOneAppointments.filter(
+    (appointment) => appointment.status === 'PLANNED',
+  );
+
+  const doctorOneCompleted = doctorOneAppointments.filter(
+    (appointment) => appointment.status === 'COMPLETED',
+  );
+
+  const doctorOneCanceled = doctorOneAppointments.filter(
+    (appointment) => appointment.status === 'CANCELED',
+  );
+
+  console.log('');
+  console.log('====================================');
+  console.log('SEED FINISHED SUCCESSFULLY');
+  console.log('====================================');
+
+  console.log('');
+  console.log('Patients: 15');
+  console.log(`Appointments: ${appointments.length}`);
+  console.log(`Visit notes: ${visitNotes.length}`);
+
+  console.log('');
+  console.log('DOCTOR 1 - Kacper Nowak');
+  console.log('------------------------------------');
+  console.log(`Patients: ${doctorOnePatientIds.length}`);
+  console.log(`Appointments: ${doctorOneAppointments.length}`);
+  console.log(`Planned: ${doctorOnePlanned.length}`);
+  console.log(`Completed: ${doctorOneCompleted.length}`);
+  console.log(`Canceled: ${doctorOneCanceled.length}`);
+
+  console.log('');
+  console.log('DOCTOR 2 - Dawid Korona');
+  console.log('------------------------------------');
+  console.log(`Patients: ${doctorTwoPatientIds.length}`);
+  console.log(`Appointments: ${doctorTwoAppointments.length}`);
+
+  console.log('');
+  console.log('LOGIN CREDENTIALS');
+  console.log('------------------------------------');
   console.log('doctor1@clinic.pl / 123456');
   console.log('doctor2@clinic.pl / 123456');
   console.log('admin@clinic.pl / 123456');
+
+  console.log('');
 }
 
 main()
-  .catch((e) => {
-    console.error('❌ Seed failed:', e);
+  .catch((error) => {
+    console.error('');
+    console.error('SEED FAILED');
+    console.error(error);
+
     process.exit(1);
   })
   .finally(async () => {

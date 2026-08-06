@@ -8,7 +8,7 @@ import type {
 } from '../types/patient.types';
 
 export function getPatients() {
-  return apiClient<Patient[]>('/patients');
+  return apiClient<Patient[]>('/patients?_limit=100');
 }
 
 export function getPatientById(id: number) {

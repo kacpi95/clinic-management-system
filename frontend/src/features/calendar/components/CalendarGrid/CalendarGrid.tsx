@@ -8,8 +8,6 @@ import styles from './CalendarGrid.module.scss';
 import { useCalendarAppointments } from '../../hooks/useCalendarAppointments';
 import type { CalendarGridProps } from '../../types/calendarHeader.types';
 
-
-
 export default function CalendarGrid({ currentDate }: CalendarGridProps) {
   const calendarRef = useRef<FullCalendar | null>(null);
 
