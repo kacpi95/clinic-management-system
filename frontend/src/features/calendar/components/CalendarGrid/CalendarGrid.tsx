@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import plLocale from '@fullcalendar/core/locales/pl';
+import type { EventClickArg } from '@fullcalendar/core';
 
 import styles from './CalendarGrid.module.scss';
 import { useCalendarAppointments } from '../../hooks/useCalendarAppointments';
@@ -10,6 +12,7 @@ import type { CalendarGridProps } from '../../types/calendarHeader.types';
 
 export default function CalendarGrid({ currentDate }: CalendarGridProps) {
   const calendarRef = useRef<FullCalendar | null>(null);
+  const navigate = useNavigate();
 
   const { calendarAppointments } = useCalendarAppointments();
 
@@ -42,11 +45,17 @@ export default function CalendarGrid({ currentDate }: CalendarGridProps) {
           : '#dc2626',
 
     extendedProps: {
-      status: appointment.status,
       patientId: appointment.patientId,
+      status: appointment.status,
       reason: appointment.reason,
     },
   }));
+
+  const handleEventClick = (info: EventClickArg) => {
+    const patientId = info.event.extendedProps.patientId;
+
+    navigate(`/dashboard/patients/${patientId}`);
+  };
 
   return (
     <section className={styles.wrapper}>
@@ -61,6 +70,7 @@ export default function CalendarGrid({ currentDate }: CalendarGridProps) {
         headerToolbar={false}
         fixedWeekCount={false}
         dayMaxEvents={2}
+        eventClick={handleEventClick}
         eventTimeFormat={{
           hour: '2-digit',
           minute: '2-digit',
