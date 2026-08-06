@@ -2,8 +2,10 @@
 
 .wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
 }
 
 .content {
@@ -14,65 +16,73 @@
 
 .eyebrow {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: $secondary;
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
-  font-size: 2.4rem;
+  font-size: 3rem;
   line-height: 1;
   color: $text-default;
 }
 
-.description {
-  margin: 0;
-  max-width: 420px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: $secondary;
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
-.actions {
+.month {
+  margin: 0;
+  min-width: 190px;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: $text-default;
+}
+
+.arrowButton {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: $surface-bg-alt;
+  color: $text-default;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: $transition-fast;
 
-  button {
-    min-height: 42px;
-    padding: 0 18px;
-    border: none;
-    border-radius: $radius-sm;
-    background: $surface-bg-alt;
-    font-family: $text-body;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: $secondary;
-    cursor: pointer;
-    transition: $transition-fast;
-
-    &:hover {
-      transform: translateY(-1px);
-    }
+  &:hover {
+    background: $primary;
+    color: $button-text;
+    transform: translateY(-2px);
   }
 }
 
-.active {
-  background: $primary !important;
-  color: $button-text !important;
-}
-
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .wrapper {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .navigation {
+    width: 100%;
+    justify-content: center;
   }
 
   .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
+  }
+
+  .month {
+    min-width: auto;
+    font-size: 1.2rem;
   }
 }
