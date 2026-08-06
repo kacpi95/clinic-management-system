@@ -1,9 +1,14 @@
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
+
 import styles from './CalendarHeader.module.scss';
+import type { CalendarHeaderProps } from '../../types/calendarHeader.types';
 
-export default function CalendarHeader() {
-  const date = new Date();
-
-  const formattedDate = date.toLocaleDateString('pl-PL', {
+export default function CalendarHeader({
+  currentDate,
+  onPrevious,
+  onNext,
+}: CalendarHeaderProps) {
+  const formattedDate = currentDate.toLocaleDateString('pl-PL', {
     month: 'long',
     year: 'numeric',
   });
@@ -12,19 +17,30 @@ export default function CalendarHeader() {
     formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 
   return (
-    <div className={styles.wrapper}>
+    <header className={styles.wrapper}>
       <div className={styles.content}>
-        <p className={styles.eyebrow}>HARMONOGRAM</p>
-        <h1 className={styles.title}>{capitalizedDate}</h1>
-        <p className={styles.description}>
-          Zarządzaj wizytami i harmonogramem.
-        </p>
+        <p className={styles.eyebrow}>Zarządzaj wizytami i harmonogramem</p>
+        <h1 className={styles.title}>HARMONOGRAM</h1>
       </div>
-      <div className={styles.actions}>
-        <button className={styles.active}>Miesiąc</button>
-        <button>Tydzień</button>
-        <button>Dzień</button>
+      <div className={styles.navigation}>
+        <button
+          type='button'
+          className={styles.arrowButton}
+          onClick={onPrevious}
+          aria-label='Poprzedni miesiąc'
+        >
+          <HiChevronLeft />
+        </button>
+        <h2 className={styles.month}>{capitalizedDate}</h2>
+        <button
+          type='button'
+          className={styles.arrowButton}
+          onClick={onNext}
+          aria-label='Następny miesiąc'
+        >
+          <HiChevronRight />
+        </button>
       </div>
-    </div>
+    </header>
   );
 }
