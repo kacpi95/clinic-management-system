@@ -39,7 +39,7 @@ export default function Calendar() {
         </div>
 
         <div className={styles.mainContent}>
-          <CalendarGrid />
+          <CalendarGrid currentDate={currentDate} />
         </div>
       </div>
     </div>

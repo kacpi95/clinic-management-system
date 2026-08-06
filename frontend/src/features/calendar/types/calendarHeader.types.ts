@@ -3,3 +3,7 @@ export type CalendarHeaderProps = {
   onPrevious: () => void;
   onNext: () => void;
 };
+
+export type CalendarGridProps = {
+  currentDate: Date;
+};

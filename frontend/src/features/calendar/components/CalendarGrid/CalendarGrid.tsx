@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -5,19 +6,58 @@ import plLocale from '@fullcalendar/core/locales/pl';
 
 import styles from './CalendarGrid.module.scss';
 import { useCalendarAppointments } from '../../hooks/useCalendarAppointments';
-import { mapAppointmentsToEvents } from '../../utils/mapAppointmentsToEvents';
+import type { CalendarGridProps } from '../../types/calendarHeader.types';
 
-export default function CalendarGrid() {
+
+
+export default function CalendarGrid({ currentDate }: CalendarGridProps) {
+  const calendarRef = useRef<FullCalendar | null>(null);
+
   const { calendarAppointments } = useCalendarAppointments();
 
-  const events = mapAppointmentsToEvents(calendarAppointments);
+  useEffect(() => {
+    const calendarApi = calendarRef.current?.getApi();
+
+    if (!calendarApi) return;
+
+    calendarApi.gotoDate(currentDate);
+  }, [currentDate]);
+
+  const events = calendarAppointments.map((appointment) => ({
+    id: appointment.id.toString(),
+    title: `${appointment.patient?.firstName} ${appointment.patient?.lastName}`,
+    start: appointment.startTime,
+    end: appointment.endTime,
+
+    backgroundColor:
+      appointment.status === 'PLANNED'
+        ? '#0056b3'
+        : appointment.status === 'COMPLETED'
+          ? '#566075'
+          : '#dc2626',
+
+    borderColor:
+      appointment.status === 'PLANNED'
+        ? '#0056b3'
+        : appointment.status === 'COMPLETED'
+          ? '#566075'
+          : '#dc2626',
+
+    extendedProps: {
+      status: appointment.status,
+      patientId: appointment.patientId,
+      reason: appointment.reason,
+    },
+  }));
 
   return (
     <section className={styles.wrapper}>
       <FullCalendar
+        ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
         locale={plLocale}
         initialView='dayGridMonth'
+        initialDate={currentDate}
         height='auto'
         events={events}
         headerToolbar={false}
