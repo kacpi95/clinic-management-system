@@ -32,7 +32,7 @@ export default function MainCard() {
 
       <div className={styles.cardContent}>
         <h2>{stats.planned}</h2>
-        <p>Zaplanowane wizyty</p>
+        <p>Zaplanowane wizyty na dzisiaj</p>
       </div>
 
       <div className={styles.cardFooter}>

@@ -1,7 +1,7 @@
 @use '../../../../styles/variables' as *;
 
 .smallCard,
-.alertCard {
+.appointmentCard {
   border-radius: $radius-md;
   background: $surface-bg-alt;
 }
@@ -13,7 +13,7 @@
 }
 
 .smallCard,
-.alertCard {
+.appointmentCard {
   padding: 18px;
 }
 
@@ -42,8 +42,4 @@
   font-size: 30px;
 }
 
-.alertCard {
-  h3 {
-    color: $error;
-  }
-}
+

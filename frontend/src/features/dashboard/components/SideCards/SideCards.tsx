@@ -1,10 +1,17 @@
 import { IoPersonAdd } from 'react-icons/io5';
-import { IoIosWarning } from 'react-icons/io';
+import { FaRegCalendar } from 'react-icons/fa';
 
 import styles from './SideCards.module.scss';
-import { stats } from '../../data/stats.mock';
+import { getTomorrowAppointments } from '../../utils/getTomorrowAppointments';
+import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
+import { usePatients } from '../../../patients/hooks/usePatients';
 
 export default function SideCards() {
+  const { patients } = usePatients();
+
+  const { calendarAppointments } = useCalendarAppointments();
+
+  const tomorrowAppointments = getTomorrowAppointments(calendarAppointments);
   return (
     <div className={styles.sideCards}>
       <article className={styles.smallCard}>
@@ -14,21 +21,21 @@ export default function SideCards() {
           </span>
 
           <div>
-            <h3>{stats.newPatients}</h3>
-            <p>Nowi pacjenci</p>
+            <h3>{patients.length}</h3>
+            <p>Moi pacjenci</p>
           </div>
         </div>
       </article>
 
-      <article className={styles.alertCard}>
+      <article className={styles.appointmentCard}>
         <div className={styles.smallCardContent}>
           <span className={styles.icon}>
-            <IoIosWarning />
+            <FaRegCalendar />
           </span>
 
           <div>
-            <h3>{stats.alerts}</h3>
-            <p>Ostrzeżenia</p>
+            <h3>{tomorrowAppointments.length}</h3>
+            <p>Wizyty jutro</p>
           </div>
         </div>
       </article>
