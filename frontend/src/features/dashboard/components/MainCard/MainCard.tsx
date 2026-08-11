@@ -1,10 +1,18 @@
 import { FaRegCalendar } from 'react-icons/fa';
 
 import styles from './MainCard.module.scss';
-import { stats } from '../../data/stats.mock';
+import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
+import { getAppointmentStats } from '../../../appointments/utils/getAppointmentStats';
+import { getTodayAppointments } from '../../utils/getTodayAppointments';
 
 export default function MainCard() {
   const date = new Date();
+
+  const { calendarAppointments } = useCalendarAppointments();
+
+  const todayAppointments = getTodayAppointments(calendarAppointments);
+
+  const stats = getAppointmentStats(todayAppointments);
 
   const formattedDate = date.toLocaleDateString('pl-PL', {
     weekday: 'long',
@@ -29,7 +37,7 @@ export default function MainCard() {
 
       <div className={styles.cardFooter}>
         <span>{stats.completed} zakończone</span>
-        <span>{stats.active} aktywne</span>
+        <span>{stats.canceled} anulowane</span>
       </div>
     </article>
   );
