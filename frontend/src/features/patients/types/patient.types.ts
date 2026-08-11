@@ -26,12 +26,14 @@ export interface CreatePatientData {
 
 export type PatientsHeaderProps = {
   searchTerm: string;
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  setSearchTerm: (value: string) => void;
   patients: Patient[];
 };
 
 export type PatientsTableProps = {
   searchTerm: string;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type UpdatePatientData = Partial<CreatePatientData>;

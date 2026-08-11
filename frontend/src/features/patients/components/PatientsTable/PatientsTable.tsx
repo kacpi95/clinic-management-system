@@ -9,12 +9,18 @@ import styles from './PatientsTable.module.scss';
 import { usePatients } from '../../hooks/usePatients';
 import type { PatientsTableProps } from '../../types/patient.types';
 
-export default function PatientsTable({ searchTerm }: PatientsTableProps) {
+export default function PatientsTable({
+  searchTerm,
+  page,
+  setPage,
+}: PatientsTableProps) {
   const navigate = useNavigate();
 
   const { patients, isLoading, error } = usePatients();
 
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
+
+  const patientsPerPage = 8;
 
   const filteredPatients = useMemo(() => {
     const normalizedSearchTerm = searchTerm.toLowerCase().trim();
@@ -34,6 +40,15 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
       );
     });
   }, [patients, searchTerm]);
+
+  const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
+
+  const visiblePatients = useMemo(() => {
+    const startIndex = (page - 1) * patientsPerPage;
+    const endIndex = startIndex + patientsPerPage;
+
+    return filteredPatients.slice(startIndex, endIndex);
+  }, [filteredPatients, page]);
 
   if (isLoading) {
     return <div>Ładowanie danych</div>;
@@ -55,23 +70,25 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
         </div>
 
         <div className={styles.body}>
-          {filteredPatients.map((patient) => (
+          {visiblePatients.map((patient) => (
             <div key={patient.id} className={styles.row}>
               <div className={styles.patient}>
                 <span
                   className={styles.avatar}
                   style={{ backgroundImage: `url(${patientOne})` }}
-                ></span>
+                />
                 <strong>
                   {patient.firstName} {patient.lastName}
                 </strong>
               </div>
+
               <div className={styles.cell}>{patient.pesel}</div>
               <div className={styles.cell}>{patient.email}</div>
               <div className={styles.cell}>{patient.phone}</div>
 
               <div className={styles.actions}>
                 <button
+                  type='button'
                   onClick={() => {
                     setOpenedMenu(
                       openedMenu === patient.id ? null : patient.id,
@@ -81,9 +98,11 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
                 >
                   <BsThreeDots />
                 </button>
+
                 {openedMenu === patient.id && (
                   <div className={styles.dropDown}>
                     <button
+                      type='button'
                       className={styles.menuButton}
                       onClick={() =>
                         navigate(`/dashboard/patients/${patient.id}`)
@@ -94,6 +113,7 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
                     </button>
 
                     <button
+                      type='button'
                       className={styles.menuButton}
                       onClick={() =>
                         navigate(`/dashboard/patients/${patient.id}/edit`)
@@ -109,6 +129,30 @@ export default function PatientsTable({ searchTerm }: PatientsTableProps) {
           ))}
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            type='button'
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            Poprzednia
+          </button>
+
+          <span>
+            {page} / {totalPages}
+          </span>
+
+          <button
+            type='button'
+            disabled={page === totalPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Następna
+          </button>
+        </div>
+      )}
     </section>
   );
 }

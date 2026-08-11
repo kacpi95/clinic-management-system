@@ -7,14 +7,21 @@ import styles from './Patients.module.scss';
 
 export default function Patients() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
+
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setPage(1);
+  };
+
   return (
     <div className={styles.wrapper}>
       <PatientsHeader
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        setSearchTerm={handleSearchChange}
         patients={[]}
       />
-      <PatientsTable searchTerm={searchTerm} />
+      <PatientsTable searchTerm={searchTerm} page={page} setPage={setPage} />
       <div className={styles.bottomGrid}>
         <PatientCapacityCard />
       </div>
