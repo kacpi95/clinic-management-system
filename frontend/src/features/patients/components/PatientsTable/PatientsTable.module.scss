@@ -167,3 +167,73 @@
   font-size: 1.1rem;
   color: $primary;
 }
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-top: 20px;
+
+  span {
+    order: -1;
+    width: 100%;
+    text-align: center;
+    font-family: $text-body;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $secondary;
+  }
+
+  button {
+    flex: 1;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid rgba(86, 96, 117, 0.16);
+    border-radius: $radius-sm;
+    background: $surface-bg-alt;
+    color: $text-default;
+    font-family: $text-body;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover:not(:disabled) {
+      border-color: $primary;
+      background: rgba(0, 86, 179, 0.04);
+      color: $primary;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .pagination {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    gap: 12px;
+
+    span {
+      order: initial;
+      width: auto;
+      min-width: 70px;
+    }
+
+    button {
+      flex: initial;
+      min-width: 110px;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
