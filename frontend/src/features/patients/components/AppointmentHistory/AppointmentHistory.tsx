@@ -1,12 +1,16 @@
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import { useState } from 'react';
+import { MdDeleteOutline } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
 import type { Appointment } from '../../../appointments/types/appointment.type';
 import styles from './AppointmentHistory.module.scss';
 import { getVisitWord } from '../../utils/getVisitWord';
+import { deleteAppointment } from '../../../appointments/services/appointment.api';
 
 type Props = {
   appointments: Appointment[];
+  onAppointmentDeleted: () => void;
 };
 
 const statusLabels = {
@@ -15,8 +19,29 @@ const statusLabels = {
   CANCELED: 'Anulowana',
 };
 
-export default function AppointmentHistory({ appointments }: Props) {
+export default function AppointmentHistory({
+  appointments,
+  onAppointmentDeleted,
+}: Props) {
   const [openedId, setOpenedId] = useState<number | null>(null);
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteAppointment(id);
+
+      await onAppointmentDeleted();
+      
+      setOpenedId(null);
+
+      toast.success('Wizyta zostałą usunięta');
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error instanceof Error ? error.message : 'Nie udało się usunąć wizyty',
+      );
+    }
+  };
 
   return (
     <section className={styles.wrapper}>
@@ -88,6 +113,18 @@ export default function AppointmentHistory({ appointments }: Props) {
 
                 <p>{appointment.notes || 'Brak notatki.'}</p>
               </div>
+              {appointment.status !== 'COMPLETED' && (
+                <div className={styles.actions}>
+                  <button
+                    type='button'
+                    className={styles.deleteButton}
+                    onClick={() => handleDelete(appointment.id)}
+                  >
+                    <MdDeleteOutline />
+                    Usuń wizytę
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </article>

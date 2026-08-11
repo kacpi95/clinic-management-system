@@ -12,7 +12,7 @@ export default function PatientDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { patient, isLoading, error } = usePatient(Number(id));
+  const { patient, isLoading, error, reloadPatient } = usePatient(Number(id));
 
   if (isLoading) {
     return <div>Ładowanie danych...</div>;
@@ -59,7 +59,10 @@ export default function PatientDetails() {
 
       <PatientInfoCard patient={patient} />
 
-      <AppointmentHistory appointments={patient.appointments} />
+      <AppointmentHistory
+        appointments={patient.appointments}
+        onAppointmentDeleted={reloadPatient}
+      />
 
       <VisitNotes visitNotes={patient.visitNotes} />
     </div>

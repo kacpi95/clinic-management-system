@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getPatientById } from '../services/patients.api';
 import type { PatientDetails } from '../types/patient.types';
@@ -8,32 +8,35 @@ export function usePatient(id: number) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    async function loadPatient() {
-      setIsLoading(true);
-
-      try {
-        const data = await getPatientById(id);
-        console.log(data);
-        setPatient(data);
-      } catch (error) {
-        const message =
-          error instanceof Error ? error.message : 'Unknown error';
-
-        setError(`Failed to load patient: ${message}`);
-      } finally {
-        setIsLoading(false);
-      }
+  const loadPatient = useCallback(async () => {
+    if (!id) {
+      return;
     }
 
-    if (id) {
-      loadPatient();
+    setIsLoading(true);
+
+    try {
+      const data = await getPatientById(id);
+
+      setPatient(data);
+      setError('');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+
+      setError(`Failed to load patient: ${message}`);
+    } finally {
+      setIsLoading(false);
     }
   }, [id]);
+
+  useEffect(() => {
+    loadPatient();
+  }, [loadPatient]);
 
   return {
     patient,
     isLoading,
     error,
+    reloadPatient: loadPatient,
   };
 }
