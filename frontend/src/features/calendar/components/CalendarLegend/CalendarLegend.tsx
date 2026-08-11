@@ -1,8 +1,11 @@
 import styles from './CalendarLegend.module.scss';
 import { useCalendarAppointments } from '../../hooks/useCalendarAppointments';
+import { getAppointmentStats } from '../../../appointments/utils/getAppointmentStats';
 
 export default function CalendarLegend() {
   const { isLoading, error, calendarAppointments } = useCalendarAppointments();
+
+  const stats = getAppointmentStats(calendarAppointments);
 
   if (isLoading) {
     return <div>Ładowanie...</div>;
@@ -12,35 +15,23 @@ export default function CalendarLegend() {
     return <div>error</div>;
   }
 
-  const plannedCount = calendarAppointments.filter(
-    (appointment) => appointment.status === 'PLANNED',
-  ).length;
-
-  const completedCount = calendarAppointments.filter(
-    (appointment) => appointment.status === 'COMPLETED',
-  ).length;
-
-  const canceledCount = calendarAppointments.filter(
-    (appointment) => appointment.status === 'CANCELED',
-  ).length;
-
   const filters = [
     {
       id: 1,
       name: 'Zaplanowane',
-      number: plannedCount,
+      number: stats.planned,
       variant: 'planned',
     },
     {
       id: 2,
       name: 'Zakończone',
-      number: completedCount,
+      number: stats.completed,
       variant: 'completed',
     },
     {
       id: 3,
       name: 'Anulowane',
-      number: canceledCount,
+      number: stats.canceled,
       variant: 'canceled',
     },
   ];
