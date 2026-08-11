@@ -141,3 +141,52 @@
     color: $text-default;
   }
 }
+.actions {
+  display: flex;
+  margin-top: 20px;
+}
+
+.deleteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: $radius-sm;
+  background: rgba(220, 38, 38, 0.06);
+  color: $error;
+  font-family: $text-body;
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: $transition-fast;
+
+  svg {
+    font-size: 1.1rem;
+  }
+
+  &:hover {
+    background: $error;
+    border-color: $error;
+    color: $button-text;
+  }
+}
+
+@media (min-width: 768px) {
+  .actions {
+    justify-content: flex-end;
+  }
+
+  .deleteButton {
+    width: auto;
+    min-width: 150px;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
