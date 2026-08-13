@@ -1,7 +1,31 @@
 import styles from './PatientFlowInsight.module.scss';
-import { flowItems } from '../../data/stats.mock';
+import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
+import { getWeeklyAppointmentStats } from '../../utils/getWeeklyAppointmentStats';
 
 export default function PatientFlowInsight() {
+  const { calendarAppointments } = useCalendarAppointments();
+
+  const stats = getWeeklyAppointmentStats(calendarAppointments);
+
+  const flowItems = [
+    {
+      label: 'Wizyty w tym tygodniu',
+      value: stats.total,
+    },
+    {
+      label: 'Zakończone',
+      value: stats.completed,
+    },
+    {
+      label: 'Zaplanowane',
+      value: stats.planned,
+    },
+    {
+      label: 'Anulowane',
+      value: stats.canceled,
+    },
+  ];
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.header}>
@@ -10,8 +34,13 @@ export default function PatientFlowInsight() {
       </div>
 
       <div className={styles.trendBox}>
-        <strong>+12%</strong>
-        <span>Wzrost względem poprzedniego tygodnia</span>
+        <strong>
+          {stats.change === null
+            ? '—'
+            : `${stats.change > 0 ? '+' : ''}${stats.change}%`}
+        </strong>
+
+        <span>Względem poprzedniego tygodnia</span>
       </div>
 
       <ul className={styles.list}>
