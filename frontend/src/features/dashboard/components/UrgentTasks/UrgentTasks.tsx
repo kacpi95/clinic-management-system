@@ -1,30 +1,45 @@
 import styles from './UrgentTasks.module.scss';
-import { tasks } from '../../data/stats.mock';
+import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
+import { getWeeklyWorkload } from '../../utils/getWeeklyWorkload';
 
-export default function UrgentTasks() {
+export default function WeeklyWorkload() {
+  const { calendarAppointments, isLoading, error } = useCalendarAppointments();
+
+  const workload = getWeeklyWorkload(calendarAppointments);
+
+  const maxValue = Math.max(...workload.map((item) => item.value), 1);
+
+  if (isLoading) {
+    return <div>Ładowanie...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.header}>
         <div>
-          <p className={styles.eyebrow}>FOLLOW-UP</p>
-          <h2>Pilne zadania</h2>
+          <p className={styles.eyebrow}>OBCIĄŻENIE</p>
+          <h2>Ten tydzień</h2>
         </div>
-
-        <span className={styles.counter}>{tasks.length}</span>
       </div>
-
       <ul className={styles.list}>
-        {tasks.map((task) => (
-          <li key={task.title} className={styles.item}>
-            <div className={styles.dot} />
+        {workload.map((item) => (
+          <li key={item.label} className={styles.item}>
+            <div className={styles.itemHeader}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
 
-            <div className={styles.content}>
-              <div className={styles.itemHeader}>
-                <h3>{task.title}</h3>
-                <span>{task.priority}</span>
-              </div>
-
-              <p>{task.description}</p>
+            <div className={styles.progressBar}>
+              <div
+                className={styles.progress}
+                style={{
+                  width: `${(item.value / maxValue) * 100}%`,
+                }}
+              />
             </div>
           </li>
         ))}
