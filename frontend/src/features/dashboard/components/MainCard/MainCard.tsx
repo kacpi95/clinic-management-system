@@ -4,6 +4,7 @@ import styles from './MainCard.module.scss';
 import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
 import { getAppointmentStats } from '../../../appointments/utils/getAppointmentStats';
 import { getTodayAppointments } from '../../utils/getTodayAppointments';
+import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDisplayStatus';
 
 export default function MainCard() {
   const date = new Date();
@@ -12,7 +13,14 @@ export default function MainCard() {
 
   const todayAppointments = getTodayAppointments(calendarAppointments);
 
-  const stats = getAppointmentStats(todayAppointments);
+  const appointmentsWithCurrentStatus = todayAppointments.map(
+    (appointment) => ({
+      ...appointment,
+      status: getAppointmentDisplayStatus(appointment),
+    }),
+  );
+
+  const stats = getAppointmentStats(appointmentsWithCurrentStatus);
 
   const formattedDate = date.toLocaleDateString('pl-PL', {
     weekday: 'long',
@@ -32,7 +40,7 @@ export default function MainCard() {
 
       <div className={styles.cardContent}>
         <h2>{stats.planned}</h2>
-        <p>Zaplanowane wizyty na dzisiaj</p>
+        <p>Wizyty na dzisiaj</p>
       </div>
 
       <div className={styles.cardFooter}>

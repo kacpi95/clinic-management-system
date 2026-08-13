@@ -7,6 +7,7 @@ import type { Appointment } from '../../../appointments/types/appointment.type';
 import styles from './AppointmentHistory.module.scss';
 import { getVisitWord } from '../../utils/getVisitWord';
 import { deleteAppointment } from '../../../appointments/services/appointment.api';
+import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDisplayStatus';
 
 type Props = {
   appointments: Appointment[];
@@ -30,7 +31,7 @@ export default function AppointmentHistory({
       await deleteAppointment(id);
 
       await onAppointmentDeleted();
-      
+
       setOpenedId(null);
 
       toast.success('Wizyta zostałą usunięta');
@@ -53,82 +54,85 @@ export default function AppointmentHistory({
         >{`${appointments.length} ${getVisitWord(appointments.length)}`}</span>
       </div>
 
-      {appointments.map((appointment) => (
-        <article key={appointment.id} className={styles.card}>
-          <header
-            className={styles.header}
-            onClick={() =>
-              setOpenedId(openedId === appointment.id ? null : appointment.id)
-            }
-          >
-            <div className={styles.left}>
-              <strong>{appointment.reason}</strong>
-
-              <span>
-                {new Date(appointment.startTime).toLocaleDateString('pl-PL')}
-              </span>
-            </div>
-
-            <div className={styles.right}>
-              <span
-                className={`${styles.status} ${styles[appointment.status.toLowerCase()]}`}
-              >
-                {statusLabels[appointment.status]}
-              </span>
-
-              {openedId === appointment.id ? (
-                <FaChevronDown className={styles.icon} />
-              ) : (
-                <FaChevronRight className={styles.icon} />
-              )}
-            </div>
-          </header>
-
-          {openedId === appointment.id && (
-            <div className={styles.content}>
-              <div className={styles.row}>
-                <span>Rozpoczęcie</span>
-
-                <strong>
-                  {new Date(appointment.startTime).toLocaleString('pl-PL')}
-                </strong>
-              </div>
-
-              <div className={styles.row}>
-                <span>Zakończenie</span>
-
-                <strong>
-                  {new Date(appointment.endTime).toLocaleString('pl-PL')}
-                </strong>
-              </div>
-
-              <div className={styles.row}>
-                <span>Powód wizyty</span>
-
+      {appointments.map((appointment) => {
+        const status = getAppointmentDisplayStatus(appointment);
+        return (
+          <article key={appointment.id} className={styles.card}>
+            <header
+              className={styles.header}
+              onClick={() =>
+                setOpenedId(openedId === appointment.id ? null : appointment.id)
+              }
+            >
+              <div className={styles.left}>
                 <strong>{appointment.reason}</strong>
+
+                <span>
+                  {new Date(appointment.startTime).toLocaleDateString('pl-PL')}
+                </span>
               </div>
 
-              <div className={styles.note}>
-                <span>Notatka</span>
+              <div className={styles.right}>
+                <span
+                  className={`${styles.status} ${styles[status.toLowerCase()]}`}
+                >
+                  {statusLabels[status]}
+                </span>
 
-                <p>{appointment.notes || 'Brak notatki.'}</p>
+                {openedId === appointment.id ? (
+                  <FaChevronDown className={styles.icon} />
+                ) : (
+                  <FaChevronRight className={styles.icon} />
+                )}
               </div>
-              {appointment.status !== 'COMPLETED' && (
-                <div className={styles.actions}>
-                  <button
-                    type='button'
-                    className={styles.deleteButton}
-                    onClick={() => handleDelete(appointment.id)}
-                  >
-                    <MdDeleteOutline />
-                    Usuń wizytę
-                  </button>
+            </header>
+
+            {openedId === appointment.id && (
+              <div className={styles.content}>
+                <div className={styles.row}>
+                  <span>Rozpoczęcie</span>
+
+                  <strong>
+                    {new Date(appointment.startTime).toLocaleString('pl-PL')}
+                  </strong>
                 </div>
-              )}
-            </div>
-          )}
-        </article>
-      ))}
+
+                <div className={styles.row}>
+                  <span>Zakończenie</span>
+
+                  <strong>
+                    {new Date(appointment.endTime).toLocaleString('pl-PL')}
+                  </strong>
+                </div>
+
+                <div className={styles.row}>
+                  <span>Powód wizyty</span>
+
+                  <strong>{appointment.reason}</strong>
+                </div>
+
+                <div className={styles.note}>
+                  <span>Notatka</span>
+
+                  <p>{appointment.notes || 'Brak notatki.'}</p>
+                </div>
+                {appointment.status !== 'COMPLETED' && (
+                  <div className={styles.actions}>
+                    <button
+                      type='button'
+                      className={styles.deleteButton}
+                      onClick={() => handleDelete(appointment.id)}
+                    >
+                      <MdDeleteOutline />
+                      Usuń wizytę
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </article>
+        );
+      })}
     </section>
   );
 }

@@ -3,6 +3,7 @@ import patientOne from '../../../../assets/patient-1.png';
 import { getTodayAppointments } from '../../utils/getTodayAppointments';
 import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
 import { useNavigate } from 'react-router-dom';
+import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDisplayStatus';
 
 export default function TodaysAppointments() {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ export default function TodaysAppointments() {
                 minute: '2-digit',
               },
             );
+            const status = getAppointmentDisplayStatus(appointment);
 
             return (
               <li key={appointment.id} className={styles.item}>
@@ -72,9 +74,9 @@ export default function TodaysAppointments() {
                   </div>
 
                   <div
-                    className={`${styles.status} ${styles[appointment.status.toLowerCase()]}`}
+                    className={`${styles.status} ${styles[status.toLowerCase()]}`}
                   >
-                    {statusLabels[appointment.status]}
+                    {statusLabels[status]}
                   </div>
                 </article>
               </li>

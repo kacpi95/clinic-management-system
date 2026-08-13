@@ -9,6 +9,7 @@ import type { EventClickArg } from '@fullcalendar/core';
 import styles from './CalendarGrid.module.scss';
 import { useCalendarAppointments } from '../../hooks/useCalendarAppointments';
 import type { CalendarGridProps } from '../../types/calendarHeader.types';
+import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDisplayStatus';
 
 export default function CalendarGrid({ currentDate }: CalendarGridProps) {
   const calendarRef = useRef<FullCalendar | null>(null);
@@ -24,32 +25,36 @@ export default function CalendarGrid({ currentDate }: CalendarGridProps) {
     calendarApi.gotoDate(currentDate);
   }, [currentDate]);
 
-  const events = calendarAppointments.map((appointment) => ({
-    id: appointment.id.toString(),
-    title: `${appointment.patient?.firstName} ${appointment.patient?.lastName}`,
-    start: appointment.startTime,
-    end: appointment.endTime,
+  const events = calendarAppointments.map((appointment) => {
+    const status = getAppointmentDisplayStatus(appointment);
 
-    backgroundColor:
-      appointment.status === 'PLANNED'
-        ? '#0056b3'
-        : appointment.status === 'COMPLETED'
-          ? '#566075'
-          : '#dc2626',
+    return {
+      id: appointment.id.toString(),
+      title: `${appointment.patient?.firstName} ${appointment.patient?.lastName}`,
+      start: appointment.startTime,
+      end: appointment.endTime,
 
-    borderColor:
-      appointment.status === 'PLANNED'
-        ? '#0056b3'
-        : appointment.status === 'COMPLETED'
-          ? '#566075'
-          : '#dc2626',
+      backgroundColor:
+        status === 'PLANNED'
+          ? '#0056b3'
+          : status === 'COMPLETED'
+            ? '#566075'
+            : '#dc2626',
 
-    extendedProps: {
-      patientId: appointment.patientId,
-      status: appointment.status,
-      reason: appointment.reason,
-    },
-  }));
+      borderColor:
+        status === 'PLANNED'
+          ? '#0056b3'
+          : status === 'COMPLETED'
+            ? '#566075'
+            : '#dc2626',
+
+      extendedProps: {
+        patientId: appointment.patientId,
+        status,
+        reason: appointment.reason,
+      },
+    };
+  });
 
   const handleEventClick = (info: EventClickArg) => {
     const patientId = info.event.extendedProps.patientId;

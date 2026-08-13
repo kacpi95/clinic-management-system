@@ -153,15 +153,18 @@
   .planned {
     background: rgba(0, 86, 179, 0.08);
     color: $primary;
+    border: 1px solid $primary;
   }
 
   .completed {
-    background: rgba(22, 163, 74, 0.08);
+    background: rgba(86, 96, 117, 0.08);
     color: $secondary;
+    border: 1px solid $secondary;
   }
 
   .canceled {
     background: rgba(220, 38, 38, 0.08);
     color: $error;
+    border: 1px solid $error;
   }
 }
