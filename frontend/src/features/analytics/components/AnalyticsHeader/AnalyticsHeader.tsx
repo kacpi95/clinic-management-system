@@ -1,6 +1,14 @@
 import styles from './AnalyticsHeader.module.scss';
 
 export default function AnalyticsHeader() {
+  const currentMonth = new Date().toLocaleDateString('pl-PL', {
+    month: 'long',
+    year: 'numeric',
+  });
+
+  const formattedMonth =
+    currentMonth.charAt(0).toUpperCase() + currentMonth.slice(1);
+
   return (
     <section className={styles.wrapper}>
       <div>
@@ -10,11 +18,9 @@ export default function AnalyticsHeader() {
           Przegląd wizyt, pacjentów i aktywności gabinetu.
         </p>
       </div>
-
-      <div className={styles.actions}>
-        <button className={styles.active}>7 dni</button>
-        <button>30 dni</button>
-        <button>90 dni</button>
+      <div className={styles.period}>
+        <span>Okres</span>
+        <strong>{formattedMonth}</strong>
       </div>
     </section>
   );
