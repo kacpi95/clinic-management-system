@@ -27,15 +27,6 @@
   }
 }
 
-.trend {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: $primary;
-}
-
 @media (min-width: 768px) {
   .wrapper {
     grid-template-columns: repeat(2, 1fr);
