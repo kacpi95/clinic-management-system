@@ -127,5 +127,36 @@ export const login = async (req, res) => {
 };
 
 export const me = async (req, res) => {
-  res.json({ user: req.user });
+  console.log('NOWE ME DZIALA');
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(req.user.userId),
+      },
+      include: {
+        doctor: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
+    return res.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        doctor: user.doctor,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: 'Failed to load user',
+    });
+  }
 };

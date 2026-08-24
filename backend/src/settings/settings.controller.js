@@ -1,4 +1,4 @@
-import * as settingsService from '../services/settings.service.js';
+import * as settingsService from './settings.service.js';
 
 export const updateProfile = async (req, res) => {
   try {

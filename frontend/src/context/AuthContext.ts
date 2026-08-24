@@ -6,6 +6,7 @@ interface AuthContextType {
   user: User | null;
   login: (data: AuthResponse) => void;
   logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

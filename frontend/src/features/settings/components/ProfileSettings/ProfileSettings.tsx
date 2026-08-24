@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { useAuth } from '../../../../context/useAuth';
+import { updateDoctorProfile } from '../../services/settings.api';
 import styles from './ProfileSettings.module.scss';
 
 export default function ProfileSettings() {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [firstName, setFirstName] = useState(user?.doctor?.firstName || '');
   const [lastName, setLastName] = useState(user?.doctor?.lastName || '');
   const [specialization, setSpecialization] = useState(
@@ -14,6 +17,42 @@ export default function ProfileSettings() {
   );
   const [email, setEmail] = useState(user?.email || '');
   const [phone, setPhone] = useState(user?.doctor?.phone || '');
+
+  const handleSave = async () => {
+    if (!isEditing) {
+      setIsEditing(true);
+      return;
+    }
+
+    const data = {
+      firstName,
+      lastName,
+      specialization,
+      phone,
+      email,
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      await updateDoctorProfile(data);
+      await refreshUser();
+
+      toast.success('Profil został zaktualizowany');
+
+      setIsEditing(false);
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Nie udało się zaktualizować profilu',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section className={styles.wrapper}>
@@ -37,9 +76,13 @@ export default function ProfileSettings() {
           <button
             type='button'
             className={styles.editButton}
-            onClick={() => setIsEditing((prev) => !prev)}
+            onClick={handleSave}
           >
-            {isEditing ? 'Zapisz' : 'Edytuj profil'}
+            {isSubmitting
+              ? 'Zapisywanie...'
+              : isEditing
+                ? 'Zapisz'
+                : 'Edytuj profil'}
           </button>
         </div>
       </div>

@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { authenticate } from '../middleware/auth.middleware.js';
-import { updateProfile } from '../controllers/settings.controller.js';
+import { updateProfile } from './settings.controller.js'
+import { authMiddleware } from '../auth/auth.middleware.js'
 
 const router = express.Router();
 
-router.put('/profile', authenticate, updateProfile);
+router.put('/profile', authMiddleware, updateProfile);
 
 export default router;

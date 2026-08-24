@@ -67,5 +67,5 @@ export const meRequest = async (): Promise<User> => {
     throw new Error(data?.message || 'Unauthorized');
   }
 
-  return data;
+  return data.user;
 };

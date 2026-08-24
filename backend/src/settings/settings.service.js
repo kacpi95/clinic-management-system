@@ -1,4 +1,4 @@
-import { prisma } from '../prismaClient/client.js';
+import { prisma } from '../../prismaClient/client.js';
 
 export const updateProfile = async ({
   userId,
