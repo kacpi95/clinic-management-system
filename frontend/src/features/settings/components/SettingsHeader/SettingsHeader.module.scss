@@ -1,0 +1,22 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  font-family: $text-headline;
+  font-size: 2.4rem;
+  color: $text-default;
+}
+
+.description {
+  margin: 0;
+  font-family: $text-body;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $secondary;
+}
