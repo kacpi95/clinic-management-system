@@ -8,7 +8,7 @@ const navItems = [
   { path: '/dashboard/calendar', label: 'Kalendarz' },
   { path: '/dashboard/patients', label: 'Pacjenci' },
   { path: '/dashboard/analytics', label: 'Analityka' },
-  { path: '/settings', label: 'Ustawienia' },
+  { path: '/dashboard/settings', label: 'Ustawienia' },
 ];
 
 export default function Sidebar() {

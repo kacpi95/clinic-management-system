@@ -16,6 +16,7 @@ import NewAppointment from './features/appointments/pages/NewAppointment/NewAppo
 import { Toaster } from 'react-hot-toast';
 import EditPatient from './features/patients/pages/EditPatient/EditPatient';
 import NewPatient from './features/patients/pages/NewPatient/NewPatient';
+import Settings from './pages/Settings/Settings';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path='patients/new' element={<NewPatient />} />
             <Route path='calendar' element={<Calendar />} />
             <Route path='analytics' element={<Analytics />} />
+            <Route path='settings' element={<Settings />} />
             <Route
               path='appointments/:id/new-appointment'
               element={<NewAppointment />}
