@@ -7,9 +7,6 @@
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
   margin-bottom: 20px;
 
   h2 {
@@ -19,12 +16,10 @@
     color: $text-default;
   }
 
-  button {
-    border: none;
-    background: transparent;
-    color: $primary;
-    font-weight: 800;
-    cursor: pointer;
+  p {
+    margin: 6px 0 0;
+    font-size: 0.9rem;
+    color: $secondary;
   }
 }
 
@@ -34,9 +29,9 @@
 
 .tableHeader,
 .row {
-  min-width: 680px;
+  min-width: 520px;
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 0.7fr 0.7fr;
   gap: 16px;
   align-items: center;
 }
@@ -60,7 +55,7 @@
   }
 
   span {
-    color: $secondary;
     font-size: 0.9rem;
+    color: $secondary;
   }
 }
