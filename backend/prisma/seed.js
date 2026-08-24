@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt';
 
 const today = new Date();
 
+const HISTORY_DAYS = 60;
+const FUTURE_DAYS = 90;
+
 function addDays(days) {
   const date = new Date(today);
   date.setDate(date.getDate() + days);
@@ -252,7 +255,7 @@ async function main() {
     5: [8, 14],
   };
 
-  for (let day = -14; day <= 21; day++) {
+  for (let day = -HISTORY_DAYS; day <= FUTURE_DAYS; day++) {
     const weekDay = getWeekDay(day);
 
     if (doctorOneSchedule[weekDay]) {
@@ -352,95 +355,50 @@ async function main() {
     };
   }
 
-  const doctorOnePastDays = [-14, -13, -12, -11, -10, -9, -8, -7, -6, -5];
-
-  doctorOnePatientIds.forEach((patientId, index) => {
-    appointments.push(
-      createAppointment({
-        patientId,
-        doctorId: 1,
-        day: doctorOnePastDays[index],
-        hour: 9 + (index % 4),
-        minute: index % 2 === 0 ? 0 : 30,
-        status: index === 3 || index === 8 ? 'CANCELED' : 'COMPLETED',
-        reason: randomItem(reasons),
-        notes: randomItem(notes),
-      }),
-    );
-  });
-
-  const doctorOneHistory = [
-    {
-      day: -8,
-      patientId: 1,
-      hour: 8,
-      minute: 0,
-      status: 'COMPLETED',
-    },
-    {
-      day: -7,
-      patientId: 2,
-      hour: 10,
-      minute: 30,
-      status: 'COMPLETED',
-    },
-    {
-      day: -6,
-      patientId: 3,
-      hour: 13,
-      minute: 0,
-      status: 'CANCELED',
-    },
-    {
-      day: -5,
-      patientId: 4,
-      hour: 9,
-      minute: 30,
-      status: 'COMPLETED',
-    },
-    {
-      day: -4,
-      patientId: 5,
-      hour: 11,
-      minute: 30,
-      status: 'COMPLETED',
-    },
-    {
-      day: -3,
-      patientId: 6,
-      hour: 14,
-      minute: 30,
-      status: 'COMPLETED',
-    },
-    {
-      day: -2,
-      patientId: 7,
-      hour: 10,
-      minute: 30,
-      status: 'CANCELED',
-    },
-    {
-      day: -1,
-      patientId: 8,
-      hour: 13,
-      minute: 30,
-      status: 'COMPLETED',
-    },
+  const doctorOnePastSlots = [
+    { hour: 8, minute: 0 },
+    { hour: 9, minute: 30 },
+    { hour: 11, minute: 0 },
+    { hour: 13, minute: 30 },
+    { hour: 15, minute: 0 },
   ];
 
-  for (const appointment of doctorOneHistory) {
-    appointments.push(
-      createAppointment({
-        patientId: appointment.patientId,
-        doctorId: 1,
-        day: appointment.day,
-        hour: appointment.hour,
-        minute: appointment.minute,
-        status: appointment.status,
-        reason: randomItem(reasons),
-        notes: randomItem(notes),
-      }),
-    );
+  for (let day = -HISTORY_DAYS; day <= -1; day++) {
+    const weekDay = getWeekDay(day);
+
+    if (weekDay === 0 || weekDay === 6) {
+      continue;
+    }
+
+    const visitsToday = 2 + Math.floor(Math.random() * 4);
+
+    const availableSlots = [...doctorOnePastSlots];
+
+    for (let index = 0; index < visitsToday; index++) {
+      const randomIndex = Math.floor(Math.random() * availableSlots.length);
+
+      const slot = availableSlots.splice(randomIndex, 1)[0];
+
+      const patientId =
+        doctorOnePatientIds[
+          (Math.abs(day) + index) % doctorOnePatientIds.length
+        ];
+
+      const status = Math.random() < 0.12 ? 'CANCELED' : 'COMPLETED';
+
+      appointments.push(
+        createAppointment({
+          patientId,
+          doctorId: 1,
+          day,
+          hour: slot.hour,
+          minute: slot.minute,
+          status,
+          reason: randomItem(reasons),
+          notes: randomItem(notes),
+        }),
+      );
+    }
   }
 
   const todayAppointments = [
@@ -475,7 +433,6 @@ async function main() {
     const endTime = createDateTime(
       0,
       appointment.minute === 30 ? appointment.hour + 1 : appointment.hour,
-
       appointment.minute === 30 ? 0 : 30,
     );
 
@@ -495,35 +452,23 @@ async function main() {
     );
   }
 
-  for (let day = 1; day <= 14; day++) {
+  const doctorOneFutureSlots = [
+    { hour: 8, minute: 0 },
+    { hour: 9, minute: 30 },
+    { hour: 11, minute: 0 },
+    { hour: 13, minute: 30 },
+  ];
+
+  for (let day = 1; day <= FUTURE_DAYS; day++) {
     const weekDay = getWeekDay(day);
 
     if (weekDay === 0 || weekDay === 6) {
       continue;
     }
 
-    const dailySlots = [
-      {
-        hour: 8,
-        minute: 0,
-      },
-      {
-        hour: 9,
-        minute: 30,
-      },
-      {
-        hour: 11,
-        minute: 0,
-      },
-      {
-        hour: 13,
-        minute: 30,
-      },
-    ];
-
-    dailySlots.forEach((slot, index) => {
-
+    doctorOneFutureSlots.forEach((slot, index) => {
       const patientIndex = (day + index) % doctorOnePatientIds.length;
+
       const patientId = doctorOnePatientIds[patientIndex];
 
       appointments.push(
@@ -541,27 +486,87 @@ async function main() {
     });
   }
 
-  doctorTwoPatientIds.forEach((patientId, index) => {
-    appointments.push(
-      createAppointment({
-        patientId,
-        doctorId: 2,
+  const doctorTwoPastSlots = [
+    { hour: 10, minute: 0 },
+    { hour: 11, minute: 30 },
+    { hour: 13, minute: 0 },
+  ];
 
-        day: -5 + index,
+  for (let day = -HISTORY_DAYS; day <= -1; day++) {
+    const weekDay = getWeekDay(day);
 
-        hour: 10 + (index % 3),
+    if (![1, 3, 5].includes(weekDay)) {
+      continue;
+    }
 
-        minute: index % 2 === 0 ? 0 : 30,
+    const visitsToday = 2 + Math.floor(Math.random() * 2);
 
-        status: index === 2 ? 'CANCELED' : 'COMPLETED',
+    for (let index = 0; index < visitsToday; index++) {
+      const slot = doctorTwoPastSlots[index];
 
-        reason: randomItem(reasons),
-        notes: randomItem(notes),
-      }),
-    );
-  });
+      const patientId =
+        doctorTwoPatientIds[
+          (Math.abs(day) + index) % doctorTwoPatientIds.length
+        ];
 
-  for (let day = 1; day <= 14; day++) {
+      const status = Math.random() < 0.1 ? 'CANCELED' : 'COMPLETED';
+
+      appointments.push(
+        createAppointment({
+          patientId,
+          doctorId: 2,
+          day,
+          hour: slot.hour,
+          minute: slot.minute,
+          status,
+          reason: randomItem(reasons),
+          notes: randomItem(notes),
+        }),
+      );
+    }
+  }
+
+  const todayWeekDay = getWeekDay(0);
+
+  if ([1, 3, 5].includes(todayWeekDay)) {
+    const doctorTwoTodayAppointments = [
+      {
+        patientId: 11,
+        hour: 10,
+        minute: 0,
+      },
+      {
+        patientId: 12,
+        hour: 12,
+        minute: 30,
+      },
+    ];
+
+    for (const appointment of doctorTwoTodayAppointments) {
+      const endTime = createDateTime(
+        0,
+        appointment.minute === 30 ? appointment.hour + 1 : appointment.hour,
+        appointment.minute === 30 ? 0 : 30,
+      );
+
+      const status = endTime < new Date() ? 'COMPLETED' : 'PLANNED';
+
+      appointments.push(
+        createAppointment({
+          patientId: appointment.patientId,
+          doctorId: 2,
+          day: 0,
+          hour: appointment.hour,
+          minute: appointment.minute,
+          status,
+          reason: randomItem(reasons),
+          notes: randomItem(notes),
+        }),
+      );
+    }
+  }
+
+  for (let day = 1; day <= FUTURE_DAYS; day++) {
     const weekDay = getWeekDay(day);
 
     if (![1, 3, 5].includes(weekDay)) {
@@ -575,32 +580,22 @@ async function main() {
     appointments.push(
       createAppointment({
         patientId: doctorTwoPatientIds[firstPatientIndex],
-
         doctorId: 2,
-
         day,
-
         hour: 10,
         minute: 0,
-
         status: 'PLANNED',
-
         reason: randomItem(reasons),
         notes: randomItem(notes),
       }),
 
       createAppointment({
         patientId: doctorTwoPatientIds[secondPatientIndex],
-
         doctorId: 2,
-
         day,
-
         hour: 12,
         minute: 30,
-
         status: 'PLANNED',
-
         reason: randomItem(reasons),
         notes: randomItem(notes),
       }),
