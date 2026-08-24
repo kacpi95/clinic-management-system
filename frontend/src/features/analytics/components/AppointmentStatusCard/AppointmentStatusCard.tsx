@@ -1,21 +1,50 @@
-import { appointmentStatuses } from '../../data/analytics.mock';
+import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
+import { getAppointmentStatusDistribution } from '../../utils/getAppointmentStatusDistribution';
+
 import styles from './AppointmentStatusCard.module.scss';
 
 export default function AppointmentStatusCard() {
+  const { calendarAppointments } = useCalendarAppointments();
+
+  const stats = getAppointmentStatusDistribution(calendarAppointments);
+
+  const appointmentStatuses = [
+    {
+      label: 'Zakończone',
+      value: stats.completed,
+    },
+    {
+      label: 'Zaplanowane',
+      value: stats.planned,
+    },
+    {
+      label: 'Anulowane',
+      value: stats.canceled,
+    },
+  ];
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.header}>
         <h2>Status wizyt</h2>
-        <p>Rozkład wyników wizyt</p>
+        <p>Rozkład wizyt w bieżącym miesiącu</p>
       </div>
-
-      <div className={styles.score}>
-        <strong>92%</strong>
-        <span>zrealizowanych</span>
+      <div
+        className={styles.score}
+        style={{
+          background: `conic-gradient(
+      #0056b3 ${stats.completed}%,
+      rgba(0, 86, 179, 0.15) ${stats.completed}% 100%
+    )`,
+        }}
+      >
+        <div className={styles.scoreInner}>
+          <strong>{stats.completed}%</strong>
+          <span>zakończonych</span>
+        </div>
       </div>
-
       <ul className={styles.list}>
-        {appointmentStatuses.map(item => (
+        {appointmentStatuses.map((item) => (
           <li key={item.label}>
             <span>{item.label}</span>
             <strong>{item.value}%</strong>
