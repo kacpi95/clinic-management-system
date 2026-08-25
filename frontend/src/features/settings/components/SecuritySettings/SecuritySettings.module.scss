@@ -1,0 +1,128 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+  padding: 20px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .title {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1.4rem;
+    color: $text-default;
+  }
+
+  p {
+    margin: 0;
+    font-family: $text-body;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: $secondary;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(86, 96, 117, 0.12);
+}
+
+.passwordInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  h3 {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1rem;
+    color: $text-default;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-family: $text-body;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: $secondary;
+  }
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 50px;
+    background: rgba(0, 86, 179, 0.08);
+    font-family: $text-body;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: $primary;
+  }
+}
+
+.info {
+  margin: 0;
+  font-family: $text-body;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: $secondary;
+}
+
+.actions {
+  display: flex;
+  margin-top: auto;
+
+  button {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 16px;
+    border: none;
+    border-radius: $radius-sm;
+    background: $primary;
+    color: $button-text;
+    font-family: $text-body;
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      background: $primaryHover;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 24px;
+  }
+
+  .actions {
+    justify-content: flex-end;
+
+    button {
+      width: auto;
+      min-width: 150px;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
