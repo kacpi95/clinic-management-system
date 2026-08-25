@@ -99,3 +99,44 @@
     color: $text-default;
   }
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+
+  span {
+    margin-right: 6px;
+    font-family: $text-body;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $secondary;
+  }
+
+  button {
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid rgba(86, 96, 117, 0.16);
+    border-radius: $radius-sm;
+    background: $surface-bg-alt;
+    color: $text-default;
+    font-family: $text-body;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover:not(:disabled) {
+      border-color: $primary;
+      background: rgba(0, 86, 179, 0.04);
+      color: $primary;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+}

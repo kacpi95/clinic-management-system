@@ -7,8 +7,12 @@ import AppointmentHistory from '../AppointmentHistory/AppointmentHistory';
 import PatientInfoCard from '../PatientInfoCard/PatientInfoCard';
 import VisitNotes from '../VisitNotes/VisitNotes';
 import styles from './PatientDetails.module.scss';
+import { useState } from 'react';
 
 export default function PatientDetails() {
+  const [appointmentsPage, setAppointmentsPage] = useState(1);
+  const [notesPage, setNotesPage] = useState(1);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -62,9 +66,15 @@ export default function PatientDetails() {
       <AppointmentHistory
         appointments={patient.appointments}
         onAppointmentDeleted={reloadPatient}
+        page={appointmentsPage}
+        setPage={setAppointmentsPage}
       />
 
-      <VisitNotes visitNotes={patient.visitNotes} />
+      <VisitNotes
+        visitNotes={patient.visitNotes}
+        page={notesPage}
+        setPage={setNotesPage}
+      />
     </div>
   );
 }

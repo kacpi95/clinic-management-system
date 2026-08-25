@@ -7,10 +7,23 @@ import { getNoteWord } from '../../utils/getNoteWord';
 
 type Props = {
   visitNotes: VisitNote[];
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function VisitNotes({ visitNotes }: Props) {
+export default function VisitNotes({ visitNotes, page, setPage }: Props) {
   const [openedId, setOpenedId] = useState<number | null>(null);
+
+  const itemsPerPage = 8;
+
+  const notesStartIndex = (page - 1) * itemsPerPage;
+
+  const visibleNotes = visitNotes.slice(
+    notesStartIndex,
+    notesStartIndex + itemsPerPage,
+  );
+
+  const notesPages = Math.ceil(visitNotes.length / itemsPerPage);
 
   return (
     <section className={styles.wrapper}>
@@ -22,7 +35,7 @@ export default function VisitNotes({ visitNotes }: Props) {
         >{` ${visitNotes.length} ${getNoteWord(visitNotes.length)}`}</span>
       </div>
 
-      {visitNotes.map((note) => (
+      {visibleNotes.map((note) => (
         <article key={note.id} className={styles.card}>
           <header
             className={styles.header}
@@ -65,6 +78,29 @@ export default function VisitNotes({ visitNotes }: Props) {
           )}
         </article>
       ))}
+      {notesPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            type='button'
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            Poprzednia
+          </button>
+
+          <span>
+            {page} / {notesPages}
+          </span>
+
+          <button
+            type='button'
+            disabled={page === notesPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Następna
+          </button>
+        </div>
+      )}
     </section>
   );
 }

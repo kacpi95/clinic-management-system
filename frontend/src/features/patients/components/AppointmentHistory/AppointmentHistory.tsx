@@ -12,6 +12,8 @@ import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDis
 type Props = {
   appointments: Appointment[];
   onAppointmentDeleted: () => void;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const statusLabels = {
@@ -23,8 +25,21 @@ const statusLabels = {
 export default function AppointmentHistory({
   appointments,
   onAppointmentDeleted,
+  page,
+  setPage,
 }: Props) {
   const [openedId, setOpenedId] = useState<number | null>(null);
+
+  const itemsPerPage = 8;
+
+  const appointmentStartIndex = (page - 1) * itemsPerPage;
+
+  const visibleAppointments = appointments.slice(
+    appointmentStartIndex,
+    appointmentStartIndex + itemsPerPage,
+  );
+
+  const appointmentPages = Math.ceil(appointments.length / itemsPerPage);
 
   const handleDelete = async (id: number) => {
     try {
@@ -53,8 +68,7 @@ export default function AppointmentHistory({
           className={styles.counter}
         >{`${appointments.length} ${getVisitWord(appointments.length)}`}</span>
       </div>
-
-      {appointments.map((appointment) => {
+      {visibleAppointments.map((appointment) => {
         const status = getAppointmentDisplayStatus(appointment);
         return (
           <article key={appointment.id} className={styles.card}>
@@ -133,6 +147,29 @@ export default function AppointmentHistory({
           </article>
         );
       })}
+      {appointmentPages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            type='button'
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            Poprzednia
+          </button>
+
+          <span>
+            {page} / {appointmentPages}
+          </span>
+
+          <button
+            type='button'
+            disabled={page === appointmentPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Następna
+          </button>
+        </div>
+      )}
     </section>
   );
 }
