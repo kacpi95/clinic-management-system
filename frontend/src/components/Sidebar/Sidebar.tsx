@@ -2,9 +2,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 import styles from './Sidebar.module.scss';
+import { useAuth } from '../../context/useAuth';
 
 const navItems = [
-  { path: '/dashboard', label: 'Dashboard' },
+  { path: '/dashboard', label: 'Dashboard', end: true },
   { path: '/dashboard/calendar', label: 'Kalendarz' },
   { path: '/dashboard/patients', label: 'Pacjenci' },
   { path: '/dashboard/analytics', label: 'Analityka' },
@@ -13,6 +14,12 @@ const navItems = [
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <aside className={styles.wrapper}>
@@ -32,6 +39,7 @@ export default function Sidebar() {
           <NavLink
             key={item.path}
             to={item.path}
+            end={item.end}
             className={({ isActive }) =>
               isActive ? `${styles.link} ${styles.active}` : styles.link
             }
@@ -42,6 +50,9 @@ export default function Sidebar() {
       </nav>
 
       <div className={styles.footer}>
+        <button className={styles.buttonLogout} onClick={handleLogout}>
+          Wyloguj
+        </button>
         <button
           className={styles.button}
           onClick={() => navigate('/dashboard/patients/new')}
