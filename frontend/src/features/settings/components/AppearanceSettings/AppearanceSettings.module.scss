@@ -1,0 +1,141 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .title {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1.4rem;
+    color: $text-default;
+  }
+
+  p {
+    margin: 0;
+    font-family: $text-body;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: $secondary;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(86, 96, 117, 0.12);
+
+  h3 {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1rem;
+    color: $text-default;
+  }
+
+  p {
+    margin: 5px 0 0;
+    font-family: $text-body;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: $secondary;
+  }
+}
+
+.themeOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid rgba(86, 96, 117, 0.18);
+    border-radius: $radius-sm;
+    background: $surface-bg-alt;
+    color: $text-default;
+    font-family: $text-body;
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: $transition-fast;
+
+    svg {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      border-color: $primary;
+      background: rgba(0, 86, 179, 0.04);
+      color: $primary;
+    }
+  }
+}
+
+.setting select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid rgba(86, 96, 117, 0.18);
+  border-radius: $radius-sm;
+  background: $surface-bg-alt;
+  color: $text-default;
+  font-family: $text-body;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.08);
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 24px;
+  }
+
+  .setting {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .themeOptions {
+    min-width: 260px;
+  }
+
+  .setting select {
+    width: 220px;
+  }
+
+  .themeOptions button:hover {
+    transform: translateY(-1px);
+  }
+}
