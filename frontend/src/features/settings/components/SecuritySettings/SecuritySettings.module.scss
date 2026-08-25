@@ -108,6 +108,113 @@
   }
 }
 
+.passwordField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-family: $text-body;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $secondary;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+
+  input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 46px 0 12px;
+    border: 1px solid rgba(86, 96, 117, 0.18);
+    border-radius: $radius-sm;
+    background: $surface-bg-alt;
+    color: $text-default;
+    font-family: $text-body;
+    font-size: 1rem;
+    outline: none;
+    transition: $transition-fast;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.08);
+    }
+  }
+}
+
+.eyeButton {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  color: $secondary;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.error {
+  font-family: $text-body;
+  font-size: 0.8rem;
+  color: $error;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.saveButton,
+.cancelButton {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: $radius-sm;
+  font-family: $text-body;
+  font-size: 1rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.saveButton {
+  border: none;
+  background: $primary;
+  color: $button-text;
+
+  &:hover:not(:disabled) {
+    background: $primaryHover;
+  }
+}
+
+.cancelButton {
+  border: 1px solid rgba(86, 96, 117, 0.18);
+  background: $surface-bg-alt;
+  color: $text-default;
+
+  &:hover:not(:disabled) {
+    border-color: $primary;
+    color: $primary;
+  }
+}
+
 @media (min-width: 768px) {
   .wrapper {
     padding: 24px;
@@ -124,5 +231,14 @@
         transform: translateY(-1px);
       }
     }
+  }
+  .buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .saveButton,
+  .cancelButton {
+    width: auto;
   }
 }
