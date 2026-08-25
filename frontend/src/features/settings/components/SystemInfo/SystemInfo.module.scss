@@ -1,0 +1,77 @@
+@use '../../../../styles/variables' as *;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 20px;
+  border-radius: $radius-md;
+  background: $surface-bg-alt;
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .title {
+    margin: 0;
+    font-family: $text-headline;
+    font-size: 1.4rem;
+    color: $text-default;
+  }
+
+  p {
+    margin: 0;
+    font-family: $text-body;
+    font-size: 1rem;
+    color: $secondary;
+  }
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(86, 96, 117, 0.12);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  span {
+    font-family: $text-body;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $secondary;
+  }
+
+  strong {
+    font-family: $text-body;
+    font-size: 1rem;
+    color: $text-default;
+  }
+}
+
+.status {
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 50px;
+  background: rgba(0, 86, 179, 0.08);
+  font-size: 0.75rem !important;
+  color: $primary !important;
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    padding: 24px;
+  }
+
+  .details {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
