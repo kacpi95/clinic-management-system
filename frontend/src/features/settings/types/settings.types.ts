@@ -5,3 +5,8 @@ export type UpdateDoctorProfileData = {
   phone: string;
   email: string;
 };
+
+export type ChangePasswordData = {
+  currentPassword: string;
+  newPassword: string;
+};
