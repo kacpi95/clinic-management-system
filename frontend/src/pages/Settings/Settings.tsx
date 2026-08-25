@@ -2,6 +2,7 @@ import AppearanceSettings from '../../features/settings/components/AppearanceSet
 import ProfileSettings from '../../features/settings/components/ProfileSettings/ProfileSettings';
 import SecuritySettings from '../../features/settings/components/SecuritySettings/SecuritySettings';
 import SettingsHeader from '../../features/settings/components/SettingsHeader/SettingsHeader';
+import SystemInfo from '../../features/settings/components/SystemInfo/SystemInfo';
 import styles from './Settings.module.scss';
 
 export default function Settings() {
@@ -13,6 +14,7 @@ export default function Settings() {
         <AppearanceSettings />
         <SecuritySettings />
       </div>
+      <SystemInfo />
     </div>
   );
 }

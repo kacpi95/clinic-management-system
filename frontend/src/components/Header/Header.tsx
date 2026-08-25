@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../context/useAuth';
 import styles from './Header.module.scss';
@@ -14,6 +14,7 @@ const pageTitles: Record<string, string> = {
 export default function Header() {
   const { user } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const doctor = user?.doctor;
   const title = pageTitles[location.pathname] || 'Dashboard';
@@ -39,7 +40,12 @@ export default function Header() {
           </span>
         </div>
 
-        <div className={styles.avatar}>{initials || 'DR'}</div>
+        <div
+          onClick={() => navigate('/dashboard/settings')}
+          className={styles.avatar}
+        >
+          {initials || 'DR'}
+        </div>
       </div>
     </header>
   );
