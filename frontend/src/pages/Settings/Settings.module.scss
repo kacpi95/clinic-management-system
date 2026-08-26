@@ -1,17 +1,31 @@
+@use '../../styles/variables' as *;
+
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
+  min-width: 0;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 20px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    gap: 28px;
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .wrapper {
+    gap: 32px;
+  }
+
   .grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
   }
 }

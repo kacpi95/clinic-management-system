@@ -1,13 +1,13 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
+  @include card-surface;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 20px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+  gap: 22px;
+  height: 100%;
+  padding: 18px;
 }
 
 .header {
@@ -18,51 +18,51 @@
   .title {
     margin: 0;
     font-family: $text-headline;
-    font-size: 1.4rem;
-    color: $text-default;
+    font-size: 1.3rem;
+    color: var(--color-text);
   }
 
   p {
     margin: 0;
     font-family: $text-body;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 }
 
 .actions {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .setting {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(86, 96, 117, 0.12);
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
 
   h3 {
     margin: 0;
     font-family: $text-headline;
     font-size: 1rem;
-    color: $text-default;
+    color: var(--color-text);
   }
 
   p {
-    margin: 5px 0 0;
+    margin: 4px 0 0;
     font-family: $text-body;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.5;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 }
 
 .themeOptions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 
   button {
@@ -71,15 +71,14 @@
     justify-content: center;
     gap: 8px;
     min-height: 44px;
-    padding: 0 14px;
-    border: 1px solid rgba(86, 96, 117, 0.18);
+    padding: 0 12px;
+    border: 1px solid var(--color-border);
     border-radius: $radius-sm;
-    background: $surface-bg-alt;
-    color: $text-default;
+    background: var(--color-surface);
+    color: var(--color-text);
     font-family: $text-body;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 700;
-
     cursor: pointer;
     transition: $transition-fast;
 
@@ -88,36 +87,26 @@
     }
 
     &:hover {
-      border-color: $primary;
-      background: rgba(0, 86, 179, 0.04);
-      color: $primary;
+      border-color: var(--color-primary);
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
     }
   }
 }
 
 .setting select {
-  width: 100%;
-  min-height: 44px;
-  padding: 0 12px;
-  border: 1px solid rgba(86, 96, 117, 0.18);
-  border-radius: $radius-sm;
-  background: $surface-bg-alt;
-  color: $text-default;
-  font-family: $text-body;
-  font-size: 1rem;
-  outline: none;
+  @include form-control;
   cursor: pointer;
-  transition: $transition-fast;
-
-  &:focus {
-    border-color: $primary;
-    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.08);
-  }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .wrapper {
-    padding: 24px;
+    padding: 22px;
   }
 
   .setting {
@@ -128,7 +117,7 @@
   }
 
   .themeOptions {
-    min-width: 260px;
+    min-width: 240px;
   }
 
   .setting select {
