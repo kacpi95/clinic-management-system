@@ -14,7 +14,7 @@ export default function PatientsHeader({
     <div className={styles.wrapper}>
       <div className={styles.content}>
         <p className={styles.eyebrow}>CENTRALNA BAZA DANYCH</p>
-        <h1 className={styles.title}>Pacjenci</h1>
+        <h2 className={styles.title}>Pacjenci</h2>
       </div>
 
       <div className={styles.actions}>
@@ -30,6 +30,7 @@ export default function PatientsHeader({
         </div>
 
         <button
+          type='button'
           className={styles.button}
           onClick={() => downloadPatientsJson(patients)}
         >

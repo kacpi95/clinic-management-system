@@ -1,12 +1,12 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
+  @include card-surface;
   display: flex;
   flex-direction: column;
   gap: 18px;
   padding: 20px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
 }
 
 .header {
@@ -17,17 +17,18 @@
 
 .eyebrow {
   margin: 0;
+  font-family: $text-body;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
   font-size: 1.1rem;
-  color: $text-default;
+  color: var(--color-text);
 }
 
 .capacity {
@@ -39,33 +40,39 @@
     font-family: $text-headline;
     font-size: 2.5rem;
     line-height: 1;
-    color: $primary;
+    color: var(--color-primary);
   }
 
   span {
+    font-family: $text-body;
     font-size: 0.8rem;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 }
 
 .progressBar {
   width: 100%;
-  height: 10px;
+  height: 9px;
   overflow: hidden;
   border-radius: 50px;
-  background: rgba(86, 96, 117, 0.12);
+  background: var(--color-surface-muted);
 }
 
 .progress {
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, $primary 0%, $primaryHover 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-primary-hover) 100%
+  );
+  transition: width $transition-fast;
 }
 
 .stats {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .stat {
@@ -75,13 +82,25 @@
   gap: 16px;
 
   span {
+    font-family: $text-body;
     font-size: 0.8rem;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 
   strong {
-    font-size: 0.9rem;
+    flex-shrink: 0;
     font-family: $text-headline;
-    color: $text-default;
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 24px;
+  }
+
+  .progressBar {
+    height: 10px;
   }
 }

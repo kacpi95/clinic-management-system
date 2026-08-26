@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 .content {
@@ -18,21 +19,22 @@
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
-  font-size: 2rem;
+  font-size: 1.5rem;
   line-height: 1;
-  color: $text-default;
+  color: var(--color-text);
 }
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
 
 .searchBox,
@@ -40,61 +42,101 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: 48px;
-  border: none;
+  min-height: 46px;
+  border: 1px solid var(--color-border);
   border-radius: $radius-sm;
-  background: $surface-bg-alt;
+  background: var(--color-surface);
   transition: $transition-fast;
 }
 
 .searchBox {
   width: 100%;
-  max-width: 320px;
-  padding: 0 16px;
+  padding: 0 14px;
 
   input {
     width: 100%;
+    min-width: 0;
     border: none;
     outline: none;
     background: transparent;
+    color: var(--color-text);
     font-family: $text-body;
     font-size: 0.9rem;
-    color: $text-default;
 
     &::placeholder {
-      color: $text-muted;
+      color: var(--color-text-muted);
     }
+  }
+
+  &:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-soft);
   }
 }
 
 .button {
-  padding: 0 18px;
+  justify-content: center;
+  width: 100%;
+  padding: 0 16px;
+  color: var(--color-text);
   font-family: $text-body;
   font-size: 0.9rem;
   font-weight: 700;
-  color: $text-default;
+
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-2px);
-    background: rgba(0, 86, 179, 0.04);
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 }
 
 .icon {
   flex-shrink: 0;
   font-size: 1rem;
-  color: $primary;
+  color: var(--color-primary);
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .wrapper {
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
+    gap: 24px;
   }
 
   .title {
     font-size: 2.6rem;
+  }
+
+  .actions {
+    flex-direction: row;
+    align-items: center;
+
+    width: auto;
+  }
+
+  .searchBox {
+    width: 280px;
+  }
+
+  .button {
+    width: auto;
+  }
+
+  .button:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .searchBox {
+    width: 320px;
   }
 }

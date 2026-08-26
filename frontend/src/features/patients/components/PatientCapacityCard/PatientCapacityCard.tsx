@@ -46,7 +46,7 @@ export default function PatientCapacityCard() {
         </div>
 
         <div className={styles.stat}>
-          <span>Wolne terminy</span>
+          <span>Wolne miejsca</span>
           <strong>{availableSlots}</strong>
         </div>
 

@@ -1,44 +1,42 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
+  min-width: 0;
 }
 
 .pageHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .title {
   margin: 0;
+  overflow-wrap: anywhere;
   font-family: $text-headline;
-  font-size: 2.4rem;
-  color: $text-default;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .actions {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 }
 
 .primaryButton,
@@ -47,41 +45,85 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 48px;
-  padding: 0 22px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 18px;
   border-radius: $radius-sm;
   font-family: $text-body;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
-
   cursor: pointer;
   transition: $transition-fast;
 }
 
 .primaryButton {
   border: none;
-  background: $primary;
-  color: $button-text;
+  background: var(--color-primary);
+  color: var(--color-button-text);
 
   &:hover {
-    background: $primaryHover;
-    transform: translateY(-2px);
+    background: var(--color-primary-hover);
   }
 }
 
 .secondaryButton {
-  border: 1px solid rgba(86, 96, 117, 0.18);
-  background: $surface-bg-alt;
-  color: $text-default;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
 
   &:hover {
-    border-color: $primary;
-    background: rgba(0, 86, 179, 0.04);
-    color: $primary;
-    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
   }
 
   svg {
+    flex-shrink: 0;
     font-size: 0.9rem;
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    gap: 28px;
+  }
+
+  .pageHeader {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .actions {
+    flex-direction: row;
+
+    width: auto;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: auto;
+    min-height: 48px;
+    padding: 0 22px;
+    font-size: 0.95rem;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .wrapper {
+    gap: 32px;
+  }
+
+  .title {
+    font-size: 2.4rem;
   }
 }

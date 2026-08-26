@@ -1,60 +1,99 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
-  padding: 28px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-  box-shadow: 0 12px 32px rgba(17, 24, 39, 0.06);
+  @include card-surface;
+  padding: 18px;
 }
 
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 28px;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: $secondary;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
-  font-size: 2rem;
-  color: $text-default;
+  font-size: 1.5rem;
+  color: var(--color-text);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 22px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
 .item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 18px;
+  gap: 6px;
+  min-width: 0;
+  padding: 14px;
   border-radius: $radius-sm;
-  background: rgba(0, 86, 179, 0.03);
+  background: var(--color-primary-soft);
 }
 
 .label {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .value {
-  font-size: 1rem;
+  overflow-wrap: anywhere;
+  font-family: $text-body;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: $text-default;
-  word-break: break-word;
+  color: var(--color-text);
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 24px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .item {
+    padding: 16px;
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .wrapper {
+    padding: 28px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .title {
+    font-size: 2rem;
+  }
 }

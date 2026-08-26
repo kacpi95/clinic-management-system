@@ -1,34 +1,41 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
   width: 100%;
+  min-width: 0;
 }
 
 .table {
+  @include card-surface;
   width: 100%;
   overflow-x: auto;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
+  overflow-y: visible;
 }
 
 .header,
 .row {
-  min-width: 820px;
   display: grid;
-  grid-template-columns: 1.6fr 1.1fr 1.5fr 1fr 0.5fr;
+  grid-template-columns:
+    minmax(220px, 1.6fr)
+    minmax(140px, 1.1fr)
+    minmax(220px, 1.5fr)
+    minmax(140px, 1fr)
+    64px;
   align-items: center;
   gap: 16px;
+  min-width: 860px;
 }
 
 .header {
-  padding: 18px 22px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--color-border);
   font-family: $text-body;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  border-bottom: 1px solid rgba(86, 96, 117, 0.12);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: $secondary;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
 }
 
 .body {
@@ -37,8 +44,8 @@
 }
 
 .row {
-  padding: 18px 22px;
-  border-bottom: 1px solid rgba(86, 96, 117, 0.1);
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--color-border);
   transition: $transition-fast;
 
   &:last-child {
@@ -46,7 +53,7 @@
   }
 
   &:hover {
-    background: rgba(0, 86, 179, 0.035);
+    background: var(--color-primary-soft);
   }
 }
 
@@ -57,38 +64,33 @@
   min-width: 0;
 
   strong {
+    min-width: 0;
+    overflow: hidden;
     font-family: $text-headline;
-    font-size: 1rem;
-    color: $text-default;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
 .avatar {
-  flex-shrink: 0;
   width: 38px;
   height: 38px;
+  flex-shrink: 0;
   border-radius: 50%;
-  background-size: cover;
   background-position: center;
+  background-size: cover;
 }
 
 .cell {
+  min-width: 0;
+  overflow: hidden;
   font-family: $text-body;
-  font-size: 0.9rem;
-  color: $secondary;
-}
-
-.statusBadge {
-  display: inline-flex;
-  width: fit-content;
-  padding: 8px 12px;
-  border-radius: 50px;
-  font-family: $text-body;
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: $primary;
-  background: rgba(0, 86, 179, 0.08);
 }
 
 .actions {
@@ -103,39 +105,40 @@
   justify-content: center;
   width: 36px;
   height: 36px;
+  padding: 0;
   border: none;
   border-radius: 50%;
-  background: $surface-bg;
-  color: $secondary;
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+
   cursor: pointer;
   transition: $transition-fast;
 
   &:hover {
-    background: $logo-bg;
-    color: $primary;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
   }
-}
 
-.test {
-  position: absolute;
-  background-color: red;
-  width: 100px;
-  height: 100px;
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .dropDown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
+  z-index: 20;
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 180px;
   padding: 8px;
-  border: 1px solid rgba(86, 96, 117, 0.12);
+  border: 1px solid var(--color-border);
   border-radius: $radius-sm;
-  background: $surface-bg-alt;
-  z-index: 20;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
 }
 
 .menuButton {
@@ -143,29 +146,33 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 12px 14px;
-  font-family: $text-body;
-  font-size: 0.9rem;
-  font-weight: 600;
-
+  min-height: 40px;
+  padding: 0 12px;
   border: none;
   border-radius: 10px;
   background: transparent;
-  color: $text-default;
-
+  color: var(--color-text);
+  font-family: $text-body;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   transition: $transition-fast;
 
   &:hover {
-    background: rgba(0, 86, 179, 0.06);
-    color: $primary;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
   }
 }
 
 .menuIcon {
   flex-shrink: 0;
   font-size: 1.1rem;
-  color: $primary;
+  color: var(--color-primary);
 }
 
 .pagination {
@@ -174,7 +181,6 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-
   margin-top: 20px;
 
   span {
@@ -182,19 +188,19 @@
     width: 100%;
     text-align: center;
     font-family: $text-body;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 
   button {
     flex: 1;
-    min-height: 44px;
+    min-height: 42px;
     padding: 0 14px;
-    border: 1px solid rgba(86, 96, 117, 0.16);
+    border: 1px solid var(--color-border);
     border-radius: $radius-sm;
-    background: $surface-bg-alt;
-    color: $text-default;
+    background: var(--color-surface);
+    color: var(--color-text);
     font-family: $text-body;
     font-size: 0.9rem;
     font-weight: 700;
@@ -203,19 +209,37 @@
     transition: $transition-fast;
 
     &:hover:not(:disabled) {
-      border-color: $primary;
-      background: rgba(0, 86, 179, 0.04);
-      color: $primary;
+      border-color: var(--color-primary);
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
     }
 
     &:disabled {
       opacity: 0.4;
       cursor: not-allowed;
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
+  .header,
+  .row {
+    min-width: 920px;
+  }
+
+  .header {
+    padding: 18px 22px;
+  }
+
+  .row {
+    padding: 18px 22px;
+  }
+
   .pagination {
     flex-wrap: nowrap;
     justify-content: flex-end;
