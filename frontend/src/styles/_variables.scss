@@ -1,16 +1,19 @@
 $primary: #0056b3;
 $primaryHover: #0b3d91;
-$secondary: #566075;
-$tertiary: #973c00;
-$neutral: #f8f9fa;
-$error: #dc2626;
+// $secondary: #566075;
+// $tertiary: #973c00;
+// $neutral: #f8f9fa;
+// $error: #dc2626;
 
-$surface-bg: #f3f4f6;
-$surface-bg-alt: #ffffff;
-$logo-bg: #dbe5ff;
-$text-default: #111827;
-$text-muted: #9ca3af;
-$button-text: #ffffff;
+// $surface-bg: #f3f4f6;
+// $surface-bg-alt: #ffffff;
+// $logo-bg: #dbe5ff;
+// $text-default: #111827;
+// $text-muted: #9ca3af;
+// $button-text: #ffffff;
+
+$primary: #0056b3;
+$primaryHover: #0b3d91;
 
 $text-headline: 'Manrope', sans-serif;
 $text-body: 'Inter', sans-serif;
@@ -26,9 +29,6 @@ $transition-fast: 0.2s ease;
 
 $maxWidth: 1200px;
 
-@mixin container {
-  width: 100%;
-  max-width: $maxWidth;
-  margin: 0 auto;
-  padding: 0 16px;
-}
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-wide: 1280px;
