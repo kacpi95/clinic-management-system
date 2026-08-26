@@ -1,9 +1,11 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
+
 import styles from './AuthLayout.module.scss';
 import img1 from '../../assets/img1.jpg';
 
 export default function AuthLayout() {
   const location = useLocation();
+
   const isHomePage = location.pathname === '/';
 
   return (
