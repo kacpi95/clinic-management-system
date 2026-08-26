@@ -6,8 +6,8 @@
   gap: 20px;
   width: 100%;
   padding: 16px;
-  background: $surface-bg-alt;
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
 }
 
 .header {
@@ -17,14 +17,15 @@
 }
 
 .logo {
-  width: 42px;
-  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
+  overflow: hidden;
   border-radius: 12px;
-  background: $primary;
+  background: var(--color-primary);
 
   img {
     width: 100%;
@@ -37,13 +38,15 @@
   margin: 0;
   font-family: $text-headline;
   font-size: 1rem;
-  color: $text-default;
+  font-weight: 700;
+  color: var(--color-text);
 }
 
 .subtitle {
   margin: 2px 0 0;
+  font-family: $text-body;
   font-size: 0.7rem;
-  color: $text-muted;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -61,31 +64,38 @@
   min-height: 44px;
   padding: 0 14px;
   border-radius: $radius-sm;
-  font-size: 1rem;
+  font-family: $text-body;
+  font-size: 0.95rem;
+  font-weight: 500;
   text-decoration: none;
-  color: $secondary;
+  color: var(--color-text-secondary);
   transition: $transition-fast;
 
   &:hover {
-    background: rgba(0, 86, 179, 0.05);
-    color: $primary;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 }
 
 .active {
-  color: $primary;
-  font-weight: 600;
-  background: rgba(0, 86, 179, 0.08);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 700;
 
   &::before {
     content: '';
     position: absolute;
-    left: 0;
     top: 8px;
     bottom: 8px;
+    left: 0;
     width: 3px;
     border-radius: 4px;
-    background: $primary;
+    background: var(--color-primary);
   }
 }
 
@@ -97,6 +107,9 @@
 
 .button,
 .buttonLogout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 44px;
   padding: 0 14px;
@@ -106,30 +119,35 @@
   font-weight: 700;
   cursor: pointer;
   transition: $transition-fast;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .button {
   border: none;
-  background: $primary;
-  color: $button-text;
+  background: var(--color-primary);
+  color: var(--color-button-text);
 
   &:hover {
-    background: $primaryHover;
+    background: var(--color-primary-hover);
   }
 }
 
 .buttonLogout {
-  border: 1px solid rgba(220, 38, 38, 0.16);
+  border: 1px solid var(--color-error-border);
   background: transparent;
-  color: $error;
+  color: var(--color-error);
 
   &:hover {
-    background: rgba(220, 38, 38, 0.06);
-    border-color: $error;
+    background: var(--color-error-soft);
+    border-color: var(--color-error);
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: $breakpoint-desktop) {
   .wrapper {
     height: 100vh;
     padding: 20px 16px;

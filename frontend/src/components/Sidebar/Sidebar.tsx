@@ -29,7 +29,7 @@ export default function Sidebar() {
         </div>
 
         <div>
-          <h1 className={styles.name}>The Clinical Atelier</h1>
+          <p className={styles.name}>The Clinical Atelier</p>
           <p className={styles.subtitle}>Medical Administration</p>
         </div>
       </div>
@@ -50,10 +50,15 @@ export default function Sidebar() {
       </nav>
 
       <div className={styles.footer}>
-        <button className={styles.buttonLogout} onClick={handleLogout}>
+        <button
+          type='button'
+          className={styles.buttonLogout}
+          onClick={handleLogout}
+        >
           Wyloguj
         </button>
         <button
+          type='button'
           className={styles.button}
           onClick={() => navigate('/dashboard/patients/new')}
         >

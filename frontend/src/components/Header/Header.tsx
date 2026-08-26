@@ -5,10 +5,10 @@ import styles from './Header.module.scss';
 
 const pageTitles: Record<string, string> = {
   '/dashboard': 'Dashboard',
-  '/calendar': 'Kalendarz',
-  '/patients': 'Pacjenci',
-  '/analytics': 'Analityka',
-  '/settings': 'Ustawienia',
+  '/dashboard/calendar': 'Kalendarz',
+  '/dashboard/patients': 'Pacjenci',
+  '/dashboard/analytics': 'Analityka',
+  '/dashboard/settings': 'Ustawienia',
 };
 
 export default function Header() {
@@ -40,12 +40,14 @@ export default function Header() {
           </span>
         </div>
 
-        <div
+        <button
+          type='button'
           onClick={() => navigate('/dashboard/settings')}
           className={styles.avatar}
+          aria-label='Przejdź do ustawień profilu'
         >
           {initials || 'DR'}
-        </div>
+        </button>
       </div>
     </header>
   );
