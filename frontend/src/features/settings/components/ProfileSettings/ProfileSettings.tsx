@@ -77,6 +77,7 @@ export default function ProfileSettings() {
             type='button'
             className={styles.editButton}
             onClick={handleSave}
+            disabled={isSubmitting}
           >
             {isSubmitting
               ? 'Zapisywanie...'

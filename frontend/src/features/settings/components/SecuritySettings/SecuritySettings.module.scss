@@ -1,14 +1,13 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
+  @include card-surface;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 22px;
   height: 100%;
-  padding: 20px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+  padding: 18px;
 }
 
 .header {
@@ -19,25 +18,25 @@
   .title {
     margin: 0;
     font-family: $text-headline;
-    font-size: 1.4rem;
-    color: $text-default;
+    font-size: 1.3rem;
+    color: var(--color-text);
   }
 
   p {
     margin: 0;
     font-family: $text-body;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(86, 96, 117, 0.12);
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
 }
 
 .passwordInfo {
@@ -50,15 +49,15 @@
     margin: 0;
     font-family: $text-headline;
     font-size: 1rem;
-    color: $text-default;
+    color: var(--color-text);
   }
 
   p {
-    margin: 6px 0 0;
+    margin: 5px 0 0;
     font-family: $text-body;
-    font-size: 1rem;
+    font-size: 0.95rem;
     letter-spacing: 0.1em;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 
   > span {
@@ -67,20 +66,20 @@
     justify-content: center;
     padding: 6px 10px;
     border-radius: 50px;
-    background: rgba(0, 86, 179, 0.08);
+    background: var(--color-success-soft);
+    color: var(--color-success);
     font-family: $text-body;
     font-size: 0.7rem;
     font-weight: 800;
-    color: $primary;
   }
 }
 
 .info {
   margin: 0;
   font-family: $text-body;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .actions {
@@ -93,17 +92,22 @@
     padding: 0 16px;
     border: none;
     border-radius: $radius-sm;
-    background: $primary;
-    color: $button-text;
+    background: var(--color-primary);
+    color: var(--color-button-text);
     font-family: $text-body;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 700;
 
     cursor: pointer;
     transition: $transition-fast;
 
     &:hover {
-      background: $primaryHover;
+      background: var(--color-primary-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
     }
   }
 }
@@ -117,7 +121,7 @@
     font-family: $text-body;
     font-size: 0.8rem;
     font-weight: 700;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 }
 
@@ -125,55 +129,52 @@
   position: relative;
 
   input {
-    width: 100%;
-    min-height: 44px;
-    padding: 0 46px 0 12px;
-    border: 1px solid rgba(86, 96, 117, 0.18);
-    border-radius: $radius-sm;
-    background: $surface-bg-alt;
-    color: $text-default;
-    font-family: $text-body;
-    font-size: 1rem;
-    outline: none;
-    transition: $transition-fast;
-
-    &:focus {
-      border-color: $primary;
-      box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.08);
-    }
+    @include form-control;
+    padding-right: 46px;
   }
 }
 
 .eyeButton {
   position: absolute;
   top: 50%;
-  right: 12px;
+  right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
   border: none;
+  border-radius: 50%;
   background: transparent;
-  color: $secondary;
+  color: var(--color-text-secondary);
   transform: translateY(-50%);
   cursor: pointer;
+  transition: $transition-fast;
 
   &:hover {
-    color: $primary;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
   }
 }
 
 .error {
   font-family: $text-body;
-  font-size: 0.8rem;
-  color: $error;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-error);
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .saveButton,
@@ -182,7 +183,7 @@
   padding: 0 16px;
   border-radius: $radius-sm;
   font-family: $text-body;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
 
   cursor: pointer;
@@ -192,32 +193,38 @@
     opacity: 0.55;
     cursor: not-allowed;
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .saveButton {
   border: none;
-  background: $primary;
-  color: $button-text;
+  background: var(--color-primary);
+  color: var(--color-button-text);
 
   &:hover:not(:disabled) {
-    background: $primaryHover;
+    background: var(--color-primary-hover);
   }
 }
 
 .cancelButton {
-  border: 1px solid rgba(86, 96, 117, 0.18);
-  background: $surface-bg-alt;
-  color: $text-default;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
 
   &:hover:not(:disabled) {
-    border-color: $primary;
-    color: $primary;
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .wrapper {
-    padding: 24px;
+    padding: 22px;
   }
 
   .actions {
@@ -232,6 +239,7 @@
       }
     }
   }
+
   .buttons {
     flex-direction: row;
     justify-content: flex-end;
@@ -240,5 +248,9 @@
   .saveButton,
   .cancelButton {
     width: auto;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
   }
 }

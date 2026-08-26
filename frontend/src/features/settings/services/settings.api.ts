@@ -11,7 +11,7 @@ export function updateDoctorProfile(data: UpdateDoctorProfileData) {
   });
 }
 
-export function ChangePassword(data: ChangePasswordData) {
+export function changePassword(data: ChangePasswordData) {
   return apiClient('/settings/password', {
     method: 'PUT',
     body: JSON.stringify(data),

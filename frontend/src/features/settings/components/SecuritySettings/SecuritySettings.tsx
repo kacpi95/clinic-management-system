@@ -3,7 +3,7 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 import styles from './SecuritySettings.module.scss';
-import { ChangePassword } from '../../services/settings.api';
+import { changePassword } from '../../services/settings.api';
 
 export default function SecuritySettings() {
   const [isEditing, setIsEditing] = useState(false);
@@ -87,7 +87,7 @@ export default function SecuritySettings() {
     setIsSubmitting(true);
 
     try {
-      await ChangePassword({
+      await changePassword({
         currentPassword: password,
         newPassword,
       });
