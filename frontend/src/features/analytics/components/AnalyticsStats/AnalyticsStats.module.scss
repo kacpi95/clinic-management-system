@@ -1,40 +1,50 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 14px;
 }
 
 .card {
+  @include card-surface;
   position: relative;
-  padding: 22px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-  box-shadow: 0 14px 36px rgba(17, 24, 39, 0.06);
+  padding: 18px;
 
   p {
-    margin: 0 0 10px;
-    color: $secondary;
-    font-size: 0.9rem;
+    margin: 0 0 8px;
+    font-family: $text-body;
+    font-size: 0.85rem;
     font-weight: 700;
+    color: var(--color-text-secondary);
   }
 
   strong {
     font-family: $text-headline;
-    font-size: 2rem;
-    color: $text-default;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--color-text);
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .wrapper {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    padding: 22px;
+
+    strong {
+      font-size: 2rem;
+    }
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: $breakpoint-wide) {
   .wrapper {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

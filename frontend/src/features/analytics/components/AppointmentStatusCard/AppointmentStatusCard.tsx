@@ -33,9 +33,9 @@ export default function AppointmentStatusCard() {
         className={styles.score}
         style={{
           background: `conic-gradient(
-      #0056b3 ${stats.completed}%,
-      rgba(0, 86, 179, 0.15) ${stats.completed}% 100%
-    )`,
+  var(--color-primary) ${stats.completed}%,
+  var(--color-primary-soft) ${stats.completed}% 100%
+)`,
         }}
       >
         <div className={styles.scoreInner}>

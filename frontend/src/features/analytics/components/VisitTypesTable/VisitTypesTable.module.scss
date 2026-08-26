@@ -1,61 +1,93 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
-  padding: 24px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
+  @include card-surface;
+  min-width: 0;
+  padding: 18px;
 }
 
 .header {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 
   h2 {
     margin: 0;
     font-family: $text-headline;
-    font-size: 1.3rem;
-    color: $text-default;
+    font-size: 1.2rem;
+    color: var(--color-text);
   }
 
   p {
     margin: 6px 0 0;
-    font-size: 0.9rem;
-    color: $secondary;
+    font-family: $text-body;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
   }
 }
 
 .table {
+  width: 100%;
   overflow-x: auto;
 }
 
 .tableHeader,
 .row {
-  min-width: 520px;
   display: grid;
-  grid-template-columns: 2fr 0.7fr 0.7fr;
-  gap: 16px;
+  grid-template-columns: minmax(240px, 2fr) minmax(80px, 0.7fr) minmax(
+      80px,
+      0.7fr
+    );
   align-items: center;
+  gap: 16px;
+  min-width: 480px;
 }
 
 .tableHeader {
-  padding: 14px 0;
-  color: $secondary;
-  font-size: 0.8rem;
+  padding: 12px 0;
+  font-family: $text-body;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
 }
 
 .row {
-  padding: 18px 0;
-  border-top: 1px solid rgba(86, 96, 117, 0.12);
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border);
 
   strong {
+    overflow-wrap: anywhere;
     font-family: $text-headline;
-    color: $text-default;
+    font-size: 0.9rem;
+    color: var(--color-text);
   }
 
   span {
-    font-size: 0.9rem;
-    color: $secondary;
+    font-family: $text-body;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 24px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .row {
+    padding: 18px 0;
   }
 }
