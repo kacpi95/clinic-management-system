@@ -1,60 +1,110 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
+  @include card-surface;
   display: flex;
   flex-direction: column;
   gap: 18px;
   padding: 20px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
   font-size: 1.1rem;
-  color: $text-default;
+  color: var(--color-text);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .item {
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    transform: translateX(2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: $radius-sm;
+  }
 }
 
 .time {
-  width: 58px;
-  height: 58px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 58px;
+  height: 58px;
   flex-shrink: 0;
   border-radius: $radius-sm;
-  font-family: $text-headline;
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: $primary;
-  background: rgba(0, 86, 179, 0.08);
+  background: var(--color-primary-soft);
+
+  strong {
+    font-family: $text-headline;
+    font-size: 0.9rem;
+    color: var(--color-primary);
+  }
+
+  span {
+    margin-top: 2px;
+    font-family: $text-body;
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+  }
 }
 
 .content {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 
   strong {
+    overflow: hidden;
+    font-family: $text-headline;
     font-size: 0.9rem;
-    color: $text-default;
+    color: var(--color-text);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   span {
+    overflow: hidden;
+    font-family: $text-body;
     font-size: 0.8rem;
-    color: $secondary;
+    color: var(--color-text-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.empty {
+  margin: 0;
+  padding: 16px 0;
+  font-family: $text-body;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 22px;
   }
 }
