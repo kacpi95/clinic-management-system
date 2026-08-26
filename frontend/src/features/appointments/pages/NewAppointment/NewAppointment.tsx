@@ -76,7 +76,6 @@ export default function NewAppointment() {
 
     setIsSubmitting(true);
     try {
-      console.log(newAppointment);
       await createAppointment(newAppointment);
 
       toast.success('Wizyta została utworzona');
@@ -111,7 +110,7 @@ export default function NewAppointment() {
       <div className={styles.header}>
         <div>
           <p className={styles.eyebrow}>NOWA WIZYTA</p>
-          <h1 className={styles.title}>Umów wizytę</h1>
+          <h2 className={styles.title}>Umów wizytę</h2>
         </div>
         <Button
           type='button'
