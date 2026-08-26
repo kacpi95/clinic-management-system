@@ -20,7 +20,7 @@ export default function CalendarHeader({
     <header className={styles.wrapper}>
       <div className={styles.content}>
         <p className={styles.eyebrow}>Zarządzaj wizytami i harmonogramem</p>
-        <h1 className={styles.title}>HARMONOGRAM</h1>
+        <h2 className={styles.title}>HARMONOGRAM</h2>
       </div>
       <div className={styles.navigation}>
         <button

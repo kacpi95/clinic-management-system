@@ -1,19 +1,19 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
+  @include card-surface;
   display: flex;
   flex-direction: column;
   gap: 18px;
   padding: 20px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
   font-size: 1.1rem;
-  color: $text-default;
+  color: var(--color-text);
 }
 
 .filters {
@@ -30,59 +30,62 @@
   width: 100%;
   min-height: 52px;
   padding: 0 14px;
-  border: none;
   border-radius: $radius-sm;
-  background: $surface-bg;
-  cursor: pointer;
-  transition: $transition-fast;
-
-  &:hover {
-    transform: translateY(-1px);
-    background: rgba(0, 86, 179, 0.04);
-  }
+  background: var(--color-surface-muted);
 }
 
 .left {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .colorCircle {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
   flex-shrink: 0;
-}
-
-.canceled {
-  background: $error;
+  border-radius: 50%;
 }
 
 .planned {
-  background: $primary;
+  background: var(--color-planned);
 }
 
 .completed {
-  background: $secondary;
+  background: var(--color-completed);
+}
+
+.canceled {
+  background: var(--color-canceled);
 }
 
 .filterName {
+  min-width: 0;
+  font-family: $text-body;
   font-size: 0.9rem;
   font-weight: 600;
-  color: $text-default;
+  color: var(--color-text);
 }
 
 .filterNumber {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 28px;
+  min-width: 30px;
   height: 28px;
-  padding: 0 10px;
+  padding: 0 9px;
+  flex-shrink: 0;
+  border-radius: 50px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-family: $text-body;
   font-size: 0.8rem;
   font-weight: 800;
-  border-radius: 50px;
-  background: rgba(0, 86, 179, 0.08);
-  color: $primary;
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 22px;
+  }
 }
