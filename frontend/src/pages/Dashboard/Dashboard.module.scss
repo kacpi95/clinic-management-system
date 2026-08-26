@@ -2,32 +2,28 @@
 
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
 }
 
-.mainContent {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
+.mainContent,
 .rightSidebar {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-width: 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: $breakpoint-desktop) {
   .wrapper {
     grid-template-columns: minmax(0, 1fr) 320px;
     align-items: start;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: $breakpoint-wide) {
   .wrapper {
-    gap: 32px;
     grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 32px;
   }
 }

@@ -1,15 +1,12 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .mainCard {
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-}
-
-.mainCard {
-  padding: 20px;
+  @include card-surface;
   display: flex;
   flex-direction: column;
   gap: 28px;
+  padding: 20px;
 }
 
 .cardHeader {
@@ -21,37 +18,39 @@
   p {
     margin: 0;
     font-family: $text-body;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 }
 
 .icon {
-  width: 42px;
-  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
   border-radius: $radius-sm;
-  background: $logo-bg;
+  background: var(--color-logo-bg);
+  color: var(--color-primary);
+  font-size: 1.25rem;
 }
 
 .cardContent {
   h2 {
     margin: 0;
+    font-family: $text-headline;
     font-size: 3rem;
     line-height: 1;
-    font-family: $text-headline;
-    color: $primary;
+    color: var(--color-primary);
   }
 
   p {
     margin: 8px 0 0;
     font-family: $text-body;
-    font-size: 1rem;
-    color: $secondary;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
   }
 }
 
@@ -61,18 +60,19 @@
   gap: 10px;
 
   span {
-    padding: 8px 10px;
+    padding: 7px 10px;
     border-radius: 50px;
+    background: var(--color-surface-muted);
+    color: var(--color-text-secondary);
+    font-family: $text-body;
     font-size: 0.8rem;
     font-weight: 700;
-    font-family: $text-body;
-    color: $secondary;
-    background: $surface-bg;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .mainCard {
     min-height: 260px;
+    padding: 24px;
   }
 }

@@ -1,9 +1,9 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
-  padding: 22px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
+  @include card-surface;
+  padding: 20px;
 }
 
 .header {
@@ -13,35 +13,37 @@
     margin: 6px 0 0;
     font-family: $text-headline;
     font-size: 1.2rem;
-    color: $text-default;
+    color: var(--color-text);
   }
 }
 
 .eyebrow {
   margin: 0;
+  font-family: $text-body;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .trendBox {
   padding: 18px;
   border-radius: $radius-sm;
-  background: rgba(0, 86, 179, 0.08);
+  background: var(--color-primary-soft);
 
   strong {
     display: block;
     font-family: $text-headline;
     font-size: 2rem;
-    color: $primary;
+    color: var(--color-primary);
   }
 
   span {
     display: block;
     margin-top: 6px;
-    font-size: 1rem;
-    color: $secondary;
+    font-family: $text-body;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
   }
 }
 
@@ -55,10 +57,11 @@
 
   li {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 14px;
     padding-bottom: 12px;
-    border-bottom: 1px solid rgba(86, 96, 117, 0.12);
+    border-bottom: 1px solid var(--color-border);
   }
 
   li:last-child {
@@ -67,12 +70,21 @@
   }
 
   span {
-    color: $secondary;
+    min-width: 0;
+    font-family: $text-body;
     font-size: 0.9rem;
+    color: var(--color-text-secondary);
   }
 
   strong {
+    flex-shrink: 0;
     font-family: $text-headline;
-    color: $text-default;
+    color: var(--color-text);
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 22px;
   }
 }

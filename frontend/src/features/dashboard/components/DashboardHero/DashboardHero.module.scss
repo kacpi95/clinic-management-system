@@ -7,20 +7,18 @@
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  min-width: 0;
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
-  font-size: 2rem;
-  line-height: 1;
-  color: $text-default;
+  font-size: clamp(2rem, 7vw, 2.5rem);
+  line-height: 1.05;
+  color: var(--color-text);
 
   span {
-    color: $primary;
+    color: var(--color-primary);
   }
 }
 
@@ -33,21 +31,23 @@
 .date {
   margin: 0;
   font-family: $text-headline;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: $primary;
+  color: var(--color-primary);
 }
 
 .subtitle {
-  font-size: 1rem;
-  color: $secondary;
+  font-family: $text-body;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .wrapper {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
+    gap: 32px;
   }
 
   .title {
@@ -55,11 +55,16 @@
   }
 
   .dateSection {
-    text-align: right;
     align-items: flex-end;
+    flex-shrink: 0;
+    text-align: right;
   }
 
   .date {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
   }
 }

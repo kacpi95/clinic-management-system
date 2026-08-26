@@ -20,9 +20,9 @@ export default function DashboardHero() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.content}>
-        <h1 className={styles.title}>
+        <h2 className={styles.title}>
           Dzień dobry, <span>{doctor?.firstName || 'Doktorze'}.</span>
-        </h1>
+        </h2>
       </div>
 
       <div className={styles.dateSection}>
