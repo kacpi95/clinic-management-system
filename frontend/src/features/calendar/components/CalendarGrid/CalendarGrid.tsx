@@ -34,19 +34,7 @@ export default function CalendarGrid({ currentDate }: CalendarGridProps) {
       start: appointment.startTime,
       end: appointment.endTime,
 
-      backgroundColor:
-        status === 'PLANNED'
-          ? '#0056b3'
-          : status === 'COMPLETED'
-            ? '#566075'
-            : '#dc2626',
-
-      borderColor:
-        status === 'PLANNED'
-          ? '#0056b3'
-          : status === 'COMPLETED'
-            ? '#566075'
-            : '#dc2626',
+      classNames: [`appointment-${status.toLowerCase()}`],
 
       extendedProps: {
         patientId: appointment.patientId,

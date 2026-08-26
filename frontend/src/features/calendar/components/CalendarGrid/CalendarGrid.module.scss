@@ -1,71 +1,135 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
-  padding: 20px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
+  @include card-surface;
+  min-width: 0;
+  padding: 14px;
+  overflow-x: auto;
 }
 
 :global(.fc) {
+  min-width: 680px;
   font-family: $text-body;
+  color: var(--color-text);
 }
 
 :global(.fc-theme-standard td),
 :global(.fc-theme-standard th),
 :global(.fc-theme-standard .fc-scrollgrid) {
-  border-color: rgba(86, 96, 117, 0.12);
+  border-color: var(--color-border);
 }
 
 :global(.fc-col-header-cell) {
-  padding: 14px 0;
-  background: rgba(86, 96, 117, 0.04);
+  padding: 12px 0;
+  background: var(--color-surface-muted);
 
   a {
-    font-size: 0.8rem;
+    font-family: $text-body;
+    font-size: 0.75rem;
     font-weight: 800;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: $secondary;
     text-decoration: none;
+
+    color: var(--color-text-secondary);
   }
 }
 
 :global(.fc-daygrid-day) {
+  background: var(--color-surface);
   transition: $transition-fast;
 
   &:hover {
-    background: rgba(0, 86, 179, 0.03);
+    background: var(--color-primary-soft);
   }
 }
 
 :global(.fc-daygrid-day-number) {
-  padding: 12px;
+  padding: 10px;
   font-family: $text-headline;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 800;
-  color: $text-default;
+  color: var(--color-text);
   text-decoration: none;
 }
 
+:global(.fc-day-other .fc-daygrid-day-number) {
+  color: var(--color-text-muted);
+}
+
 :global(.fc-event) {
-  border: none;
-  padding: 4px 8px;
-  border-radius: 10px;
-  font-size: 0.75rem;
+  padding: 4px 7px;
+  border-radius: 8px;
+  font-family: $text-body;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: $primary;
-  background: rgba(0, 86, 179, 0.12);
+
+  cursor: pointer;
 }
 
 :global(.fc-event-title) {
   font-weight: 700;
-  color: black
+  color: inherit;
+}
+
+:global(.fc .appointment-planned) {
+  border: none;
+  border-left: 3px solid var(--color-planned);
+  background: var(--color-planned-soft);
+  color: var(--color-planned);
+}
+
+:global(.fc .appointment-completed) {
+  border: none;
+  border-left: 3px solid var(--color-completed);
+  background: var(--color-completed-soft);
+  color: var(--color-completed);
+}
+
+:global(.fc .appointment-canceled) {
+  border: none;
+  border-left: 3px solid var(--color-canceled);
+  background: var(--color-canceled-soft);
+  color: var(--color-canceled);
+}
+
+:global(.fc-daygrid-event-dot) {
+  display: none;
 }
 
 :global(.fc-day-today) {
-  background: rgba(0, 86, 179, 0.05) !important;
+  background: var(--color-primary-soft) !important;
 }
 
 :global(.fc-toolbar) {
   display: none;
+}
+
+:global(.fc-daygrid-more-link) {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .wrapper {
+    padding: 18px;
+  }
+
+  :global(.fc) {
+    min-width: 0;
+  }
+
+  :global(.fc-col-header-cell) {
+    padding: 14px 0;
+  }
+
+  :global(.fc-daygrid-day-number) {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  :global(.fc-event) {
+    font-size: 0.75rem;
+  }
 }
