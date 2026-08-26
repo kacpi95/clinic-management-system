@@ -1,6 +1,6 @@
 import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
 import { getNextAppointment } from '../../utils/getNextAppointment';
-import styles from './TodaysAppointments.module.scss';
+import styles from './TodaysAppointment.module.scss';
 
 export default function TodaysAppointments() {
   const { calendarAppointments } = useCalendarAppointments();

@@ -1,23 +1,25 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 
 .title {
   margin: 0;
   font-family: $text-headline;
-  font-size: 1.5rem;
-  color: $text-default;
+  font-size: 1.35rem;
+  color: var(--color-text);
 }
 
 .linkButton {
@@ -25,20 +27,26 @@
   align-items: center;
   justify-content: center;
   min-height: 40px;
-  padding: 0 14px;
-  border: 1px solid rgba(0, 86, 179, 0.14);
+  padding: 0 12px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-primary-soft);
   border-radius: $radius-sm;
-  background: rgba(0, 86, 179, 0.05);
-  color: $primary;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
   font-family: $text-body;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
+
   cursor: pointer;
   transition: $transition-fast;
 
   &:hover {
-    border-color: $primary;
-    background: $neutral;
+    border-color: var(--color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 }
 
@@ -46,46 +54,50 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-
   margin: 0;
   padding: 0;
-
   list-style: none;
 }
 
 .item {
   width: 100%;
+  min-width: 0;
 }
 
 .card {
+  @include card-surface;
   display: grid;
-  grid-template-columns: 72px 56px 1fr;
+  grid-template-columns: 52px 46px minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
-  padding: 18px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
+  gap: 12px;
+  padding: 14px;
   cursor: pointer;
   transition: $transition-fast;
 
   &:hover {
     transform: translateY(-2px);
   }
+
+  &:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 .time {
   span {
     font-family: $text-headline;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    color: $primary;
+    color: var(--color-primary);
   }
 }
 
 .avatar {
-  width: 56px;
-  height: 56px;
+  width: 46px;
+  height: 46px;
   overflow: hidden;
+  flex-shrink: 0;
   border-radius: 50%;
 
   img {
@@ -100,16 +112,22 @@
 
   h3 {
     margin: 0;
+    overflow: hidden;
     font-family: $text-headline;
-    font-size: 1rem;
-    color: $text-default;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   p {
     margin: 6px 0 0;
+    overflow: hidden;
     font-family: $text-body;
-    font-size: 0.9rem;
-    color: $secondary;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -117,25 +135,61 @@
   display: none;
 }
 
+.planned {
+  background: var(--color-planned-soft);
+  color: var(--color-planned);
+  border: 1px solid var(--color-planned);
+}
+
+.completed {
+  background: var(--color-completed-soft);
+  color: var(--color-completed);
+  border: 1px solid var(--color-completed);
+}
+
+.canceled {
+  background: var(--color-canceled-soft);
+  color: var(--color-canceled);
+  border: 1px solid var(--color-canceled);
+}
+
 .empty {
+  @include card-surface;
   margin: 0;
   padding: 24px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
   font-family: $text-body;
   font-size: 0.9rem;
   text-align: center;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
-@media (min-width: 768px) {
-  .card {
-    grid-template-columns: 90px 56px 1fr auto;
-    padding: 22px;
+@media (min-width: $breakpoint-tablet) {
+  .title {
+    font-size: 1.5rem;
   }
-  .linkButton {
-    &:hover {
-      transform: translateY(-1px);
+
+  .card {
+    grid-template-columns: 80px 56px minmax(0, 1fr) auto;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  .time span {
+    font-size: 1rem;
+  }
+
+  .content {
+    h3 {
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
     }
   }
 
@@ -143,28 +197,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 14px;
+    padding: 8px 12px;
     border-radius: 50px;
     font-family: $text-body;
     font-size: 0.8rem;
     font-weight: 700;
   }
 
-  .planned {
-    background: rgba(0, 86, 179, 0.08);
-    color: $primary;
-    border: 1px solid $primary;
-  }
-
-  .completed {
-    background: rgba(86, 96, 117, 0.08);
-    color: $secondary;
-    border: 1px solid $secondary;
-  }
-
-  .canceled {
-    background: rgba(220, 38, 38, 0.08);
-    color: $error;
-    border: 1px solid $error;
+  .linkButton:hover {
+    transform: translateY(-1px);
   }
 }

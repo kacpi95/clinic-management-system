@@ -1,32 +1,29 @@
 @use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
 
 .wrapper {
-  padding: 22px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.08);
+  @include card-surface;
+  padding: 20px;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
   margin-bottom: 18px;
 
   h2 {
     margin: 6px 0 0;
     font-family: $text-headline;
     font-size: 1.2rem;
-    color: $text-default;
+    color: var(--color-text);
   }
 }
 
 .eyebrow {
   margin: 0;
+  font-family: $text-body;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.16em;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .list {
@@ -42,6 +39,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .itemHeader {
@@ -51,15 +49,17 @@
   gap: 12px;
 
   span {
+    min-width: 0;
     font-family: $text-body;
     font-size: 0.9rem;
-    color: $secondary;
+    color: var(--color-text-secondary);
   }
 
   strong {
+    flex-shrink: 0;
     font-family: $text-headline;
     font-size: 0.95rem;
-    color: $text-default;
+    color: var(--color-text);
   }
 }
 
@@ -68,17 +68,17 @@
   height: 8px;
   overflow: hidden;
   border-radius: 50px;
-  background: $surface-bg;
+  background: var(--color-surface-muted);
 }
 
 .progress {
   height: 100%;
   border-radius: inherit;
-  background: $primary;
-  transition: $transition-fast;
+  background: var(--color-primary);
+  transition: width $transition-fast;
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .wrapper {
     padding: 24px;
   }

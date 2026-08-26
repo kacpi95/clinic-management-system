@@ -1,4 +1,4 @@
-import styles from './UrgentTasks.module.scss';
+import styles from './WeeklyWorkload.module.scss';
 import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
 import { getWeeklyWorkload } from '../../utils/getWeeklyWorkload';
 
