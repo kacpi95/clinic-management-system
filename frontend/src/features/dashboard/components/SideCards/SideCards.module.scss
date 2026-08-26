@@ -1,10 +1,5 @@
 @use '../../../../styles/variables' as *;
-
-.smallCard,
-.appointmentCard {
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-}
+@use '../../../../styles/mixins' as *;
 
 .sideCards {
   display: grid;
@@ -14,6 +9,10 @@
 
 .smallCard,
 .appointmentCard {
+  @include card-surface;
+  display: flex;
+  align-items: center;
+  min-width: 0;
   padding: 18px;
 }
 
@@ -21,25 +20,40 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
 
   h3 {
     margin: 0;
     font-family: $text-headline;
     font-size: 1.8rem;
     line-height: 1;
-    color: $text-default;
+    color: var(--color-text);
   }
 
   p {
     margin: 6px 0 0;
-    font-size: 1rem;
     font-family: $text-body;
-    color: $secondary;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
   }
 }
 
 .icon {
-  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: $radius-sm;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 1.4rem;
 }
 
-
+@media (min-width: $breakpoint-tablet) {
+  .smallCard,
+  .appointmentCard {
+    padding: 20px;
+  }
+}

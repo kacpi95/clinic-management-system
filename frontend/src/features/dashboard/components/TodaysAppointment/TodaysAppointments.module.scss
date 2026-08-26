@@ -2,15 +2,15 @@
 
 .promoCard {
   position: relative;
+  display: flex;
+  flex-direction: column;
   min-height: 180px;
   padding: 20px;
   overflow: hidden;
   border-radius: $radius-md;
-
   background:
     linear-gradient(rgba(0, 86, 179, 0.22), rgba(11, 61, 145, 0.42)),
     url('../../../../assets/dashboard-promo-bgc.png');
-
   background-size: cover;
   background-position: center;
 }
@@ -24,10 +24,8 @@
 .promoContent {
   position: relative;
   z-index: 1;
-
   display: flex;
   flex-direction: column;
-
   max-width: 320px;
 
   h3 {
@@ -35,7 +33,7 @@
     font-family: $text-headline;
     font-size: 1.35rem;
     line-height: 1.2;
-    color: $button-text;
+    color: var(--color-on-media);
   }
 
   span {
@@ -60,14 +58,15 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-@media (min-width: 768px) {
+@media (min-width: $breakpoint-tablet) {
   .promoCard {
     grid-column: 1 / -1;
     min-height: 220px;
+    padding: 24px;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: $breakpoint-wide) {
   .promoCard {
     grid-column: auto;
   }
