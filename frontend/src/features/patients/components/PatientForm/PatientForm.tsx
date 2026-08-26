@@ -108,9 +108,9 @@ export default function PatientForm({ patient }: Props) {
             {isEditMode ? 'EDYCJA PACJENTA' : 'NOWY PACJENT'}
           </p>
 
-          <h1 className={styles.title}>
+          <h2 className={styles.title}>
             {isEditMode ? 'Edytuj pacjenta' : 'Dodaj pacjenta'}
-          </h1>
+          </h2>
         </div>
 
         <Button

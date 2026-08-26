@@ -49,7 +49,7 @@ export default function AppointmentHistory({
 
       setOpenedId(null);
 
-      toast.success('Wizyta zostałą usunięta');
+      toast.success('Wizyta została usunięta');
     } catch (error) {
       console.error(error);
 
