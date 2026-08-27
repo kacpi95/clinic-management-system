@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import patientOne from '../../../../assets/patient-1.png';
 import styles from './PatientsTable.module.scss';
 import type { PatientsTableProps } from '../../types/patient.types';
+import ErrorState from '../../../../components/Feedback/ErrorState';
+import LoadingState from '../../../../components/Feedback/LoadingState';
 
 export default function PatientsTable({
   patients,
@@ -51,11 +53,11 @@ export default function PatientsTable({
   }, [filteredPatients, page]);
 
   if (isLoading) {
-    return <div>Ładowanie danych</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorState message={error} />;
   }
 
   return (

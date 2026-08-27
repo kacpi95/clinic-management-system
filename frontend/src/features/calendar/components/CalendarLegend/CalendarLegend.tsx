@@ -1,6 +1,8 @@
 import styles from './CalendarLegend.module.scss';
 import { useCalendarAppointments } from '../../hooks/useCalendarAppointments';
 import { getAppointmentStats } from '../../../appointments/utils/getAppointmentStats';
+import LoadingState from '../../../../components/Feedback/LoadingState';
+import ErrorState from '../../../../components/Feedback/ErrorState';
 
 export default function CalendarLegend() {
   const { isLoading, error, calendarAppointments } = useCalendarAppointments();
@@ -8,11 +10,11 @@ export default function CalendarLegend() {
   const stats = getAppointmentStats(calendarAppointments);
 
   if (isLoading) {
-    return <div>Ładowanie...</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>error</div>;
+    return <ErrorState message={error} />;
   }
 
   const filters = [

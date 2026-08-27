@@ -13,6 +13,8 @@ import { useAuth } from '../../../../context/useAuth';
 import { APPOINTMENT_HOURS } from '../../appointmentHours';
 import { createAppointment } from '../../services/appointment.api';
 import type { AppointmentStatus } from '../../types/appointment.type';
+import LoadingState from '../../../../components/Feedback/LoadingState';
+import ErrorState from '../../../../components/Feedback/ErrorState';
 
 export default function NewAppointment() {
   const { id } = useParams();
@@ -94,11 +96,11 @@ export default function NewAppointment() {
   };
 
   if (isLoading) {
-    return <div>Ładowanie...</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorState message={error} />;
   }
 
   if (!patient) {

@@ -10,6 +10,8 @@ import { usePatient } from '../../hooks/usePatient';
 import { createPatient, updatePatient } from '../../services/patients.api';
 import styles from './PatientForm.module.scss';
 import type { PatientDetails } from '../../types/patient.types';
+import LoadingState from '../../../../components/Feedback/LoadingState';
+import ErrorState from '../../../../components/Feedback/ErrorState';
 
 type Props = {
   patient?: PatientDetails;
@@ -93,11 +95,11 @@ export default function PatientForm({ patient }: Props) {
   };
 
   if (isEditMode && isLoading) {
-    return <div>Ładowanie...</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorState message={error} />;
   }
 
   return (

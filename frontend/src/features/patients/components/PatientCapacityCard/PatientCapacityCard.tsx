@@ -1,3 +1,5 @@
+import ErrorState from '../../../../components/Feedback/ErrorState';
+import LoadingState from '../../../../components/Feedback/LoadingState';
 import { usePatients } from '../../hooks/usePatients';
 import styles from './PatientCapacityCard.module.scss';
 
@@ -7,11 +9,11 @@ export default function PatientCapacityCard() {
   const { isLoading, error, patients } = usePatients();
 
   if (isLoading) {
-    return <div>Ładowanie...</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorState message={error} />;
   }
 
   const activePatients = patients.length;

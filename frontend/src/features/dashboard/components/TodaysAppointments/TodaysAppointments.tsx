@@ -4,6 +4,8 @@ import { getTodayAppointments } from '../../utils/getTodayAppointments';
 import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
 import { useNavigate } from 'react-router-dom';
 import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDisplayStatus';
+import LoadingState from '../../../../components/Feedback/LoadingState';
+import ErrorState from '../../../../components/Feedback/ErrorState';
 
 export default function TodaysAppointments() {
   const navigate = useNavigate();
@@ -19,11 +21,11 @@ export default function TodaysAppointments() {
   };
 
   if (isLoading) {
-    return <p>Ładowanie wizyt...</p>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <ErrorState message={error} />;
   }
 
   return (

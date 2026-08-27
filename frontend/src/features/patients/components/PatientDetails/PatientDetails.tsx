@@ -8,6 +8,8 @@ import PatientInfoCard from '../PatientInfoCard/PatientInfoCard';
 import VisitNotes from '../VisitNotes/VisitNotes';
 import styles from './PatientDetails.module.scss';
 import { useState } from 'react';
+import LoadingState from '../../../../components/Feedback/LoadingState';
+import ErrorState from '../../../../components/Feedback/ErrorState';
 
 export default function PatientDetails() {
   const [appointmentsPage, setAppointmentsPage] = useState(1);
@@ -19,11 +21,11 @@ export default function PatientDetails() {
   const { patient, isLoading, error, reloadPatient } = usePatient(Number(id));
 
   if (isLoading) {
-    return <div>Ładowanie danych...</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorState message={error} />;
   }
 
   if (!patient) {

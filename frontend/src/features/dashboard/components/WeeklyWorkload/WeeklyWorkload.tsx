@@ -1,6 +1,8 @@
 import styles from './WeeklyWorkload.module.scss';
 import { useCalendarAppointments } from '../../../calendar/hooks/useCalendarAppointments';
 import { getWeeklyWorkload } from '../../utils/getWeeklyWorkload';
+import LoadingState from '../../../../components/Feedback/LoadingState';
+import ErrorState from '../../../../components/Feedback/ErrorState';
 
 export default function WeeklyWorkload() {
   const { calendarAppointments, isLoading, error } = useCalendarAppointments();
@@ -10,11 +12,11 @@ export default function WeeklyWorkload() {
   const maxValue = Math.max(...workload.map((item) => item.value), 1);
 
   if (isLoading) {
-    return <div>Ładowanie...</div>;
+    return <LoadingState />;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorState message={error} />;
   }
 
   return (
