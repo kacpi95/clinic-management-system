@@ -2,7 +2,7 @@
 
 .layout {
   min-height: 100vh;
-  background: $neutral;
+  background: var(--color-page-bg);
 }
 
 .main {
