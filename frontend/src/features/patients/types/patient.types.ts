@@ -31,6 +31,9 @@ export type PatientsHeaderProps = {
 };
 
 export type PatientsTableProps = {
+  patients: Patient[];
+  isLoading: boolean;
+  error: string | null;
   searchTerm: string;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;

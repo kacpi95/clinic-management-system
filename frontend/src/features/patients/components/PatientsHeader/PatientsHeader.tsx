@@ -2,8 +2,8 @@ import { IoFilter } from 'react-icons/io5';
 import { PiExport } from 'react-icons/pi';
 
 import styles from './PatientsHeader.module.scss';
-import { downloadPatientsJson } from '../../utils/exportPatients';
 import type { PatientsHeaderProps } from '../../types/patient.types';
+import { exportPatientsCsv } from '../../utils/exportPatientsCsv';
 
 export default function PatientsHeader({
   searchTerm,
@@ -32,7 +32,8 @@ export default function PatientsHeader({
         <button
           type='button'
           className={styles.button}
-          onClick={() => downloadPatientsJson(patients)}
+          onClick={() => exportPatientsCsv(patients)}
+          disabled={!patients.length}
         >
           <PiExport className={styles.icon} />
           <span>Eksport</span>

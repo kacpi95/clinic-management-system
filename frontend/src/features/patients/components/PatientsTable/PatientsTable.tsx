@@ -6,17 +6,17 @@ import { useNavigate } from 'react-router-dom';
 
 import patientOne from '../../../../assets/patient-1.png';
 import styles from './PatientsTable.module.scss';
-import { usePatients } from '../../hooks/usePatients';
 import type { PatientsTableProps } from '../../types/patient.types';
 
 export default function PatientsTable({
+  patients,
+  isLoading,
+  error,
   searchTerm,
   page,
   setPage,
 }: PatientsTableProps) {
   const navigate = useNavigate();
-
-  const { patients, isLoading, error } = usePatients();
 
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
 
