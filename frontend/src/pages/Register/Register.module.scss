@@ -1,123 +1,67 @@
 @use '../../styles/variables' as *;
-
-.content {
-  width: 100%;
-  max-width: 380px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-}
+@use '../../styles/mixins' as *;
 
 .register {
-  width: 100%;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
-  align-items: center;
+  width: 100%;
+  max-width: 560px;
+  min-width: 0;
 }
 
 .infoPanel {
   display: none;
 }
 
-.eyebrow {
-  margin: 0 0 16px;
-  font-family: $text-body;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: $secondary;
-}
-
-.heading {
-  margin: 0 0 16px;
-  font-family: $text-headline;
-  font-size: 2rem;
-  line-height: 1.1;
-  font-weight: 800;
-  color: $primary;
-}
-
-.description {
-  margin: 0;
-  max-width: 520px;
-  font-family: $text-body;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: $secondary;
-}
-
-.featureGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.featureCard {
-  padding: 20px;
-  border-radius: $radius-md;
-  background: $neutral;
-
-  h3 {
-    margin: 0 0 8px;
-    font-family: $text-headline;
-    font-size: 1.1rem;
-    color: $text-default;
-  }
-
-  p {
-    margin: 0;
-    font-family: $text-body;
-    line-height: 1.6;
-    color: $secondary;
-  }
-}
-
 .card {
+  @include card-surface;
   width: 100%;
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 24px 18px;
-  border-radius: $radius-md;
-  background: $surface-bg-alt;
-  backdrop-filter: blur(8px);
+  min-width: 0;
+  padding: 20px 18px;
+  box-shadow: var(--shadow-card);
 }
 
 .cardHeader {
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 56px;
   height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 0 auto 18px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 .title {
-  margin: 0 0 10px;
+  margin: 0;
   font-family: $text-headline;
-  font-size: 2rem;
-  line-height: 1.1;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: $text-default;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
 .subtitle {
-  margin: 0;
+  margin: 8px 0 0;
   font-family: $text-body;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: $secondary;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .row {
@@ -129,132 +73,186 @@
 .field {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  min-width: 0;
 }
 
 .label {
-  margin-bottom: 8px;
   font-family: $text-body;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  border-radius: $secondary;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: $text-default;
+  color: var(--color-text-secondary);
 }
 
 .input {
-  width: 100%;
-  min-height: 52px;
-  padding: 0 $padding-lg;
-  border: 1px solid transparent;
-  border-radius: $radius-sm;
-  background: $surface-bg;
-  font-family: $text-body;
-  font-size: 1rem;
-  color: $text-default;
-  outline: none;
-  transition: $transition-fast;
-
-  &::placeholder {
-    color: $text-muted;
-  }
-
-  &:focus {
-    border-color: $primary;
-    background: $surface-bg-alt;
-  }
+  @include form-control;
+  min-height: 48px;
 }
 
 .error {
   min-height: 18px;
-  margin-top: 6px;
-  font-size: 0.82rem;
-  color: $error;
+  font-family: $text-body;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-error);
 }
 
 .submitError {
   margin: 0;
+  padding: 10px 12px;
+  border-radius: $radius-sm;
+  background: var(--color-error-soft);
+  color: var(--color-error);
+  font-family: $text-body;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-align: center;
-  font-size: 0.92rem;
-  color: $error;
 }
 
 .button {
   width: 100%;
-  min-height: 52px;
+  min-height: 50px;
   border: none;
   border-radius: $radius-sm;
-  background: $primary;
-  color: $button-text;
-  font-size: 1rem;
+  background: var(--color-primary);
+  color: var(--color-button-text);
+  font-family: $text-body;
+  font-size: 0.95rem;
   font-weight: 700;
+
   cursor: pointer;
   transition: $transition-fast;
-}
 
-.button:hover {
-  background: $primaryHover;
-}
+  &:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+  }
 
-.button:active {
-  transform: translateY(1px);
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 }
 
 .switchAuth {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(86, 96, 117, 0.15);
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
   font-family: $text-body;
-  font-size: 0.96rem;
-  color: $secondary;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
 
   a {
-    color: $primary;
     font-weight: 700;
-    text-decoration: none;
-    transition: $transition-fast;
-  }
+    color: var(--color-primary);
 
-  a:hover {
-    color: $primaryHover;
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
   }
 }
 
-@media (min-width: 768px) {
-  .content {
-    max-width: 480px;
-    padding: 40px 32px;
-    border-radius: $radius-lg;
+.eyebrow {
+  margin: 0 0 14px;
+  font-family: $text-body;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--color-text-secondary);
+}
+
+.heading {
+  margin: 0 0 16px;
+  max-width: 620px;
+  font-family: $text-headline;
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.05;
+
+  color: var(--color-primary);
+}
+
+.description {
+  margin: 0;
+  max-width: 520px;
+  font-family: $text-body;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.featureCard {
+  @include card-surface;
+  padding: 18px;
+  background: var(--color-auth-feature);
+
+  h3 {
+    margin: 0 0 6px;
+    font-family: $text-headline;
+    font-size: 1rem;
+    color: var(--color-text);
   }
+
+  p {
+    margin: 0;
+    font-family: $text-body;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .register {
+    max-width: 600px;
+  }
+
   .card {
-    padding: 32px 28px;
+    padding: 30px 28px;
   }
 
   .logo {
     width: 64px;
     height: 64px;
-    font-size: 32px;
     margin-bottom: 22px;
   }
 
   .title {
-    font-size: 2.4rem;
+    font-size: 2rem;
   }
 
   .row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: $breakpoint-desktop) {
   .register {
-    grid-template-columns: minmax(0, 1.1fr) minmax(420px, 560px);
+    grid-template-columns: minmax(0, 1fr) minmax(460px, 560px);
+    align-items: center;
     gap: 48px;
-  }
-
-  .content {
-    max-width: 100%;
+    max-width: 1200px;
   }
 
   .infoPanel {
@@ -262,21 +260,14 @@
   }
 
   .heading {
-    font-size: 4rem;
-    max-width: 620px;
-  }
-
-  .description {
-    font-size: 1.1rem;
+    font-size: clamp(2.5rem, 4vw, 1rem);
   }
 
   .featureGrid {
-    grid-template-columns: repeat(2, minmax(180px, 240px));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .card {
-    margin: 0 0 0 auto;
-    padding: 40px 32px;
-    border-radius: $radius-lg;
+    padding: 36px 32px;
   }
 }
