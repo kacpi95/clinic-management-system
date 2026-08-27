@@ -17,6 +17,7 @@ export const getPatients = async (req, res) => {
     const limit = Number(_limit) || 8;
 
     const allPatients = await patientService.getAll({
+      userId: req.user.userId,
       firstName,
       lastName,
       pesel,
@@ -38,7 +39,7 @@ export const getPatients = async (req, res) => {
 export const getPatientById = async (req, res) => {
   try {
     const { id } = req.params;
-    const patient = await patientService.getById(id);
+    const patient = await patientService.getById(id, req.user.userId);
 
     if (!patient) {
       return res.status(404).json({ message: 'Patient not found' });
@@ -57,6 +58,7 @@ export const addPatient = async (req, res) => {
       req.body;
 
     const newPatient = await patientService.add({
+      userId: req.user.userId,
       firstName,
       lastName,
       pesel,
@@ -77,7 +79,7 @@ export const removePatient = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedPatient = await patientService.remove(id);
+    const deletedPatient = await patientService.remove(id, req.user.userId);
 
     return res.json(deletedPatient);
   } catch (error) {
@@ -90,7 +92,11 @@ export const updatePatient = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const updatedPatient = await patientService.update(id, req.body);
+    const updatedPatient = await patientService.update(
+      id,
+      req.user.userId,
+      req.body,
+    );
 
     return res.json(updatedPatient);
   } catch (error) {

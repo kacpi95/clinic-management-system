@@ -72,10 +72,8 @@ export const register = async (req, res) => {
       user: {
         id: user.id,
         email: user.email,
-        firstName: user.doctor.firstName,
-        lastName: user.doctor.lastName,
-        specialization: user.doctor.specialization,
-        phone: user.doctor.phone,
+        role: user.role,
+        doctor: user.doctor,
       },
     });
   } catch (error) {
@@ -127,7 +125,6 @@ export const login = async (req, res) => {
 };
 
 export const me = async (req, res) => {
-  console.log('NOWE ME DZIALA');
   try {
     const user = await prisma.user.findUnique({
       where: {

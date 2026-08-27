@@ -1,6 +1,21 @@
 import { prisma } from '../../prismaClient/client.js';
 
+const getDoctorByUserId = async (userId) => {
+  const doctor = await prisma.doctor.findUnique({
+    where: {
+      userId: Number(userId),
+    },
+  });
+
+  if (!doctor) {
+    throw new Error('Doctor not found');
+  }
+
+  return doctor;
+};
+
 export const getAll = async ({
+  userId,
   firstName,
   lastName,
   pesel,
@@ -11,50 +26,55 @@ export const getAll = async ({
   page = 1,
   limit = 20,
 }) => {
-  const where = {};
+  const doctor = await getDoctorByUserId(userId);
 
-  if (firstName) where.firstName = { contains: firstName, mode: 'insensitive' };
+  const where = {
+    doctorId: doctor.id,
+  };
 
-  if (lastName) where.lastName = { contains: lastName, mode: 'insensitive' };
-
+  if (firstName) where.firstName = { contains: firstName };
+  if (lastName) where.lastName = { contains: lastName };
   if (pesel) where.pesel = pesel;
-
   if (birthDate) where.birthDate = new Date(birthDate);
+  if (phone) where.phone = { contains: phone };
+  if (email) where.email = { contains: email };
+  if (address) where.address = { contains: address };
 
-  if (phone) where.phone = { contains: phone, mode: 'insensitive' };
-
-  if (email) where.email = { contains: email, mode: 'insensitive' };
-
-  if (address) where.address = { contains: address, mode: 'insensitive' };
-
-  const patients = await prisma.patient.findMany({
+  return prisma.patient.findMany({
     where,
     skip: (page - 1) * limit,
     take: Number(limit),
-    orderBy: { createdAt: 'desc' },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
-
-  return patients;
 };
 
-export const getById = async (id) => {
-  return prisma.patient.findUnique({
+export const getById = async (id, userId) => {
+  const doctor = await getDoctorByUserId(userId);
+
+  return prisma.patient.findFirst({
     where: {
       id: Number(id),
+      doctorId: doctor.id,
     },
+
     include: {
       appointments: {
         orderBy: {
           startTime: 'desc',
         },
+
         include: {
           doctor: true,
         },
       },
+
       visitNotes: {
         orderBy: {
           createdAt: 'desc',
         },
+
         include: {
           doctor: true,
           appointment: true,
@@ -65,6 +85,7 @@ export const getById = async (id) => {
 };
 
 export const add = async ({
+  userId,
   firstName,
   lastName,
   pesel,
@@ -73,8 +94,11 @@ export const add = async ({
   email,
   address,
 }) => {
-  const newPatient = await prisma.patient.create({
+  const doctor = await getDoctorByUserId(userId);
+
+  return prisma.patient.create({
     data: {
+      doctorId: doctor.id,
       firstName,
       lastName,
       pesel,
@@ -84,22 +108,52 @@ export const add = async ({
       address,
     },
   });
-
-  return newPatient;
 };
 
-export const remove = async (id) => {
+export const remove = async (id, userId) => {
+  const doctor = await getDoctorByUserId(userId);
+
+  const patient = await prisma.patient.findFirst({
+    where: {
+      id: Number(id),
+      doctorId: doctor.id,
+    },
+  });
+
+  if (!patient) {
+    throw new Error('Patient not found');
+  }
+
   return prisma.patient.delete({
-    where: { id: Number(id) },
+    where: {
+      id: patient.id,
+    },
   });
 };
 
-export const update = async (id, data) => {
+export const update = async (id, userId, data) => {
+  const doctor = await getDoctorByUserId(userId);
+
+  const patient = await prisma.patient.findFirst({
+    where: {
+      id: Number(id),
+      doctorId: doctor.id,
+    },
+  });
+
+  if (!patient) {
+    throw new Error('Patient not found');
+  }
+
   return prisma.patient.update({
-    where: { id: Number(id) },
+    where: {
+      id: patient.id,
+    },
     data: {
       ...data,
-      ...(data.birthDate && { birthDate: new Date(data.birthDate) }),
+      ...(data.birthDate && {
+        birthDate: new Date(data.birthDate),
+      }),
     },
   });
 };

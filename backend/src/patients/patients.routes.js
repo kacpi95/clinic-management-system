@@ -8,12 +8,14 @@ import {
   updatePatient,
 } from './patients.controller.js';
 
+import { authMiddleware } from '../auth/auth.middleware.js';
+
 const router = express.Router();
 
-router.get('/', getPatients);
-router.get('/:id', getPatientById);
-router.post('/', addPatient);
-router.delete('/:id', removePatient);
-router.put('/:id', updatePatient);
+router.get('/', authMiddleware, getPatients);
+router.get('/:id', authMiddleware, getPatientById);
+router.post('/', authMiddleware, addPatient);
+router.delete('/:id', authMiddleware, removePatient);
+router.put('/:id', authMiddleware, updatePatient);
 
 export default router;
