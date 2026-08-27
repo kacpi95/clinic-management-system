@@ -1,8 +1,7 @@
-import { Formik, Form, ErrorMessage, Field } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { Formik, Form, ErrorMessage, Field, type FormikHelpers } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.png';
 import { loginRequest } from '../../utils/auth.api';
@@ -22,18 +21,6 @@ export default function Login() {
     password: '',
   };
 
-  const onSubmit = async (values: LoginFormData) => {
-    setError('');
-
-    try {
-      const data = await loginRequest(values);
-      login(data);
-      navigate('/dashboard');
-    } catch (error) {
-      setError(getErrorMessage(error));
-    }
-  };
-
   const validationSchema = Yup.object({
     email: Yup.string()
       .email('Podaj poprawny adres email')
@@ -43,10 +30,30 @@ export default function Login() {
       .max(50, 'Hasło jest za długie')
       .required('Hasło jest wymagane'),
   });
+
+  const onSubmit = async (
+    values: LoginFormData,
+    { setSubmitting }: FormikHelpers<LoginFormData>,
+  ) => {
+    setError('');
+
+    try {
+      const data = await loginRequest(values);
+
+      login(data);
+
+      navigate('/dashboard', { replace: true });
+    } catch (error) {
+      setError(getErrorMessage(error));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <div className={styles.card}>
+    <section className={styles.card}>
       <div className={styles.logo}>
-        <img src={logo} alt='Logo' />
+        <img src={logo} alt='Clinica Atelier' />
       </div>
 
       <h1 className={styles.title}>Clinica Atelier</h1>
@@ -54,54 +61,66 @@ export default function Login() {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={onSubmit}
         validationSchema={validationSchema}
+        onSubmit={onSubmit}
       >
-        <Form className={styles.form}>
-          <div className={styles.field}>
-            <label htmlFor='email' className={styles.label}>
-              Email
-            </label>
-            <Field
-              id='email'
-              name='email'
-              type='email'
-              placeholder='name@clinic.com'
-              className={styles.input}
-            />
-            <div className={styles.error}>
-              <ErrorMessage name='email' component='span' />
+        {({ isSubmitting }) => (
+          <Form className={styles.form}>
+            <div className={styles.field}>
+              <label htmlFor='email' className={styles.label}>
+                Email
+              </label>
+
+              <Field
+                id='email'
+                name='email'
+                type='email'
+                autoComplete='email'
+                placeholder='name@clinic.com'
+                className={styles.input}
+              />
+
+              <div className={styles.error}>
+                <ErrorMessage name='email' component='span' />
+              </div>
             </div>
-          </div>
 
-          <div className={styles.field}>
-            <label htmlFor='password' className={styles.label}>
-              Hasło
-            </label>
-            <Field
-              id='password'
-              name='password'
-              type='password'
-              placeholder='••••••••'
-              className={styles.input}
-            />
-            <div className={styles.error}>
-              <ErrorMessage name='password' component='span' />
+            <div className={styles.field}>
+              <label htmlFor='password' className={styles.label}>
+                Hasło
+              </label>
+
+              <Field
+                id='password'
+                name='password'
+                type='password'
+                autoComplete='current-password'
+                placeholder='••••••••'
+                className={styles.input}
+              />
+
+              <div className={styles.error}>
+                <ErrorMessage name='password' component='span' />
+              </div>
             </div>
-          </div>
 
-          {error && <p className={styles.submitError}>{error}</p>}
+            {error && <p className={styles.submitError}>{error}</p>}
 
-          <Button type='submit' className={styles.button}>
-            Zaloguj się
-          </Button>
-        </Form>
+            <Button
+              type='submit'
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Logowanie...' : 'Zaloguj się'}
+            </Button>
+          </Form>
+        )}
       </Formik>
 
       <div className={styles.switchAuth}>
-        <span>Nowy użytkownik? </span>
+        <span>Nowy użytkownik?</span>
         <Link to='/register'>Załóż konto</Link>
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,213 +1,165 @@
 @use '../../styles/variables' as *;
-
-.wrapper {
-  position: relative;
-  min-height: 100vh;
-  padding: $padding-lg;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url('../../assets/img1.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(2px);
-  background: $neutral;
-}
-
-.content {
-  width: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-}
+@use '../../styles/mixins' as *;
 
 .card {
+  @include card-surface;
   width: 100%;
-  max-width: 320px;
-  padding: 28px 20px;
-  border-radius: $radius-md;
-  backdrop-filter: blur(8px);
-  background: $surface-bg-alt;
+  max-width: 420px;
+  padding: 24px 18px;
+  box-shadow: var(--shadow-card);
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 56px;
   height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 0 auto 18px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 .title {
   margin: 0;
-  text-align: center;
-  font-size: 1.75rem;
+  font-family: $text-headline;
+  font-size: 1.8rem;
+  font-weight: 800;
   line-height: 1.2;
-  font-weight: 700;
-  color: $primary;
+  text-align: center;
+  color: var(--color-primary);
 }
 
 .subtitle {
   margin: 8px 0 24px;
+  font-family: $text-body;
+  font-size: 0.9rem;
+  line-height: 1.5;
   text-align: center;
-  font-size: 0.95rem;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .label {
-  margin-bottom: 8px;
+  font-family: $text-body;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: $secondary;
+  color: var(--color-text-secondary);
 }
 
 .input {
-  width: 100%;
-  min-height: 52px;
-  padding: 0 16px;
-  border: 1px solid $secondary;
-  border-radius: $radius-sm;
-  background: $surface-bg;
-  font-size: 1rem;
-  color: $text-default;
-  outline: none;
-  transition: $transition-fast;
-}
-
-.input::placeholder {
-  color: $text-muted;
-}
-
-.input:focus {
-  border-color: $primary;
-  background: $surface-bg-alt;
+  @include form-control;
+  min-height: 50px;
 }
 
 .error {
   min-height: 18px;
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: $error;
+  font-family: $text-body;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-error);
 }
 
 .submitError {
   margin: 0;
-  font-size: 0.9rem;
-  color: $error;
+  padding: 10px 12px;
+  border-radius: $radius-sm;
+  background: var(--color-error-soft);
+  color: var(--color-error);
+  font-family: $text-body;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-align: center;
 }
 
 .button {
   width: 100%;
-  min-height: 52px;
+  min-height: 50px;
   border: none;
   border-radius: $radius-sm;
-  background: $primary;
-  color: $button-text;
-  font-size: 1rem;
+  background: var(--color-primary);
+  color: var(--color-button-text);
+  font-family: $text-body;
+  font-size: 0.95rem;
   font-weight: 700;
-  cursor: pointer;
   transition: $transition-fast;
-}
 
-.button:hover {
-  background: $primaryHover;
-}
-
-.button:active {
-  transform: translateY(1px);
-}
-@media (min-width: 768px) {
-  .wrapper {
-    padding: 24px;
+  &:hover:not(:disabled) {
+    background: var(--color-primary-hover);
   }
 
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.switchAuth {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+  font-family: $text-body;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+
+  a {
+    font-weight: 700;
+    color: var(--color-primary);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
   .card {
-    max-width: 480px;
-    padding: 40px 32px;
-    border-radius: $radius-lg;
+    max-width: 460px;
+    padding: 36px 32px;
   }
 
   .logo {
     width: 64px;
     height: 64px;
-    font-size: 32px;
     margin-bottom: 22px;
   }
 
   .title {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
   }
 
   .subtitle {
-    font-size: 1rem;
-    margin-bottom: 32px;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
   }
 
-  .input {
-    min-height: 56px;
-    font-size: 1rem;
-  }
-
+  .input,
   .button {
-    min-height: 56px;
-    font-size: 1.05rem;
+    min-height: 52px;
   }
-}
-@media (min-width: 1024px) {
-  .wrapper {
-    justify-content: center;
-  }
-
-  .card {
-    max-width: 520px;
-    padding: 48px 40px;
-  }
-
-  .title {
-    font-size: 2.5rem;
-  }
-
-  .subtitle {
-    font-size: 1.05rem;
-  }
-}
-.switchAuth {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid #e5e7eb;
-  text-align: center;
-  font-size: 0.95rem;
-  color: #4b5563;
-}
-
-.switchAuth a {
-  margin-left: 4px;
-  color: $primary;
-}
-
-.switchAuth a:hover {
-  text-decoration: underline;
 }
