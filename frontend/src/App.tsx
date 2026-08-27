@@ -17,40 +17,43 @@ import { Toaster } from 'react-hot-toast';
 import EditPatient from './features/patients/pages/EditPatient/EditPatient';
 import NewPatient from './features/patients/pages/NewPatient/NewPatient';
 import Settings from './pages/Settings/Settings';
+import ThemeProvider from './context/ThemeProvider';
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<PublicRoute />}>
-          <Route path='/' element={<AuthLayout />}>
-            <Route index element={<Navigate to='/login' replace />} />
-            <Route path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <Routes>
+          <Route element={<PublicRoute />}>
+            <Route path='/' element={<AuthLayout />}>
+              <Route index element={<Navigate to='/login' replace />} />
+              <Route path='login' element={<Login />} />
+              <Route path='register' element={<Register />} />
+            </Route>
           </Route>
-        </Route>
 
-        <Route element={<ProtectedRoute />}>
-          <Route path='/dashboard' element={<DashboardLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path='patients' element={<Patients />} />
-            <Route path='patients/:id' element={<PatientDetails />} />
-            <Route path='patients/:id/edit' element={<EditPatient />} />
-            <Route path='patients/new' element={<NewPatient />} />
-            <Route path='calendar' element={<Calendar />} />
-            <Route path='analytics' element={<Analytics />} />
-            <Route path='settings' element={<Settings />} />
-            <Route
-              path='appointments/:id/new-appointment'
-              element={<NewAppointment />}
-            />
+          <Route element={<ProtectedRoute />}>
+            <Route path='/dashboard' element={<DashboardLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path='patients' element={<Patients />} />
+              <Route path='patients/:id' element={<PatientDetails />} />
+              <Route path='patients/:id/edit' element={<EditPatient />} />
+              <Route path='patients/new' element={<NewPatient />} />
+              <Route path='calendar' element={<Calendar />} />
+              <Route path='analytics' element={<Analytics />} />
+              <Route path='settings' element={<Settings />} />
+              <Route
+                path='appointments/:id/new-appointment'
+                element={<NewAppointment />}
+              />
+            </Route>
           </Route>
-        </Route>
 
-        <Route path='*' element={<Navigate to='/' replace />} />
-      </Routes>
-      <Toaster position='top-center' />
-    </AuthProvider>
+          <Route path='*' element={<Navigate to='/' replace />} />
+        </Routes>
+        <Toaster position='top-center' />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

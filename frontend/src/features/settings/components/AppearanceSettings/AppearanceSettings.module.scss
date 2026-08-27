@@ -99,6 +99,12 @@
   }
 }
 
+.active {
+  border-color: var(--color-primary) !important;
+  background: var(--color-primary-soft) !important;
+  color: var(--color-primary) !important;
+}
+
 .setting select {
   @include form-control;
   cursor: pointer;

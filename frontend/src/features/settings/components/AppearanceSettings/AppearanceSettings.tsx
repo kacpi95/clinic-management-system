@@ -2,8 +2,11 @@ import { FaRegMoon } from 'react-icons/fa';
 import { IoSunnyOutline } from 'react-icons/io5';
 
 import styles from './AppearanceSettings.module.scss';
+import { useTheme } from '../../../../context/useTheme';
 
 export default function AppearanceSettings() {
+  const { theme, setTheme } = useTheme();
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.header}>
@@ -19,11 +22,20 @@ export default function AppearanceSettings() {
           </div>
 
           <div className={styles.themeOptions}>
-            <button type='button'>
+            <button
+              type='button'
+              className={theme === 'light' ? styles.active : ''}
+              onClick={() => setTheme('light')}
+            >
               <IoSunnyOutline />
               Jasny
             </button>
-            <button type='button'>
+
+            <button
+              type='button'
+              className={theme === 'dark' ? styles.active : ''}
+              onClick={() => setTheme('dark')}
+            >
               <FaRegMoon />
               Ciemny
             </button>
