@@ -1,7 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { HiBars3 } from 'react-icons/hi2';
 
 import { useAuth } from '../../context/useAuth';
 import styles from './Header.module.scss';
+
+type Props = {
+  onMenuClick: () => void;
+};
 
 const pageTitles: Record<string, string> = {
   '/dashboard': 'Dashboard',
@@ -11,7 +16,7 @@ const pageTitles: Record<string, string> = {
   '/dashboard/settings': 'Ustawienia',
 };
 
-export default function Header() {
+export default function Header({ onMenuClick }: Props) {
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,9 +30,20 @@ export default function Header() {
 
   return (
     <header className={styles.wrapper}>
-      <div className={styles.leftSection}>
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.description}>Panel zarządzania</p>
+      <div className={styles.leftGroup}>
+        <button
+          type='button'
+          className={styles.menuButton}
+          onClick={onMenuClick}
+          aria-label='Otwórz menu'
+        >
+          <HiBars3 />
+        </button>
+
+        <div className={styles.leftSection}>
+          <h1 className={styles.title}>{title}</h1>
+          <p className={styles.description}>Panel zarządzania</p>
+        </div>
       </div>
 
       <div className={styles.rightSection}>

@@ -90,6 +90,36 @@
   }
 }
 
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  border-radius: $radius-sm;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+  }
+}
+
 @media (min-width: $breakpoint-tablet) {
   .wrapper {
     padding: 18px 28px;
@@ -112,5 +142,8 @@
   .wrapper {
     min-height: 90px;
     padding: 20px 32px;
+  }
+  .menuButton {
+    display: none;
   }
 }
