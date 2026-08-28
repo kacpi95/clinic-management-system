@@ -27,8 +27,8 @@ export function updateAppointment(id: number, data: UpdateAppointmentData) {
   });
 }
 
-export function deleteAppointment(id: number) {
-  return apiClient<{ message: string }>(`/appointments/${id}`, {
-    method: 'DELETE',
+export function cancelAppointment(id: number) {
+  return apiClient(`/appointments/${id}/cancel`, {
+    method: 'PATCH',
   });
 }

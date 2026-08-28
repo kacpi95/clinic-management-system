@@ -88,27 +88,26 @@ export const addAppointment = async (req, res) => {
   }
 };
 
-export const removeAppointment = async (req, res) => {
+export const cancelAppointment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const appointment = await appointmentService.getById(id);
+    const canceledAppointment = await appointmentService.cancel(
+      id,
+      req.user.userId,
+    );
 
-    if (!appointment) {
-      return res.status(404).json({ message: 'Appointment not found' });
-    }
-
-    if (appointment.doctorId !== req.user.userId) {
-      return res.status(403).json({ message: 'Access denied' });
-    }
-
-    const deletedAppointment = await appointmentService.remove(id);
-
-    return res.json(deletedAppointment);
+    return res.json(canceledAppointment);
   } catch (error) {
     console.error(error);
 
-    return res.status(500).json({ message: 'Failed to remove appointment' });
+    if (error.message === 'Appointment not found') {
+      return res.status(404).json({ message: error.message });
+    }
+
+    return res.status(500).json({
+      message: 'Failed to cancel appointment',
+    });
   }
 };
 

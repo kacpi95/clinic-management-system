@@ -44,6 +44,8 @@
   --color-on-media: #ffffff;
 
   --color-auth-feature: rgba(255, 255, 255, 0.58);
+
+   --auth-overlay: rgba(248, 249, 250, 0.88);
 }
 
 [data-theme='dark'] {
@@ -83,6 +85,8 @@
   --color-auth-feature: rgba(31, 41, 55, 0.72);
 
   --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.28);
+
+  --auth-overlay: rgba(15, 18, 22, 0.90);
 }
 
 *,

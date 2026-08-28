@@ -4,9 +4,9 @@ import {
   getAppointments,
   getAppointmentById,
   addAppointment,
-  removeAppointment,
   updateAppointment,
   getCalendarAppointments,
+  cancelAppointment,
 } from './appointment.controller.js';
 import { authMiddleware } from '../auth/auth.middleware.js';
 
@@ -18,7 +18,7 @@ router.get('/', getAppointments);
 router.get('/calendar', getCalendarAppointments);
 router.get('/:id', getAppointmentById);
 router.post('/', addAppointment);
-router.delete('/:id', removeAppointment);
+router.patch('/:id/cancel', cancelAppointment);
 router.put('/:id', updateAppointment);
 
 export default router;

@@ -96,9 +96,25 @@ export const add = async ({
   return appointment;
 };
 
-export const remove = async (id) => {
-  return prisma.appointment.delete({
-    where: { id: Number(id) },
+export const cancel = async (id, doctorId) => {
+  const appointment = await prisma.appointment.findFirst({
+    where: {
+      id: Number(id),
+      doctorId: Number(doctorId),
+    },
+  });
+
+  if (!appointment) {
+    throw new Error('Appointment not found');
+  }
+
+  return prisma.appointment.update({
+    where: {
+      id: appointment.id,
+    },
+    data: {
+      status: 'CANCELED',
+    },
   });
 };
 

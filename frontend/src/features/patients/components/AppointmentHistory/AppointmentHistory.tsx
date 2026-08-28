@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import type { Appointment } from '../../../appointments/types/appointment.type';
 import styles from './AppointmentHistory.module.scss';
 import { getVisitWord } from '../../utils/getVisitWord';
-import { deleteAppointment } from '../../../appointments/services/appointment.api';
+import { cancelAppointment } from '../../../appointments/services/appointment.api';
 import { getAppointmentDisplayStatus } from '../../../../utils/getAppointmentDisplayStatus';
 
 type Props = {
@@ -41,20 +41,22 @@ export default function AppointmentHistory({
 
   const appointmentPages = Math.ceil(appointments.length / itemsPerPage);
 
-  const handleDelete = async (id: number) => {
+  const handleCancel = async (id: number) => {
     try {
-      await deleteAppointment(id);
+      await cancelAppointment(id);
 
       await onAppointmentDeleted();
 
       setOpenedId(null);
 
-      toast.success('Wizyta została usunięta');
+      toast.success('Wizyta została anulowana');
     } catch (error) {
       console.error(error);
 
       toast.error(
-        error instanceof Error ? error.message : 'Nie udało się usunąć wizyty',
+        error instanceof Error
+          ? error.message
+          : 'Nie udało się anulować wizyty',
       );
     }
   };
@@ -130,15 +132,15 @@ export default function AppointmentHistory({
 
                   <p>{appointment.notes || 'Brak notatki.'}</p>
                 </div>
-                {appointment.status !== 'COMPLETED' && (
+                {status === 'PLANNED' && (
                   <div className={styles.actions}>
                     <button
                       type='button'
                       className={styles.deleteButton}
-                      onClick={() => handleDelete(appointment.id)}
+                      onClick={() => handleCancel(appointment.id)}
                     >
                       <MdDeleteOutline />
-                      Usuń wizytę
+                      Anuluj wizytę
                     </button>
                   </div>
                 )}
