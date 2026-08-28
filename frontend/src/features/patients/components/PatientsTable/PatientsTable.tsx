@@ -1,7 +1,7 @@
 import { BsThreeDots } from 'react-icons/bs';
 import { BiDetail } from 'react-icons/bi';
 import { CiEdit } from 'react-icons/ci';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import patientOne from '../../../../assets/patient-1.png';
@@ -23,6 +23,26 @@ export default function PatientsTable({
   const [openedMenu, setOpenedMenu] = useState<number | null>(null);
 
   const patientsPerPage = 8;
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        openedMenu !== null &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setOpenedMenu(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openedMenu]);
 
   const filteredPatients = useMemo(() => {
     const normalizedSearchTerm = searchTerm.toLowerCase().trim();
@@ -72,63 +92,73 @@ export default function PatientsTable({
         </div>
 
         <div className={styles.body}>
-          {visiblePatients.map((patient) => (
-            <div key={patient.id} className={styles.row}>
-              <div className={styles.patient}>
-                <span
-                  className={styles.avatar}
-                  style={{ backgroundImage: `url(${patientOne})` }}
-                />
-                <strong>
-                  {patient.firstName} {patient.lastName}
-                </strong>
-              </div>
+          {visiblePatients.map((patient, index) => {
+            const shouldOpenUp = index >= visiblePatients.length - 2;
+            return (
+              <div key={patient.id} className={styles.row}>
+                <div className={styles.patient}>
+                  <span
+                    className={styles.avatar}
+                    style={{ backgroundImage: `url(${patientOne})` }}
+                  />
+                  <strong>
+                    {patient.firstName} {patient.lastName}
+                  </strong>
+                </div>
 
-              <div className={styles.cell}>{patient.pesel}</div>
-              <div className={styles.cell}>{patient.email}</div>
-              <div className={styles.cell}>{patient.phone}</div>
+                <div className={styles.cell}>{patient.pesel}</div>
+                <div className={styles.cell}>{patient.email}</div>
+                <div className={styles.cell}>{patient.phone}</div>
 
-              <div className={styles.actions}>
-                <button
-                  type='button'
-                  onClick={() => {
-                    setOpenedMenu(
-                      openedMenu === patient.id ? null : patient.id,
-                    );
-                  }}
-                  className={styles.actionButton}
+                <div
+                  className={styles.actions}
+                  ref={openedMenu === patient.id ? menuRef : null}
                 >
-                  <BsThreeDots />
-                </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setOpenedMenu(
+                        openedMenu === patient.id ? null : patient.id,
+                      );
+                    }}
+                    className={styles.actionButton}
+                  >
+                    <BsThreeDots />
+                  </button>
 
-                {openedMenu === patient.id && (
-                  <div className={styles.dropDown}>
-                    <button
-                      type='button'
-                      className={styles.menuButton}
-                      onClick={() =>
-                        navigate(`/dashboard/patients/${patient.id}`)
-                      }
+                  {openedMenu === patient.id && (
+                    <div
+                      className={`${styles.dropDown} ${
+                        shouldOpenUp ? styles.dropDownUp : ''
+                      }`}
                     >
-                      <BiDetail className={styles.menuIcon} />
-                      <span>Szczegóły</span>
-                    </button>
+                      <button
+                        type='button'
+                        className={styles.menuButton}
+                        onClick={() =>
+                          navigate(`/dashboard/patients/${patient.id}`)
+                        }
+                      >
+                        <BiDetail className={styles.menuIcon} />
+                        <span>Szczegóły</span>
+                      </button>
 
-                    <button
-                      type='button'
-                      className={styles.menuButton}
-                      onClick={() =>
-                        navigate(`/dashboard/patients/${patient.id}/edit`)
-                      }
-                    >
-                      <CiEdit className={styles.menuIcon} />
-                      <span>Edytuj</span>
-                    </button>
-                  </div>
-                )}
+                      <button
+                        type='button'
+                        className={styles.menuButton}
+                        onClick={() =>
+                          navigate(`/dashboard/patients/${patient.id}/edit`)
+                        }
+                      >
+                        <CiEdit className={styles.menuIcon} />
+                        <span>Edytuj</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

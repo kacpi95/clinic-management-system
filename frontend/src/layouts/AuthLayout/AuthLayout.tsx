@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 import styles from './AuthLayout.module.scss';
-import img1 from '../../assets/img1.jpg';
+import img1 from '../../assets/dashboard-bgc.jpg';
 
 export default function AuthLayout() {
   const location = useLocation();

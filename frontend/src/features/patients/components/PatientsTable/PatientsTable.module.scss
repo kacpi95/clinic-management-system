@@ -10,7 +10,6 @@
   @include card-surface;
   width: 100%;
   overflow-x: auto;
-  overflow-y: visible;
 }
 
 .header,
@@ -96,7 +95,9 @@
 .actions {
   position: relative;
   display: flex;
+  align-items: center;
   justify-content: flex-start;
+  overflow: visible;
 }
 
 .actionButton {
@@ -127,18 +128,23 @@
 
 .dropDown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 6px);
   right: 0;
-  z-index: 20;
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 180px;
-  padding: 8px;
+  gap: 4px;
+  width: 180px;
+  padding: 6px;
   border: 1px solid var(--color-border);
   border-radius: $radius-sm;
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
+}
+
+.dropDownUp {
+  top: auto;
+  bottom: calc(100% + 6px);
 }
 
 .menuButton {
@@ -259,5 +265,11 @@
         transform: translateY(-1px);
       }
     }
+  }
+}
+
+@media (min-width: $breakpoint-desktop) {
+  .table {
+    overflow: visible;
   }
 }
