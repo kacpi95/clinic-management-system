@@ -36,7 +36,7 @@ export default function Sidebar({ isOpen, onClose }: Props) {
         </div>
 
         <div>
-          <p className={styles.name}>The Clinical Atelier</p>
+          <p className={styles.name}>Clinica Atelier</p>
           <p className={styles.subtitle}>Medical Administration</p>
         </div>
         <button

@@ -5,24 +5,13 @@ import { prisma } from '../../prismaClient/client.js';
 const JWT_SECRET = process.env.JWT_SECRET;
 
 function signToken(user) {
-  const token = jwt.sign(
+  return jwt.sign(
     { userId: user.id, email: user.email, role: user.role },
     JWT_SECRET,
     {
       expiresIn: '7d',
     },
   );
-
-  console.log('SIGN TOKEN END:', token.slice(-25));
-
-  try {
-    jwt.verify(token, JWT_SECRET);
-    console.log('SIGN SELF VERIFY: OK');
-  } catch (error) {
-    console.log('SIGN SELF VERIFY ERROR:', error.message);
-  }
-
-  return token;
 }
 
 export const register = async (req, res) => {
@@ -119,8 +108,6 @@ export const login = async (req, res) => {
     }
 
     const token = signToken(user);
-
-    console.log('LOGIN TOKEN END:', token.slice(-25));
 
     return res.json({
       user: {
