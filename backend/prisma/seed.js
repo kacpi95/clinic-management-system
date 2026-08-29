@@ -34,8 +34,8 @@ async function main() {
   await prisma.visitNote.deleteMany();
   await prisma.appointment.deleteMany();
   await prisma.availability.deleteMany();
-  await prisma.doctor.deleteMany();
   await prisma.patient.deleteMany();
+  await prisma.doctor.deleteMany();
   await prisma.user.deleteMany();
 
   const password = await bcrypt.hash('123456', 10);
@@ -88,6 +88,7 @@ async function main() {
     data: [
       {
         id: 1,
+        doctorId: 1,
         firstName: 'Kamil',
         lastName: 'Nowakowski',
         pesel: '99010112345',
@@ -98,6 +99,7 @@ async function main() {
       },
       {
         id: 2,
+        doctorId: 1,
         firstName: 'Anna',
         lastName: 'Kowalska',
         pesel: '95051254321',
@@ -108,6 +110,7 @@ async function main() {
       },
       {
         id: 3,
+        doctorId: 1,
         firstName: 'Marek',
         lastName: 'Wiśniewski',
         pesel: '87032067890',
@@ -118,6 +121,7 @@ async function main() {
       },
       {
         id: 4,
+        doctorId: 1,
         firstName: 'Daria',
         lastName: 'Kowalczyk',
         pesel: '91082611223',
@@ -128,6 +132,7 @@ async function main() {
       },
       {
         id: 5,
+        doctorId: 1,
         firstName: 'Tomasz',
         lastName: 'Lewandowski',
         pesel: '78040233445',
@@ -138,6 +143,7 @@ async function main() {
       },
       {
         id: 6,
+        doctorId: 1,
         firstName: 'Julia',
         lastName: 'Zielińska',
         pesel: '02021445678',
@@ -148,6 +154,7 @@ async function main() {
       },
       {
         id: 7,
+        doctorId: 1,
         firstName: 'Paweł',
         lastName: 'Kamiński',
         pesel: '85061198765',
@@ -158,6 +165,7 @@ async function main() {
       },
       {
         id: 8,
+        doctorId: 1,
         firstName: 'Karolina',
         lastName: 'Wójcik',
         pesel: '93093011223',
@@ -168,6 +176,7 @@ async function main() {
       },
       {
         id: 9,
+        doctorId: 1,
         firstName: 'Patryk',
         lastName: 'Kaczmarek',
         pesel: '89041833445',
@@ -178,6 +187,7 @@ async function main() {
       },
       {
         id: 10,
+        doctorId: 1,
         firstName: 'Monika',
         lastName: 'Mazur',
         pesel: '96072355667',
@@ -188,6 +198,7 @@ async function main() {
       },
       {
         id: 11,
+        doctorId: 1,
         firstName: 'Michał',
         lastName: 'Sikora',
         pesel: '81030577889',
@@ -198,6 +209,7 @@ async function main() {
       },
       {
         id: 12,
+        doctorId: 1,
         firstName: 'Natalia',
         lastName: 'Dąbrowska',
         pesel: '00081299123',
@@ -208,6 +220,7 @@ async function main() {
       },
       {
         id: 13,
+        doctorId: 1,
         firstName: 'Adam',
         lastName: 'Lis',
         pesel: '92041011122',
@@ -218,6 +231,7 @@ async function main() {
       },
       {
         id: 14,
+        doctorId: 1,
         firstName: 'Barbara',
         lastName: 'Król',
         pesel: '88012233344',
@@ -228,6 +242,7 @@ async function main() {
       },
       {
         id: 15,
+        doctorId: 1,
         firstName: 'Piotr',
         lastName: 'Walczak',
         pesel: '94060244455',
@@ -319,8 +334,6 @@ async function main() {
 
   const appointments = [];
 
-  let appointmentId = 1;
-
   const doctorOnePatientIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const doctorTwoPatientIds = [11, 12, 13, 14, 15];
@@ -336,8 +349,6 @@ async function main() {
     notes = '',
   }) {
     return {
-      id: appointmentId++,
-
       patientId,
       doctorId,
 
@@ -602,12 +613,6 @@ async function main() {
     );
   }
 
-  await prisma.appointment.createMany({
-    data: appointments,
-  });
-
-  console.log(`Created ${appointments.length} appointments`);
-
   console.log(
     `Doctor 1 appointments: ${
       appointments.filter((appointment) => appointment.doctorId === 1).length
@@ -687,25 +692,39 @@ async function main() {
     'Kontrola przebiegła bez powikłań.',
   ];
 
-  const completedAppointments = appointments.filter(
-    (appointment) => appointment.status === 'COMPLETED',
+  console.log('Liczba wygenerowanych wizyt:', appointments.length);
+
+  const uniqueAppointments = Array.from(
+    new Map(
+      appointments.map((appointment) => [
+        `${appointment.doctorId}-${appointment.startTime.toISOString()}`,
+        appointment,
+      ]),
+    ).values(),
   );
 
-  const visitNotes = completedAppointments.map((appointment, index) => ({
-    id: index + 1,
+  console.log('Przed usunięciem duplikatów:', appointments.length);
+  console.log('Po usunięciu duplikatów:', uniqueAppointments.length);
 
+  const appointmentResult = await prisma.appointment.createMany({
+    data: uniqueAppointments,
+  });
+
+  console.log('Liczba zapisanych wizyt:', appointmentResult.count);
+
+  const completedAppointments = await prisma.appointment.findMany({
+    where: {
+      status: 'COMPLETED',
+    },
+  });
+
+  const visitNotes = completedAppointments.map((appointment) => ({
     patientId: appointment.patientId,
-
     appointmentId: appointment.id,
-
     doctorId: appointment.doctorId,
-
     diagnosis: randomItem(diagnoses),
-
     recommendations: randomItem(recommendations),
-
     medications: randomItem(medications),
-
     notes: randomItem(visitNotesText),
   }));
 
