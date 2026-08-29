@@ -4,6 +4,8 @@ import { prisma } from '../../prismaClient/client.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+console.log('SIGN JWT SECRET LENGTH:', JWT_SECRET?.length);
+
 function signToken(user) {
   return jwt.sign(
     { userId: user.id, email: user.email, role: user.role },

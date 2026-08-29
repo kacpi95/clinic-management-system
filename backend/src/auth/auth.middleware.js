@@ -7,6 +7,9 @@ export const authMiddleware = (req, res, next) => {
       return res.status(401).json({ message: 'Missing token' });
 
     const token = header.split(' ')[1];
+
+    console.log('VERIFY JWT SECRET LENGTH:', process.env.JWT_SECRET?.length);
+
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = payload;
